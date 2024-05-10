@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Cuoco</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+	<h1>Dettagli Cuoco</h1>
+	<div th:if="${cuoco}">
+		<span th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</span>
+		<span th:text="'(' + ${cuoco.dataDiNascita} + ')'">12 gennaio 1962</span>
+		<div><img width="20%" th:src=${cuoco.urlImage} /></div>
+	</div>
+	<div th:unless="${cuoco}">Non esiste</div>
+</body>
+
+</html>
