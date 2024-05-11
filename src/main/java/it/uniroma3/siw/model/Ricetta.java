@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Ricetta {
@@ -14,7 +16,12 @@ public class Ricetta {
 	private Long id;
 	private String nome;
 	private String descrizione;
-	//private Cuoco cuoco; /* Eager o Lazy?*/ 
+	
+	@OneToMany
+	private List<RigaRicetta> righericetta;
+	
+    @ManyToOne 
+	private Cuoco cuoco; /* Eager o Lazy?*/ 
 	//private List<RigaRicetta> righericetta;
 	
 	public Long getId() {
@@ -35,7 +42,7 @@ public class Ricetta {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	/*
+
 	public Cuoco getCuoco() {
 		return cuoco;
 	}
@@ -49,5 +56,4 @@ public class Ricetta {
 	public void setRighericetta(List<RigaRicetta> righericetta) {
 		this.righericetta = righericetta;
 	} 
-	*/
 }

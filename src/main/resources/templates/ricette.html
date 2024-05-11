@@ -14,9 +14,8 @@
 	<ul>
 	
 		<li th:each="ricetta : ${ricette}">
-			<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" th:text="${ricetta.nome} + ' (' + ${ricetta.descrizione} + ')'">Lasagna
-				(Buona)</a>
-	
+			<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" th:text="${ricetta.nome}">Lasagna</a>
+			<a th:href="@{'/cuoco' + '/' + ${ricetta.cuoco.id}}" th:text="'('+${ricetta.cuoco.nome}+ ' ' + ${ricetta.cuoco.cognome}+')'">Bruno Barbieri</a>
 		</li>
 	</ul>
 </body>
