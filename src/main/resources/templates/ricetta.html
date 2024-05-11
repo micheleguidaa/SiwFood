@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Cuoco</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<div><a href="/"><img src="/images/logo.png" width="20%" /></a></div>
+	<h1>Dettagli Ricetta</h1>
+	<div th:if="${ricetta}">
+		<span th:text="${ricetta.nome}">Lasagna</span>
+		<span th:text="${ricetta.descrizione}">Buona</span>
+	</div>
+	<div th:unless="${ricetta}">Non esiste</div>
+</body>
+
+</html>
