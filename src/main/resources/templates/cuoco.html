@@ -10,7 +10,7 @@
 
 </head>
 
-<nav class="navbar navbar-expand navbar-light" style="background-color:#e6f7ec">
+<nav class="navbar navbar-expand navbar-light fixed-top" style="background-color:#9CCC65">
 	<div class="container">
 		<a class="navbar-brand" href="/">SiwFood</a>
 
@@ -51,9 +51,10 @@
 </nav>
 
 
-<body>
+<body  class="bg-light py-5">
 	<div class="container">
-		<img src="/images/logo.png" width="40%" style="display: block; margin: 0 auto;" />
+		<div class="mt-5"></div>
+		<img src="/images/logo.png" class="rounded-4" width="40%" style="display: block; margin: 0 auto;" />
 		<h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
 		<div class="row">
 			<div class="col-4"><img width="100%" th:src=${cuoco.urlImage} class="rounded float-left" /></div>
