@@ -3,8 +3,9 @@
 
 <head>
 	<title>Ricette</title>
-	 <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
 <nav class="navbar navbar-expand navbar-light" style="background-color:#e6f7ec">
@@ -51,15 +52,16 @@
 <body>
 	<div class="container">
 		<img src="/images/logo.png" width="40%" style="display: block; margin: 0 auto;" />
-	<h1>Ricette</h1>
-	
-	<div th:if="${ricette==null || ricette.isEmpty()}">Non ci sono ricette nel sistema</div>
-	<ul>
-		<li th:each="ricetta : ${ricette}">
-			<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" th:text="${ricetta.nome}">Lasagna</a>
-			<a th:href="@{'/cuoco' + '/' + ${ricetta.cuoco.id}}" th:text="'('+${ricetta.cuoco.nome}+ ' ' + ${ricetta.cuoco.cognome}+')'">Bruno Barbieri</a>
-		</li>
-	</ul>
+		<h1>Ricette</h1>
+
+		<div th:if="${ricette==null || ricette.isEmpty()}">Non ci sono ricette nel sistema</div>
+		<ul>
+			<li th:each="ricetta : ${ricette}">
+				<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" th:text="${ricetta.nome}">Lasagna</a>
+				<a th:href="@{'/cuoco' + '/' + ${ricetta.cuoco.id}}"
+					th:text="'('+${ricetta.cuoco.nome}+ ' ' + ${ricetta.cuoco.cognome}+')'">Bruno Barbieri</a>
+			</li>
+		</ul>
 	</div>
 </body>
 
