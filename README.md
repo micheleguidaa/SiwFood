@@ -78,6 +78,3 @@ Questo progetto ha lo scopo di progettare e implementare un sistema informativo 
 ## Note aggiuntive
 Le specifiche possono essere ulteriormente dettagliate o modificate a discrezione del candidato, per garantire una migliore comprensione e implementazione del sistema.
 
----
-
-Questo readme fornisce una panoramica chiara e concisa del progetto, delineando le funzionalità e i requisiti principali. Sarebbe utile includere dettagli aggiuntivi sulle tecnologie utilizzate, la struttura del database e altri aspetti tecnici durante lo sviluppo effettivo del sistema. Fammi sapere se ci sono altri dettagli che vuoi aggiungere o modificare!
