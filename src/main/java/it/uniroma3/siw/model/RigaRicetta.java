@@ -11,7 +11,7 @@ public class RigaRicetta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
-	private int quantita;
+	private String quantita; //q.b, 200g, 1/2 bicchiere etc.
 	
 	@ManyToOne
 	private Ingrediente ingrediente;
@@ -25,10 +25,10 @@ public class RigaRicetta {
 	public void setId(Long id) {
 		Id = id;
 	}
-	public int getQuantita() {
+	public String getQuantita() {
 		return quantita;
 	}
-	public void setQuantita(int quantita) {
+	public void setQuantita(String quantita) {
 		this.quantita = quantita;
 	}
 	public Ingrediente getIngrediente() {

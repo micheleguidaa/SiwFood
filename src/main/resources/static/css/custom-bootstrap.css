@@ -1,0 +1,7 @@
+/* src/main/resources/static/css/custom-bootstrap.css */
+
+a { 
+   text-decoration: underline; /* Sottolinea il testo */
+    color: rgb(103, 107, 110)  ; /* Verde chiaro per il colore del testo */
+}
+

@@ -13,7 +13,7 @@ public class Ingrediente {
 	private Long id;
 	@Column(nullable = false)
 	private String nome;
-	private String descrizione;
+
 	
 	public Long getId() {
 		return id;
@@ -27,12 +27,7 @@ public class Ingrediente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getDescrizione() {
-		return descrizione;
-	}
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
+
 	
 	
 

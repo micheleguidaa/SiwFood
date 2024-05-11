@@ -22,8 +22,8 @@ public class Ricetta {
 	private String descrizione;
 	private List<String> urlsImages;
 	
-	@OneToMany
-	private List<RigaRicetta> righericetta;
+	@OneToMany(mappedBy = "ricetta")
+	private List<RigaRicetta> righeRicetta;
 	
     @ManyToOne 
 	private Cuoco cuoco; 
@@ -55,11 +55,11 @@ public class Ricetta {
 		this.cuoco = cuoco;
 	}
 
-	public List<RigaRicetta> getRighericetta() {
-		return righericetta;
+	public List<RigaRicetta> getRigheRicetta() {
+		return righeRicetta;
 	}
-	public void setRighericetta(List<RigaRicetta> righericetta) {
-		this.righericetta = righericetta;
+	public void setRigheRicetta(List<RigaRicetta> righeRicetta) {
+		this.righeRicetta = righeRicetta;
 	}
 	public List<String> getUrlsImages() {
 		return urlsImages;
