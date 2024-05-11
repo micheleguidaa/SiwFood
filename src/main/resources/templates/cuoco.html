@@ -53,14 +53,19 @@
 	<div class="container">
 		<img src="/images/logo.png" width="40%" style="display: block; margin: 0 auto;" />
 		<h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
-		<div><img width="30%" th:src=${cuoco.urlImage} class="rounded float-left" /></div>
-		<div th:if="${cuoco.ricette==null || cuoco.ricette.isEmpty()}">Non ci sono ricette del cuoco nel sistema
+		<div class="row">
+			<div class="col-4"><img width="100%" th:src=${cuoco.urlImage} class="rounded float-left" /></div>
+			<div class="col-8">
+				<h2>Ricette:</h2>
+				<div th:if="${cuoco.ricette==null || cuoco.ricette.isEmpty()}">Non ci sono ricette del cuoco nel sistema
+				</div>
+				<ul>
+					<li th:each="ricetta : ${cuoco.ricette}">
+						<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" th:text="${ricetta.nome}">Lasagna</a>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<ul>
-			<li th:each="ricetta : ${cuoco.ricette}">
-				<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" th:text="${ricetta.nome}">Lasagna</a>
-			</li>
-		</ul>
 	</div>
 
 </body>

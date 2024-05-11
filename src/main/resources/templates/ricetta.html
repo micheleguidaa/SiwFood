@@ -53,8 +53,13 @@
 		<img src="/images/logo.png" width="40%" style="display: block; margin: 0 auto;" />
 		<div th:if="${ricetta}">
 			<h1 th:text="${ricetta.nome}">Lasagna</h1>
-			<div th:each="urlImage : ${ricetta.urlsImages}">
-				<div><img width="30%" th:src="${urlImage}" class="rounded float-left" /></div>
+			<div class="row">
+				<div class="col-sm-4" th:each="urlImage : ${ricetta.urlsImages}">
+					<div ><img width="90%" th:src="${urlImage}" class="rounded float-left" /></div>
+				</div>
+				<div class="col-sm-8">
+					<p class="text-justify" th:text="${ricetta.descrizione}"> </p>
+				</div>
 			</div>
 		</div>
 		<div th:unless="${ricetta}">Non esiste</div>

@@ -1,3 +1,5 @@
+@import url("webjars/bootstrap/5.3.0/css/bootstrap.min.css");
+
 body { 
     font-family: "Geneva";
     color:dimgrey;
