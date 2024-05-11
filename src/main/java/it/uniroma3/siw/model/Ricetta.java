@@ -2,6 +2,8 @@ package it.uniroma3.siw.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,15 +16,18 @@ public class Ricetta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Column(nullable = false)
 	private String nome;
+	@Column(length = 2000)
 	private String descrizione;
+	private List<String> urlsImages;
 	
 	@OneToMany
 	private List<RigaRicetta> righericetta;
 	
     @ManyToOne 
-	private Cuoco cuoco; /* Eager o Lazy?*/ 
-	//private List<RigaRicetta> righericetta;
+	private Cuoco cuoco; 
+
 	
 	public Long getId() {
 		return id;
@@ -55,5 +60,11 @@ public class Ricetta {
 	}
 	public void setRighericetta(List<RigaRicetta> righericetta) {
 		this.righericetta = righericetta;
+	}
+	public List<String> getUrlsImages() {
+		return urlsImages;
+	}
+	public void setUrlsImages(List<String> urlsImages) {
+		this.urlsImages = urlsImages;
 	} 
 }

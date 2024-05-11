@@ -1,11 +1,13 @@
 package it.uniroma3.siw.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Cuoco {
@@ -18,6 +20,15 @@ public class Cuoco {
 	private LocalDate dataDiNascita;
 	private String urlImage;
 	
+	@OneToMany(mappedBy = "cuoco")  
+	private List<Ricetta> ricette;
+	
+	public List<Ricetta> getRicette() {
+		return ricette;
+	}
+	public void setRicette(List<Ricetta> ricette) {
+		this.ricette = ricette;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -48,6 +59,5 @@ public class Cuoco {
 	public void setUrlImage(String urlImage) {
 		this.urlImage = urlImage;
 	}
-	
 	
 }
