@@ -24,8 +24,6 @@ Questo progetto ha lo scopo di progettare e implementare un sistema informativo 
   - Data di nascita
   - Fotografia (caricata direttamente nel sistema)
  
-    # Sistema Informativo sulle Ricette
-
 ## Casi d'uso implementati:
 
 1. **Inserimento di nuove ricette** (Attore: Cuoco Utente Registrato)
