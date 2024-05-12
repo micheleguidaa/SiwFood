@@ -1,0 +1,49 @@
+/* src/main/resources/static/css/custom-bootstrap.css */
+
+a {
+	text-decoration: underline;
+	color: rgb(103, 107, 110);
+}
+
+/* Centrare il testo nel jumbotron */
+.jumbotron {
+	text-align: center;
+}
+
+body {
+    /* Aggiungi le classi Bootstrap desiderate */
+    background-color: #f8f9fa !important; /* bg-light */
+    padding-top: 3rem !important; /* py-5 */
+    padding-bottom: 3rem !important; /* py-5 */
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #28a745; /* Verde */
+    border-color: #28a745; /* Colore del bordo */
+}
+
+.btn-outline-primary {
+    color: #28a745; /* Testo verde */
+    border-color: #28a745; /* Bordo verde */
+}
+
+
+
+/* Sovrascrive il colore di hover e aggiunge spazio tra i pulsanti */
+.btn-primary:hover,
+.navbar .btn-outline-primary:hover {
+    color: #fff; /* Testo bianco */
+    background-color: #218838; /* Verde scuro per hover */
+    border-color: #218838; /* Bordo verde scuro per hover */
+}
+
+/* Aggiunge spazio tra i pulsanti */
+.form-inline{
+	margin-right: 10px; /* Aggiungi spazio a destra tra i pulsanti */
+}
+
+/* Aggiunge spazio tra i pulsanti */
+.navbar .btn {
+    margin-right: 10px; /* Aggiungi spazio a destra tra i pulsanti */
+}
