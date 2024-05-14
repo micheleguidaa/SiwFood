@@ -1,58 +1,45 @@
-/* src/main/resources/static/css/custom-bootstrap.css */
-
 a {
     text-decoration: underline;
     color: rgb(103, 107, 110);
 }
 
-/* Centrare il testo nel jumbotron */
 .jumbotron {
     text-align: center;
+    background-color: #C8E6C9 !important; /* Verde molto chiaro */
 }
 
 body {
-    padding-top: 3rem !important; /* py-5 */
-    background-color: #C8E6C9 !important; /* Verde molto chiaro */
+    padding-top: 3rem !important;
+    background-color: #C8E6C9 !important;
 }
 
 .btn-primary {
     color: #fff;
     background-color: #388E3C; /* Verde scuro */
-    border-color: #388E3C; /* Colore del bordo */
+    border-color: #388E3C;
 }
 
 .btn-outline-primary {
     color: #388E3C; /* Testo verde scuro */
-    border-color: #388E3C; /* Bordo verde scuro */
+    border-color: #388E3C;
 }
 
 .btn-primary:hover,
 .navbar .btn-outline-primary:hover {
     color: #fff; /* Testo bianco */
     background-color: #2E7D32; /* Verde ancora più scuro per hover */
-    border-color: #2E7D32; /* Bordo verde ancora più scuro per hover */
+    border-color: #2E7D32;
 }
 
-/* Aggiunge spazio tra i pulsanti */
-.form-inline {
-    margin-right: 10px; /* Aggiungi spazio a destra tra i pulsanti */
-}
-
-/* Aggiunge spazio tra i pulsanti */
+.form-inline,
 .navbar .btn {
     margin-right: 10px; /* Aggiungi spazio a destra tra i pulsanti */
 }
 
-/* Personalizzazione della navbar */
 .navbar {
     background-color: #81C784;
 }
 
-.jumbotron {
-    background-color: #C8E6C9 !important; /* Verde molto chiaro */
-}
-
-/* Stile personalizzato per il modulo di registrazione utente */
 .form-container {
     background-color: #ffffff;
     padding: 2rem;
@@ -85,8 +72,6 @@ body {
     margin-bottom: 1.5rem;
 }
 
-/* Stile personalizzato per la pagina della ricetta */
-
 .card-img-top {
     height: 200px;
     object-fit: cover;
@@ -101,7 +86,6 @@ body {
     border-top: none;
 }
 
-/* Stile personalizzato per il footer */
 footer {
     color: white;
     background-color: #388E3C;
@@ -156,4 +140,105 @@ footer .container {
     object-fit: cover;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px; /* Per un aspetto più morbido */
+}
+
+.card {
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiungere un'ombra per la profondità */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body .btn {
+    margin-top: auto;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #45a049; /* Cambia colore del pulsante */
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Media queries per la reattività */
+@media (max-width: 1200px) {
+    .card {
+        margin: 15px;
+    }
+
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    footer .container {
+        padding: 1.5rem 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .card {
+        margin: 10px;
+    }
+
+    .form-container {
+        padding: 1rem;
+    }
+
+    footer .container {
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-inline {
+        margin-right: 5px;
+    }
+
+    .navbar .btn {
+        margin-right: 5px;
+    }
+
+    .card {
+        margin: 10px 5px;
+    }
+
+    .form-container {
+        padding: 0.5rem;
+    }
+
+    footer .container {
+        padding: 0.5rem 0;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding-top: 2rem !important;
+    }
+
+    .card {
+        margin: 5px;
+    }
+
+    .form-container {
+        padding: 0.5rem;
+    }
+
+    footer .container {
+        padding: 0.5rem 0;
+    }
 }
