@@ -33,19 +33,36 @@
         </div>
     </nav>
 	
-	<div class="container">
-		<div class="mt-5"></div>
-		<h1>Ricette</h1>
+	<div class="container mt-5">
+        <h1 class="mb-4">Ricette</h1>
+        <div th:if="${ricette==null || ricette.isEmpty()}" class="alert alert-warning">
+            Non ci sono ricette nel sistema
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="ricetta : ${ricette}">
+                <div class="card h-100">
+                    <img th:src="${ricetta.urlsImages[0]}" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${ricetta.nome}">Lasagna</h5>
+                        <p class="card-text">
+                            <a th:href="@{'/cuoco' + '/' + ${ricetta.cuoco.id}}"
+                                th:text="'('+${ricetta.cuoco.nome}+ ' ' + ${ricetta.cuoco.cognome}+')'">Bruno Barbieri</a>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" class="btn btn-primary">Visualizza Ricetta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		<div th:if="${ricette==null || ricette.isEmpty()}">Non ci sono ricette nel sistema</div>
-		<ul>
-			<li th:each="ricetta : ${ricette}">
-				<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" th:text="${ricetta.nome}">Lasagna</a>
-				<a th:href="@{'/cuoco' + '/' + ${ricetta.cuoco.id}}"
-					th:text="'('+${ricetta.cuoco.nome}+ ' ' + ${ricetta.cuoco.cognome}+')'">Bruno Barbieri</a>
-			</li>
-		</ul>
-	</div>
+    <!-- Includi gli script di Bootstrap e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
+</html>
 
 </html>
