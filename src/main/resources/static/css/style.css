@@ -86,3 +86,19 @@ body {
     text-align: center;
     margin-bottom: 1.5rem;
 }
+
+/* Stile personalizzato per la pagina della ricetta */
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    color: #388E3C;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: none;
+}
