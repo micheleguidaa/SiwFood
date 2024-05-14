@@ -53,3 +53,36 @@ body {
 .jumbotron {
     background-color: #C8E6C9 !important; /* Verde molto chiaro */
 }
+
+/* Stile personalizzato per il modulo di registrazione utente */
+.form-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.form-container .btn-primary {
+    background-color: #388E3C;
+    border-color: #388E3C;
+}
+
+.form-container .btn-primary:hover {
+    background-color: #2E7D32;
+    border-color: #2E7D32;
+}
+
+.form-container .form-group {
+    margin-bottom: 1rem;
+}
+
+.form-container .form-control:focus {
+    border-color: #81C784;
+    box-shadow: 0 0 0 0.2rem rgba(129, 199, 132, 0.25);
+}
+
+.form-container h2 {
+    color: #388E3C;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
