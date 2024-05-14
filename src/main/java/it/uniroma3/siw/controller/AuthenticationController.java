@@ -1,6 +1,5 @@
 package it.uniroma3.siw.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Utente;
@@ -30,11 +28,10 @@ public class AuthenticationController {
 		return "register.html";
 	}
 
-
-    @GetMapping(value = "/login")
-    public String showLoginForm(Model model) {
-        return "login.html";
-    }
+	@GetMapping(value = "/login")
+	public String showLoginForm(Model model) {
+		return "login.html";
+	}
 
 	@GetMapping(value = "/")
 	public String index(Model model) {
@@ -57,7 +54,7 @@ public class AuthenticationController {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
 		if(credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-			return "indexAdmin.html";
+			return "indexAmministratore.html";
 		}
 		return "index.html";
 	}
@@ -74,9 +71,8 @@ public class AuthenticationController {
 				model.addAttribute("utente", utente);
 				return "registrationSuccesful.html";
 			}
-			return "register.html";
+			return "formRegistraUtente.html";
 	}
 	
-
-	
 }
+		

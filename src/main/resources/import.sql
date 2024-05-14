@@ -26,4 +26,3 @@ insert into riga_ricetta (id, ingrediente_id, ricetta_id, quantita) values (next
 insert into riga_ricetta (id, ingrediente_id, ricetta_id, quantita) values (nextval('riga_ricetta_seq'),(select id from ingrediente where nome = 'Parmigiano Reggiano'),(select id from ricetta where nome = 'Risotto ai Funghi'),'40 gr');
 
 
-insert into credenziali (id, username, password, ruolo) values (nextval('credenziali_seq'),'mik170802','password','DEFAULT');
