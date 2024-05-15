@@ -43,7 +43,7 @@ public class AuthenticationController {
 			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
 			if (credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-				return "indexAmministratore.html";
+				return "admin/indexAdmin.html";
 			}
 		}
 		return "index.html";
@@ -54,7 +54,7 @@ public class AuthenticationController {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
 		if(credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-			return "indexAmministratore.html";
+			return "admin/indexAdmin.html";
 		}
 		return "index.html";
 	}

@@ -169,10 +169,7 @@ footer .container {
     transition: transform 0.3s ease-in-out;
 }
 
-.btn:hover {
-    background-color: #45a049; /* Cambia colore del pulsante */
-    transition: background-color 0.3s ease-in-out;
-}
+
 
 /* Media queries per la reattività */
 @media (max-width: 1200px) {

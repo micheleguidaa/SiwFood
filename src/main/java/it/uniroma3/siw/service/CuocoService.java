@@ -18,4 +18,12 @@ public class CuocoService {
 	public Iterable<Cuoco> findAll() {
 		return cuocoRepository.findAll();
 	}
+	
+	public boolean existsByNomeAndCognome(String nome,String cognome) {
+		return cuocoRepository.existsByNomeAndCognome(nome,cognome);
+	}
+	
+	public void save(Cuoco cuoco) {
+		 cuocoRepository.save(cuoco);
+	}
 }
