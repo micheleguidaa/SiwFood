@@ -3,120 +3,73 @@
 <head th:replace="~{fragments/header :: header(title='SiwFood - Admin')}"></head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #81C784;">
-        <div class="container">
-            <a class="navbar-brand" href="/">SiwFood</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin/indexCuochi">Gestisci cuochi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/gestisci-ricette">Gestisci Ricette</a>
-                    </li>
-                </ul>
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
-                <a type="button" class="btn btn-outline-primary" href="/logout">Logout</a>
-            </div>
-        </div>
-    </nav>
 
-    <div class="jumbotron jumbotron-fluid vh-100" style="background-color: #C8E6C9;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 d-flex justify-content-center">
-                    <div class="text-center">
-                        <div class="text-center mt-5">
-                            <img src="/images/logo.png" class="rounded-4 img-fluid mb-4" alt="Logo SiwFood"
-                                style="max-width: 500px;">
-                            <h1 class="display-4">Benvenuto Amministratore!</h1>
-                            <p class="lead mb-4">
-                                Qui puoi gestire utenti, ricette e molto altro.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-4">
-                    <a class="btn btn-primary btn-lg" href="/gestisci-utenti" role="button">Gestisci Utenti</a>
-                    <a class="btn btn-success btn-lg" href="/gestisci-ricette" role="button">Gestisci Ricette</a>
-                    <a class="btn btn-info btn-lg" href="/statistiche" role="button">Visualizza Statistiche</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
 
-    <!-- Footer -->
-    <footer class="text-center text-lg-start text-white" style="background-color: #388E3C;">
-        <div class="container p-4 pb-0">
-            <section class="">
-                <div class="row">
-                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">
-                            SiwFood
-                        </h6>
-                        <p>
-                            Esplora un mondo di sapori e scopri le migliori ricette da chef rinomati, tutto su SiwFood.
-                        </p>
-                    </div>
-                    <hr class="w-100 clearfix d-md-none" />
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">Links</h6>
-                        <p>
-                            <a href="/cuochi" class="text-white">Cuochi</a>
-                        </p>
-                        <p>
-                            <a href="/ricette" class="text-white">Ricette</a>
-                        </p>
-                    </div>
-                    <hr class="w-100 clearfix d-md-none" />
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">Account</h6>
-                        <p>
-                            <a href="/login" class="text-white">Login</a>
-                        </p>
-                        <p>
-                            <a href="/register" class="text-white">Sign Up</a>
-                        </p>
-                    </div>
-                    <hr class="w-100 clearfix d-md-none" />
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                        <h6 class="text-uppercase mb-4 font-weight-bold">Contatti</h6>
-                        <p>
-                            <i class="fas fa-home mr-3"></i> Roma, RM 10012, IT
-                        </p>
-                        <p>
-                            <i class="fas fa-envelope mr-3"></i> info@siwfood.com
-                        </p>
-                        <p>
-                            <i class="fas fa-phone mr-3"></i> + 39 234 567 88
-                        </p>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2024 SiwFood
-        </div>
-    </footer>
+	<!-- Footer -->
+	<footer class="text-center text-lg-start text-white" style="background-color: #388E3C;">
+		<div class="container p-4 pb-0">
+			<section class="">
+				<div class="row">
+					<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">
+							SiwFood
+						</h6>
+						<p>
+							Esplora un mondo di sapori e scopri le migliori ricette da chef rinomati, tutto su SiwFood.
+						</p>
+					</div>
+					<hr class="w-100 clearfix d-md-none" />
+					<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">Links</h6>
+						<p>
+							<a href="/cuochi" class="text-white">Cuochi</a>
+						</p>
+						<p>
+							<a href="/ricette" class="text-white">Ricette</a>
+						</p>
+					</div>
+					<hr class="w-100 clearfix d-md-none" />
+					<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">Account</h6>
+						<p>
+							<a href="/login" class="text-white">Login</a>
+						</p>
+						<p>
+							<a href="/register" class="text-white">Sign Up</a>
+						</p>
+					</div>
+					<hr class="w-100 clearfix d-md-none" />
+					<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">Contatti</h6>
+						<p>
+							<i class="fas fa-home mr-3"></i> Roma, RM 10012, IT
+						</p>
+						<p>
+							<i class="fas fa-envelope mr-3"></i> info@siwfood.com
+						</p>
+						<p>
+							<i class="fas fa-phone mr-3"></i> + 39 234 567 88
+						</p>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+			© 2024 SiwFood
+		</div>
+	</footer>
 
-    <!-- Optional JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha384-L2j5YpXvGOsj6zU6+49axwFeVQxwOrCdEaeJIpK7oXaIxpTtmKxaL3CZVCG+ABm1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
-        integrity="sha384-lOUI+NRDwAS0FqNkuHSzpJvDkpZ4P97XjWehoGQnoa7eS+bv3WumZNnq6q5nqdJX"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"
-        integrity="sha384-XXXXXX" crossorigin="anonymous"></script>
+	<!-- Optional JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha384-L2j5YpXvGOsj6zU6+49axwFeVQxwOrCdEaeJIpK7oXaIxpTtmKxaL3CZVCG+ABm1"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
+		integrity="sha384-lOUI+NRDwAS0FqNkuHSzpJvDkpZ4P97XjWehoGQnoa7eS+bv3WumZNnq6q5nqdJX"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha384-XXXXXX"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -4,28 +4,8 @@
 
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #81C784;">
-        <div class="container">
-            <a class="navbar-brand" href="/">SiwFood</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/indexCuoco">Index Cuoco</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/formNewCuoco">Aggiungi Cuoco</a>
-                    </li>
-                </ul>
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
-                <a type="button" class="btn btn-outline-primary" href="/logout">Logout</a>
-            </div>
-        </div>
-    </nav>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
 
   <div class="container mt-5 pt-5">
         <h2 class="text-center mb-4">Lista dei Cuochi</h2>
