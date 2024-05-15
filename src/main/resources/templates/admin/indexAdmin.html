@@ -1,75 +1,83 @@
 <!DOCTYPE html>
+<html lang="it">
 
-<head th:replace="~{fragments/header :: header(title='SiwFood - Admin')}"></head>
+<head th:replace="~{fragments/header :: header(title='SiwFood - Admin')}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="static/css/style.css" rel="stylesheet">
+</head>
 
 <body>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
 
-	<!-- Include la navbar -->
-	<div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
+    <!-- Corpo principale della pagina -->
+    <div class="container mt-5 vh-50">
+        <h1 class="text-center">Benvenuto nella sezione Admin di SiwFood</h1>
+        <div class="row row-cols-1 row-cols-md-2 g-1">
+            <!-- Gestione Cuochi -->
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">Gestione Cuochi</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Qui puoi gestire i cuochi registrati nel sistema.</p>
+                        <a href="/admin/formNewCuoco" class="btn btn-primary w-100">Aggiungi Nuovo Cuoco</a>
+                        <a href="/admin/indexCuochi" class="btn btn-secondary w-100 mt-2">Visualizza Cuochi</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Gestione Ricette -->
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">Gestione Ricette</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Qui puoi gestire le ricette registrate nel sistema.</p>
+                        <a href="/admin/formNewRicetta" class="btn btn-primary w-100">Aggiungi Nuova Ricetta</a>
+                        <a href="/admin/indexRicette" class="btn btn-secondary w-100 mt-2">Visualizza Ricette</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Gestione Utenti -->
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">Gestione Utenti</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Qui puoi gestire gli utenti registrati nel sistema.</p>
+                        <a href="/admin/formNewUtente" class="btn btn-primary w-100">Aggiungi Nuovo Utente</a>
+                        <a href="/admin/indexUtenti" class="btn btn-secondary w-100 mt-2">Visualizza Utenti</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Gestione Ingredienti -->
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">Gestione Ingredienti</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Qui puoi gestire gli ingredienti registrati nel sistema.</p>
+                        <a href="/admin/formNewIngrediente" class="btn btn-primary w-100">Aggiungi Nuovo Ingrediente</a>
+                        <a href="/admin/indexIngredienti" class="btn btn-secondary w-100 mt-2">Visualizza Ingredienti</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- Footer -->
-	<footer class="text-center text-lg-start text-white" style="background-color: #388E3C;">
-		<div class="container p-4 pb-0">
-			<section class="">
-				<div class="row">
-					<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">
-							SiwFood
-						</h6>
-						<p>
-							Esplora un mondo di sapori e scopri le migliori ricette da chef rinomati, tutto su SiwFood.
-						</p>
-					</div>
-					<hr class="w-100 clearfix d-md-none" />
-					<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">Links</h6>
-						<p>
-							<a href="/cuochi" class="text-white">Cuochi</a>
-						</p>
-						<p>
-							<a href="/ricette" class="text-white">Ricette</a>
-						</p>
-					</div>
-					<hr class="w-100 clearfix d-md-none" />
-					<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">Account</h6>
-						<p>
-							<a href="/login" class="text-white">Login</a>
-						</p>
-						<p>
-							<a href="/register" class="text-white">Sign Up</a>
-						</p>
-					</div>
-					<hr class="w-100 clearfix d-md-none" />
-					<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">Contatti</h6>
-						<p>
-							<i class="fas fa-home mr-3"></i> Roma, RM 10012, IT
-						</p>
-						<p>
-							<i class="fas fa-envelope mr-3"></i> info@siwfood.com
-						</p>
-						<p>
-							<i class="fas fa-phone mr-3"></i> + 39 234 567 88
-						</p>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-			© 2024 SiwFood
-		</div>
-	</footer>
+    <!-- Include il footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
 
-	<!-- Optional JavaScript -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-		integrity="sha384-L2j5YpXvGOsj6zU6+49axwFeVQxwOrCdEaeJIpK7oXaIxpTtmKxaL3CZVCG+ABm1"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
-		integrity="sha384-lOUI+NRDwAS0FqNkuHSzpJvDkpZ4P97XjWehoGQnoa7eS+bv3WumZNnq6q5nqdJX"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha384-XXXXXX"
-		crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-L2j5YpXvGOsj6zU6+49axwFeVQxwOrCdEaeJIpK7oXaIxpTtmKxaL3CZVCG+ABm1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha384-lOUI+NRDwAS0FqNkuHSzpJvDkpZ4P97XjWehoGQnoa7eS+bv3WumZNnq6q5nqdJX" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha384-XXXXXX" crossorigin="anonymous"></script>
 </body>
 
 </html>
