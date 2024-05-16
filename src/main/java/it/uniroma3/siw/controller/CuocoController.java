@@ -3,13 +3,8 @@ package it.uniroma3.siw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.service.CuocoService;
 
@@ -23,7 +18,7 @@ public class CuocoController {
     @Autowired
     private CuocoService cuocoService;
 
-    private static String UPLOADED_FOLDER = "src/main/resources/static/images/cuochi";
+    private static String UPLOADED_FOLDER = "uploads/";
 
     @GetMapping(value="/admin/formNewCuoco")
     public String formNewCuoco(Model model) {
@@ -37,18 +32,25 @@ public class CuocoController {
         return "admin/indexCuochi.html";
     }
 
-    @PostMapping("/admin/cuoco")
+    @PostMapping("/admin/add/cuoco")
     public String newCuoco(@ModelAttribute("cuoco") Cuoco cuoco, 
                            @RequestParam("fileImage") MultipartFile file, 
                            Model model) {
         if (!cuocoService.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
             try {
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-                Files.write(path, bytes);
-                
+                // Assicurati che la directory di upload esista
+                Path uploadDir = Paths.get(UPLOADED_FOLDER);
+                if (!Files.exists(uploadDir)) {
+                    Files.createDirectories(uploadDir);
+                }
+
+                // Salva il file nel server
+                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                Path path = uploadDir.resolve(fileName);
+                Files.write(path, file.getBytes());
+
                 // Imposta l'URL dell'immagine
-                cuoco.setUrlImage("/images/" + file.getOriginalFilename());
+                cuoco.setUrlImage("/uploads/" + fileName);
                 
                 this.cuocoService.save(cuoco); 
                 model.addAttribute("cuoco", cuoco);
@@ -76,11 +78,9 @@ public class CuocoController {
         return "cuoco.html";
     }
     
-    @PostMapping("/admin/cuoco/delete/{id}")
+    @PostMapping("/admin/delete/cuoco/{id}")
     public String deleteCuoco(@PathVariable("id") Long id) {
         cuocoService.deleteById(id);
         return "redirect:/admin/indexCuochi";
     }
-    
-    
 }
