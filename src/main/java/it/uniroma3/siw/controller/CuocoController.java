@@ -77,10 +77,9 @@ public class CuocoController {
     }
     
     @PostMapping("/admin/cuoco/delete/{id}")
-    public String deleteCuoco(@PathVariable("id") Long id,Model model) {
-    	cuocoService.deleteById(id);
-        model.addAttribute("cuochi", cuocoService.findAll());
-        return "admin/indexCuochi.html";
+    public String deleteCuoco(@PathVariable("id") Long id) {
+        cuocoService.deleteById(id);
+        return "redirect:/admin/indexCuochi";
     }
     
     
