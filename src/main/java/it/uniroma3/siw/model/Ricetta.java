@@ -2,6 +2,7 @@ package it.uniroma3.siw.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Ricetta {
 	private String descrizione;
 	private List<String> urlsImages;
 	
-	@OneToMany(mappedBy = "ricetta")
+	@OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<RigaRicetta> righeRicetta;
 	
     @ManyToOne 

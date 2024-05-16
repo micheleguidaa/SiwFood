@@ -75,4 +75,13 @@ public class CuocoController {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
         return "cuoco.html";
     }
+    
+    @PostMapping("/admin/cuoco/delete/{id}")
+    public String deleteCuoco(@PathVariable("id") Long id,Model model) {
+    	cuocoService.deleteById(id);
+        model.addAttribute("cuochi", cuocoService.findAll());
+        return "admin/indexCuochi.html";
+    }
+    
+    
 }

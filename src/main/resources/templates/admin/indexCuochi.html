@@ -1,13 +1,13 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/header :: header(title='SiwFood - Gestione Cuochi')}"></head>
 
-
 <body>
-	<!-- Include la navbar -->
-	<div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
 
-  <div class="container mt-5">
+    <div class="container mt-5">
         <h2 class="text-center mb-4">Lista dei Cuochi</h2>
         <div class="text-center mb-4">
             <a class="btn btn-primary btn-lg" href="/admin/formNewCuoco" role="button">Aggiungi Nuovo Cuoco</a>
@@ -25,7 +25,9 @@
                         <h5 class="card-title" th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Nome Cuoco</h5>
                         <div class="mt-auto">
                             <a th:href="@{'/admin/cuoco/edit/' + ${cuoco.id}}" class="btn btn-primary">Modifica</a>
-                            <a th:href="@{'/admin/cuoco/delete/' + ${cuoco.id}}" class="btn btn-danger">Elimina</a>
+                            <form th:action="@{'/admin/cuoco/delete/' + ${cuoco.id}}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">Elimina</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -33,9 +35,8 @@
         </div>
     </div>
 
-	<!-- Include il footer -->
-	<div th:replace="~{fragments/footer :: footer}"></div> 
- 
+    <!-- Include il footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div> 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-L2j5YpXvGOsj6zU6+49axwFeVQxwOrCdEaeJIpK7oXaIxpTtmKxaL3CZVCG+ABm1" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha384-lOUI+NRDwAS0FqNkuHSzpJvDkpZ4P97XjWehoGQnoa7eS+bv3WumZNnq6q5nqdJX" crossorigin="anonymous"></script>
