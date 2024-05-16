@@ -1,48 +1,39 @@
 <!DOCTYPE html>
 <html lang="it">
-<head th:replace="~{fragments/header :: header(title='SiwFood - Inserimento Cuoco')}">
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-</head>
+
+<head th:replace="~{fragments/header :: header(title='SiwFood - Inserimento Cuoco')}"></head>
 
 <body>
-    <!-- Include la navbar -->
-    <div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
 
-    <div class="container form-container mt-5">
-        <h2 class="text-center mb-4">Aggiungi Nuovo Cuoco</h2>
-        <form th:action="@{/admin/add/cuoco}" method="post" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
-            </div>
-            <div class="mb-3">
-                <label for="cognome" class="form-label">Cognome</label>
-                <input type="text" class="form-control" id="cognome" name="cognome" required>
-            </div>
-            <div class="mb-3">
-                <label for="dataDiNascita" class="form-label">Data di Nascita</label>
-                <input type="date" class="form-control" id="dataDiNascita" name="dataDiNascita" required>
-            </div>
-            <div class="mb-4">
-                <label for="fileImage" class="form-label">Carica una foto del cuoco</label>
-                <input type="file" class="form-control" id="fileImage" name="fileImage" accept="image/*" required>
-                <div class="form-text">Assicurati di caricare una foto chiara e recente del cuoco.</div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Salva Cuoco</button>
-        </form>
-    </div>
+	<div class="container form-container mt-5">
+		<h2 class="text-center mb-4">Aggiungi Nuovo Cuoco</h2>
+		<form th:action="@{/admin/add/cuoco}" method="post" enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="nome" class="form-label">Nome</label>
+				<input type="text" class="form-control" id="nome" name="nome" required>
+			</div>
+			<div class="mb-3">
+				<label for="cognome" class="form-label">Cognome</label>
+				<input type="text" class="form-control" id="cognome" name="cognome" required>
+			</div>
+			<div class="mb-3">
+				<label for="dataDiNascita" class="form-label">Data di Nascita</label>
+				<input type="date" class="form-control" id="dataDiNascita" name="dataDiNascita" required>
+			</div>
+			<div class="mb-4">
+				<label for="fileImage" class="form-label">Carica una foto del cuoco</label>
+				<input type="file" class="form-control" id="fileImage" name="fileImage" accept="image/*" required>
+				<div class="form-text">Assicurati di caricare una foto chiara e recente del cuoco.</div>
+			</div>
+			<button type="submit" class="btn btn-primary w-100">Salva Cuoco</button>
+		</form>
+	</div>
 
-    <!-- Include il footer -->
-    <div th:replace="~{fragments/footer :: footer}"></div>
+	<!-- Include il footer -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha384-L2j5YpXvGOsj6zU6+49axwFeVQxwOrCdEaeJIpK7oXaIxpTtmKxaL3CZVCG+ABm1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
-        integrity="sha384-lOUI+NRDwAS0FqNkuHSzpJvDkpZ4P97XjWehoGQnoa7eS+bv3WumZNnq6q5nqdJX"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha384-XXXXXX"
-        crossorigin="anonymous"></script>
 </body>
+
 </html>

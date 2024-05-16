@@ -1,66 +1,62 @@
 <!DOCTYPE html>
 <html lang="it">
-<head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Cuoco')}">
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-</head>
+
+<head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Cuoco')}"></head>
 
 <body>
-    <!-- Include la navbar -->
-    <div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
 
-    <div class="container form-container mt-5">
-        <h2 class="text-center mb-4">Modifica Cuoco</h2>
-        <form th:action="@{/admin/update/cuoco/{id}(id=${cuoco.id})}" method="post" enctype="multipart/form-data">
-            <div class="row">
-                <!-- Colonna Immagine attuale -->
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Immagine Attuale</h5>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="image-container overflow-hidden">
-                                <img th:src="${cuoco.urlImage}" class="img-fluid rounded" style="object-fit: cover; object-position: top;" alt="Immagine Cuoco" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Colonna Modifica Cuoco -->
-                <div class="col-md-8">
-                    <div class="mb-3">
-                        <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" th:value="${cuoco.nome}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="cognome" class="form-label">Cognome</label>
-                        <input type="text" class="form-control" id="cognome" name="cognome" th:value="${cuoco.cognome}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="dataDiNascita" class="form-label">Data di Nascita</label>
-                        <input type="date" class="form-control" id="dataDiNascita" name="dataDiNascita" th:value="${cuoco.dataDiNascita}" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="fileImage" class="form-label">Carica una nuova foto del cuoco (opzionale)</label>
-                        <input type="file" class="form-control" id="fileImage" name="fileImage" accept="image/*">
-                        <div class="form-text">Assicurati di caricare una foto chiara e recente del cuoco.</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Salva Modifiche</button>
-                </div>
-            </div>
-        </form>
-    </div>
+	<div class="container form-container mt-5">
+		<h2 class="text-center mb-4">Modifica Cuoco</h2>
+		<form th:action="@{/admin/update/cuoco/{id}(id=${cuoco.id})}" method="post" enctype="multipart/form-data">
+			<div class="row">
 
-    <!-- Include il footer -->
-    <div th:replace="~{fragments/footer :: footer}"></div>
+				<!-- Colonna Immagine attuale -->
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Immagine Attuale</h5>
+						</div>
+						<div class="card-body p-0">
+							<div class="image-container overflow-hidden">
+								<img th:src="${cuoco.urlImage}" class="img-fluid rounded"
+									style="object-fit: cover; object-position: top;" alt="Immagine Cuoco" />
+							</div>
+						</div>
+					</div>
+				</div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha384-L2j5YpXvGOsj6zU6+49axwFeVQxwOrCdEaeJIpK7oXaIxpTtmKxaL3CZVCG+ABm1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"
-        integrity="sha384-lOUI+NRDwAS0FqNkuHSzpJvDkpZ4P97XjWehoGQnoa7eS+bv3WumZNnq6q5nqdJX"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"
-        integrity="sha384-XXXXXX" crossorigin="anonymous"></script>
+				<!-- Colonna Modifica Cuoco -->
+				<div class="col-md-8">
+					<div class="mb-3">
+						<label for="nome" class="form-label">Nome</label>
+						<input type="text" class="form-control" id="nome" name="nome" th:value="${cuoco.nome}" required>
+					</div>
+					<div class="mb-3">
+						<label for="cognome" class="form-label">Cognome</label>
+						<input type="text" class="form-control" id="cognome" name="cognome" th:value="${cuoco.cognome}"
+							required>
+					</div>
+					<div class="mb-3">
+						<label for="dataDiNascita" class="form-label">Data di Nascita</label>
+						<input type="date" class="form-control" id="dataDiNascita" name="dataDiNascita"
+							th:value="${cuoco.dataDiNascita}" required>
+					</div>
+					<div class="mb-4">
+						<label for="fileImage" class="form-label">Carica una nuova foto del cuoco (opzionale)</label>
+						<input type="file" class="form-control" id="fileImage" name="fileImage" accept="image/*">
+						<div class="form-text">Assicurati di caricare una foto chiara e recente del cuoco.</div>
+					</div>
+					<button type="submit" class="btn btn-primary w-100">Salva Modifiche</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Include il footer -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
+
 </html>
