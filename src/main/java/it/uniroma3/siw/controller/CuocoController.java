@@ -18,7 +18,7 @@ public class CuocoController {
     @Autowired
     private CuocoService cuocoService;
 
-    private static String UPLOADED_FOLDER = "uploads/cuochi/";
+    private static String UPLOADED_FOLDER = "uploads/cuochi2/";
 
     @GetMapping(value="/admin/formNewCuoco")
     public String formNewCuoco(Model model) {
@@ -32,7 +32,7 @@ public class CuocoController {
         return "admin/indexCuochi.html";
     }
 
-    @PostMapping("/admin/cuoco")
+    @PostMapping("/admin/add/cuoco")
     public String newCuoco(@ModelAttribute("cuoco") Cuoco cuoco, 
                            @RequestParam("fileImage") MultipartFile file, 
                            Model model) {
@@ -50,11 +50,11 @@ public class CuocoController {
                 Files.write(path, file.getBytes());
 
                 // Imposta l'URL dell'immagine
-                cuoco.setUrlImage("/uploads/cuochi/" + fileName);
+                cuoco.setUrlImage("/cuochi2/" + fileName);
                 
                 this.cuocoService.save(cuoco); 
                 model.addAttribute("cuoco", cuoco);
-                return "/cuochi.html";
+                return "cuoco.html";
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
