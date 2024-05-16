@@ -15,78 +15,114 @@ import java.nio.file.Paths;
 
 @Controller
 public class CuocoController {
-    @Autowired
-    private CuocoService cuocoService;
+	@Autowired
+	private CuocoService cuocoService;
 
-    private static String UPLOADED_FOLDER = "uploads/cuochi2/";
+	private static String UPLOADED_FOLDER = "uploads/cuochi2/";
 
-    @GetMapping(value="/admin/formNewCuoco")
-    public String formNewCuoco(Model model) {
-        model.addAttribute("cuoco", new Cuoco());
-        return "admin/formNewCuoco.html";
-    }
+	@GetMapping(value = "/admin/formNewCuoco")
+	public String formNewCuoco(Model model) {
+		model.addAttribute("cuoco", new Cuoco());
+		return "admin/formNewCuoco.html";
+	}
 
-    @GetMapping(value="/admin/indexCuochi")
-    public String indexCuochi(Model model) {
-        model.addAttribute("cuochi", cuocoService.findAll());
-        return "admin/indexCuochi.html";
-    }
+	@GetMapping(value = "/admin/indexCuochi")
+	public String indexCuochi(Model model) {
+		model.addAttribute("cuochi", cuocoService.findAll());
+		return "admin/indexCuochi.html";
+	}
 
-    @PostMapping("/admin/add/cuoco")
-    public String newCuoco(@ModelAttribute("cuoco") Cuoco cuoco, 
-                           @RequestParam("fileImage") MultipartFile file, 
-                           Model model) {
-        if (!cuocoService.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
-            try {
-                // Assicurati che la directory di upload esista
-                Path uploadDir = Paths.get(UPLOADED_FOLDER);
-                if (!Files.exists(uploadDir)) {
-                    Files.createDirectories(uploadDir);
-                }
+	@PostMapping("/admin/add/cuoco")
+	public String newCuoco(@ModelAttribute("cuoco") Cuoco cuoco, @RequestParam("fileImage") MultipartFile file,
+			Model model) {
+		if (!cuocoService.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
+			try {
+				// Assicurati che la directory di upload esista
+				Path uploadDir = Paths.get(UPLOADED_FOLDER);
+				if (!Files.exists(uploadDir)) {
+					Files.createDirectories(uploadDir);
+				}
 
-                // Salva il file nel server
-                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-                Path path = uploadDir.resolve(fileName);
-                Files.write(path, file.getBytes());
+				// Salva il file nel server
+				String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+				Path path = uploadDir.resolve(fileName);
+				Files.write(path, file.getBytes());
 
-                // Imposta l'URL dell'immagine
-                cuoco.setUrlImage("/cuochi2/" + fileName);
-                
-                this.cuocoService.save(cuoco); 
-                model.addAttribute("cuoco", cuoco);
-                return "redirect:/admin/indexCuochi";
-            } catch (IOException e) {
-                e.printStackTrace();
-                model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
-                return "admin/formNewCuoco.html";
-            }
-        } else {
-            model.addAttribute("messaggioErrore", "Questo cuoco esiste già");
-            return "admin/formNewCuoco.html";
-        }
-    }
+				// Imposta l'URL dell'immagine
+				cuoco.setUrlImage("/cuochi2/" + fileName);
 
-    @GetMapping("/cuochi")
-    public String showCuochi(Model model) {
-        model.addAttribute("cuochi", cuocoService.findAll());
-        return "cuochi.html"; 
-    }
-    
-    @GetMapping("/cuoco/{id}")
-    public String getCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "cuoco.html";
-    }
-    
-    @PostMapping("/admin/delete/cuoco/{id}")
-    public String deleteCuoco(@PathVariable("id") Long id) {
-        cuocoService.deleteById(id);
-        return "redirect:/admin/indexCuochi";
-    }
-    
-    @GetMapping("/admin/edit/cuoco/{id}")
-    public String formEditCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "admin/formModifyCuoco.html";
-    }
+				this.cuocoService.save(cuoco);
+				model.addAttribute("cuoco", cuoco);
+				return "redirect:/admin/indexCuochi";
+			} catch (IOException e) {
+				e.printStackTrace();
+				model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
+				return "admin/formNewCuoco.html";
+			}
+		} else {
+			model.addAttribute("messaggioErrore", "Questo cuoco esiste già");
+			return "admin/formNewCuoco.html";
+		}
+	}
+
+	@GetMapping("/cuochi")
+	public String showCuochi(Model model) {
+		model.addAttribute("cuochi", cuocoService.findAll());
+		return "cuochi.html";
+	}
+
+	@GetMapping("/cuoco/{id}")
+	public String getCuoco(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("cuoco", this.cuocoService.findById(id));
+		return "cuoco.html";
+	}
+
+	@PostMapping("/admin/delete/cuoco/{id}")
+	public String deleteCuoco(@PathVariable("id") Long id) {
+		cuocoService.deleteById(id);
+		return "redirect:/admin/indexCuochi";
+	}
+
+	@GetMapping("/admin/edit/cuoco/{id}")
+	public String formEditCuoco(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("cuoco", this.cuocoService.findById(id));
+		return "admin/formModifyCuoco.html";
+	}
+
+	@PostMapping("/admin/update/cuoco/{id}")
+	public String updateCuoco(@PathVariable("id") Long id, @ModelAttribute("cuoco") Cuoco cuoco,
+			@RequestParam("fileImage") MultipartFile file, Model model) {
+		Cuoco existingCuoco = cuocoService.findById(id);
+
+		// Aggiorna i dettagli del cuoco
+		existingCuoco.setNome(cuoco.getNome());
+		existingCuoco.setCognome(cuoco.getCognome());
+		existingCuoco.setDataDiNascita(cuoco.getDataDiNascita());
+
+		if (!file.isEmpty()) {
+			try {
+				// Assicurati che la directory di upload esista
+				Path uploadDir = Paths.get(UPLOADED_FOLDER);
+				if (!Files.exists(uploadDir)) {
+					Files.createDirectories(uploadDir);
+				}
+
+				// Salva il nuovo file nel server
+				String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+				Path path = uploadDir.resolve(fileName);
+				Files.write(path, file.getBytes());
+
+				// Imposta il nuovo URL dell'immagine
+				existingCuoco.setUrlImage("/cuochi2/" + fileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+				model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
+				return "admin/formModifyCuoco.html";
+			}
+		}
+
+		// Salva le modifiche
+		cuocoService.save(existingCuoco);
+		return "redirect:/admin/indexCuochi";
+	}
 }
