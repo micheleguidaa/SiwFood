@@ -54,7 +54,7 @@ public class CuocoController {
                 
                 this.cuocoService.save(cuoco); 
                 model.addAttribute("cuoco", cuoco);
-                return "redirect:/admin/indexCuochi";
+                return "cuoco.html";
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
@@ -82,11 +82,5 @@ public class CuocoController {
     public String deleteCuoco(@PathVariable("id") Long id) {
         cuocoService.deleteById(id);
         return "redirect:/admin/indexCuochi";
-    }
-    
-    @GetMapping("/admin/edit/cuoco/{id}")
-    public String formEditCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "admin/formModifyCuoco.html";
     }
 }
