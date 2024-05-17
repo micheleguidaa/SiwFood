@@ -3,10 +3,15 @@ package it.uniroma3.siw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import it.uniroma3.siw.model.Cuoco;
+import it.uniroma3.siw.model.Credenziali;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CuocoService;
+import it.uniroma3.siw.service.CredenzialiService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,12 +22,15 @@ import java.nio.file.Paths;
 public class CuocoController {
     @Autowired
     private CuocoService cuocoService;
+    @Autowired
+    private CredenzialiService credenzialiService;
 
     private static String UPLOADED_FOLDER = "uploads/cuochi2/";
 
     @GetMapping(value = "/registerCuoco")
     public String formNewCuoco(Model model) {
-        model.addAttribute("cuoco", new Cuoco());
+        model.addAttribute("cuoco", new Utente());
+        model.addAttribute("credenziali", new Credenziali());
         return "formRegisterCuoco.html";
     }
 
@@ -33,10 +41,13 @@ public class CuocoController {
     }
 
     @PostMapping("/registerCuoco")
-    public String newCuoco(@ModelAttribute("cuoco") Cuoco cuoco,
-                           @RequestParam("fileImage") MultipartFile file,
-                           Model model) {
-        if (!cuocoService.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
+    public String registerCuoco(@ModelAttribute("cuoco") Cuoco cuoco,
+                                BindingResult cuocoBindingResult, 
+                                @ModelAttribute("credenziali") Credenziali credenziali,
+                                BindingResult credenzialiBindingResult,
+                                @RequestParam("fileImage") MultipartFile file,
+                                Model model) {
+        if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors() && !cuocoService.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
             try {
                 // Assicurati che la directory di upload esista
                 Path uploadDir = Paths.get(UPLOADED_FOLDER);
@@ -52,6 +63,11 @@ public class CuocoController {
                 // Imposta l'URL dell'immagine
                 cuoco.setUrlImage("/cuochi2/" + fileName);
 
+                // Salva le credenziali del cuoco
+                credenziali.setCuoco(cuoco);
+                credenzialiService.saveCredenziali(credenziali);
+                credenziali.setRuolo(Credenziali.CUOCO_ROLE);
+
                 this.cuocoService.save(cuoco);
                 model.addAttribute("cuoco", cuoco);
                 return "redirect:/admin/indexCuochi";
@@ -61,7 +77,7 @@ public class CuocoController {
                 return "formRegisterCuoco.html";
             }
         } else {
-            model.addAttribute("messaggioErrore", "Questo cuoco esiste già");
+            model.addAttribute("messaggioErrore", "Questo cuoco esiste già o ci sono errori nei dati inseriti");
             return "formRegisterCuoco.html";
         }
     }

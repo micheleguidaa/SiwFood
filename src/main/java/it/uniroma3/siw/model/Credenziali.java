@@ -13,6 +13,7 @@ public class Credenziali {
 	
 	public static final String DEFAULT_ROLE = "DEFAULT";
 	public static final String ADMIN_ROLE = "ADMIN";
+	public static final String CUOCO_ROLE = "CUOCO";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +24,10 @@ public class Credenziali {
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Utente utente;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Cuoco cuoco;
+	
 
 	public Long getId() {
 		return id;
@@ -62,5 +67,13 @@ public class Credenziali {
 
 	public void setUtente(Utente utente) {
 		this.utente = utente;
+	}
+	
+	public Cuoco getCuoco() {
+		return cuoco;
+	}
+
+	public void setCuoco(Cuoco cuoco) {
+		this.cuoco = cuoco;
 	}
 }
