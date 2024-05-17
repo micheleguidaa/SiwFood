@@ -25,7 +25,7 @@ public class AuthenticationController {
 	public String showRegisterForm(Model model) {
 		model.addAttribute("utente", new Utente());
 		model.addAttribute("credenziali", new Credenziali());
-		return "register.html";
+		return "formRegister.html";
 	}
 
 	@GetMapping(value = "/login")
@@ -60,7 +60,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping(value= {"/register"})
-	public String registerUser(@ModelAttribute("utente") Utente utente,
+	public String register(@ModelAttribute("utente") Utente utente,
 		BindingResult utenteBindingResult, 
 		@ModelAttribute("credenziali") Credenziali credenziali,
 		BindingResult credenzialiBindingResult,
@@ -71,7 +71,7 @@ public class AuthenticationController {
 				model.addAttribute("utente", utente);
 				return "login.html";
 			}
-			return "register.html";
+			return "formRegister.html";
 	}
 	
 }
