@@ -9,14 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.model.Credenziali;
-import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CuocoService;
 import it.uniroma3.siw.service.CredenzialiService;
+import it.uniroma3.siw.service.FileService;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller
 public class CuocoController {
@@ -24,12 +21,14 @@ public class CuocoController {
     private CuocoService cuocoService;
     @Autowired
     private CredenzialiService credenzialiService;
+    @Autowired
+    private FileService fileService;
 
-    private static String UPLOADED_FOLDER = "uploads/cuochi2/";
+    private static final String UPLOADED_FOLDER = "uploads/cuochi2/";
 
     @GetMapping(value = "/registerCuoco")
     public String formNewCuoco(Model model) {
-        model.addAttribute("cuoco", new Utente());
+        model.addAttribute("cuoco", new Cuoco());
         model.addAttribute("credenziali", new Credenziali());
         return "formRegisterCuoco.html";
     }
@@ -49,26 +48,16 @@ public class CuocoController {
                                 Model model) {
         if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors() && !cuocoService.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
             try {
-                // Assicurati che la directory di upload esista
-                Path uploadDir = Paths.get(UPLOADED_FOLDER);
-                if (!Files.exists(uploadDir)) {
-                    Files.createDirectories(uploadDir);
-                }
-
-                // Salva il file nel server
-                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-                Path path = uploadDir.resolve(fileName);
-                Files.write(path, file.getBytes());
-
-                // Imposta l'URL dell'immagine
-                cuoco.setUrlImage("/cuochi2/" + fileName);
+                // Salva il file e imposta l'URL dell'immagine
+                String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
+                cuoco.setUrlImage(fileUrl);
 
                 // Salva le credenziali del cuoco
                 credenziali.setCuoco(cuoco);
                 credenzialiService.saveCredenziali(credenziali);
                 credenziali.setRuolo(Credenziali.CUOCO_ROLE);
 
-                this.cuocoService.save(cuoco);
+                cuocoService.save(cuoco);
                 model.addAttribute("cuoco", cuoco);
                 return "redirect:/admin/indexCuochi";
             } catch (IOException e) {
@@ -90,7 +79,7 @@ public class CuocoController {
 
     @GetMapping("/cuoco/{id}")
     public String getCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
+        model.addAttribute("cuoco", cuocoService.findById(id));
         return "cuoco.html";
     }
 
@@ -98,13 +87,10 @@ public class CuocoController {
     public String deleteCuoco(@PathVariable("id") Long id) {
         Cuoco cuoco = cuocoService.findById(id);
         if (cuoco != null) {
-            cuocoService.deleteById(id);
-            // Elimina il file associato al cuoco
             try {
-                Path path = Paths.get(UPLOADED_FOLDER).resolve(Paths.get(cuoco.getUrlImage()).getFileName().toString());
-                if (Files.exists(path)) {
-                    Files.delete(path);
-                }
+                // Elimina il file associato al cuoco
+                fileService.deleteFile(cuoco.getUrlImage(), UPLOADED_FOLDER);
+                cuocoService.deleteById(id);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -114,7 +100,7 @@ public class CuocoController {
 
     @GetMapping("/admin/update/cuoco/{id}")
     public String formEditCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
+        model.addAttribute("cuoco", cuocoService.findById(id));
         return "admin/formModifyCuoco.html";
     }
 
@@ -131,39 +117,18 @@ public class CuocoController {
         existingCuoco.setDataDiNascita(cuoco.getDataDiNascita());
 
         if (!file.isEmpty()) {
-            // Elimina il file esistente
             try {
-                Path oldPath = Paths.get(UPLOADED_FOLDER).resolve(Paths.get(existingCuoco.getUrlImage()).getFileName().toString());
-                if (Files.exists(oldPath)) {
-                    Files.delete(oldPath);
-                }
+                // Elimina il file esistente e salva il nuovo file
+                fileService.deleteFile(existingCuoco.getUrlImage(), UPLOADED_FOLDER);
+                String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
+                existingCuoco.setUrlImage(fileUrl);
             } catch (IOException e) {
                 e.printStackTrace();
-                model.addAttribute("messaggioErrore", "Errore nella cancellazione dell'immagine esistente");
-                return "admin/formModifyCuoco.html";
-            }
-
-            // Salva il nuovo file nel server
-            try {
-                Path uploadDir = Paths.get(UPLOADED_FOLDER);
-                if (!Files.exists(uploadDir)) {
-                    Files.createDirectories(uploadDir);
-                }
-
-                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-                Path path = uploadDir.resolve(fileName);
-                Files.write(path, file.getBytes());
-
-                // Imposta il nuovo URL dell'immagine
-                existingCuoco.setUrlImage("/cuochi2/" + fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-                model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
+                model.addAttribute("messaggioErrore", "Errore nella gestione dell'immagine");
                 return "admin/formModifyCuoco.html";
             }
         }
 
-        // Salva le modifiche
         cuocoService.save(existingCuoco);
         return "redirect:/admin/indexCuochi";
     }

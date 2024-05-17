@@ -11,24 +11,23 @@ import java.nio.file.Paths;
 @Service
 public class FileService {
 
-    public String uploadFile(MultipartFile file, String uploadDir) throws IOException {
-        // Assicurati che la directory di upload esista
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+    public String saveFile(MultipartFile file, String uploadDirPath) throws IOException {
+        Path uploadDir = Paths.get(uploadDirPath);
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
         }
 
-        // Salva il file nel server
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        Path path = uploadPath.resolve(fileName);
+        Path path = uploadDir.resolve(fileName);
         Files.write(path, file.getBytes());
 
-        // Ritorna il percorso relativo del file
-        return uploadDir + "/" + fileName;
+        // Rimuove la prima directory dal percorso
+        String relativePath = uploadDir.subpath(1, uploadDir.getNameCount()).resolve(fileName).toString();
+        return "/" + relativePath;
     }
 
-    public void deleteFile(String fileUrl, String uploadDir) throws IOException {
-        Path path = Paths.get(uploadDir).resolve(Paths.get(fileUrl).getFileName().toString());
+    public void deleteFile(String fileUrl, String uploadDirPath) throws IOException {
+        Path path = Paths.get(uploadDirPath).resolve(Paths.get(fileUrl).getFileName().toString());
         if (Files.exists(path)) {
             Files.delete(path);
         }
