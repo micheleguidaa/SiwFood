@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import it.uniroma3.siw.model.Credenziali;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.UtenteService;
 
 
@@ -18,4 +20,12 @@ public class UtenteController {
 		model.addAttribute("utenti", utenteService.findAll());
 		return "admin/indexUtenti.html";
 	}
+	
+	@GetMapping(value = "/registerUtente")
+	public String showRegisterForm(Model model) {
+		model.addAttribute("utente", new Utente());
+		model.addAttribute("credenziali", new Credenziali());
+		return "formRegisterUtente.html";
+	}
+
 }

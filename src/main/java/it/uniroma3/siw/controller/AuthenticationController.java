@@ -20,13 +20,6 @@ import it.uniroma3.siw.service.CredenzialiService;
 public class AuthenticationController {
 	@Autowired
 	private CredenzialiService credenzialiService;
-	
-	@GetMapping(value = "/registerUtente")
-	public String showRegisterForm(Model model) {
-		model.addAttribute("utente", new Utente());
-		model.addAttribute("credenziali", new Credenziali());
-		return "formRegisterUtente.html";
-	}
 
 	@GetMapping(value = "/login")
 	public String showLoginForm(Model model) {
