@@ -2,6 +2,7 @@ package it.uniroma3.siw.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,9 @@ public class Utente {
 	private String cognome;
 	private String email;
 	private LocalDate dataDiNascita;
+	
+	@OneToOne(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Credenziali credenziali;
 	
 
 	public Long getId() {

@@ -98,6 +98,7 @@ public class CuocoController {
     public String deleteCuoco(@PathVariable("id") Long id) {
         Cuoco cuoco = cuocoService.findById(id);
         if (cuoco != null) {
+            cuocoService.deleteById(id);
             // Elimina il file associato al cuoco
             try {
                 Path path = Paths.get(UPLOADED_FOLDER).resolve(Paths.get(cuoco.getUrlImage()).getFileName().toString());
@@ -107,12 +108,11 @@ public class CuocoController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            cuocoService.deleteById(id);
         }
         return "redirect:/admin/indexCuochi";
     }
 
-    @GetMapping("/admin/edit/cuoco/{id}")
+    @GetMapping("/admin/update/cuoco/{id}")
     public String formEditCuoco(@PathVariable("id") Long id, Model model) {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
         return "admin/formModifyCuoco.html";

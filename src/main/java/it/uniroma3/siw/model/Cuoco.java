@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cuoco {
@@ -23,6 +24,9 @@ public class Cuoco {
     
     @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ricetta> ricette;
+    
+	@OneToOne(mappedBy = "cuoco", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Credenziali credenziali;
     
     // Getters and Setters
 
