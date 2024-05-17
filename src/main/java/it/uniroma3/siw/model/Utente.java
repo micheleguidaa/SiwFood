@@ -68,5 +68,6 @@ public class Utente {
 	public void setCredenziali(Credenziali credenziali) {
 		this.credenziali = credenziali;
 	}
+
 	
 }
