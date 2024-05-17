@@ -21,11 +21,11 @@ public class AuthenticationController {
 	@Autowired
 	private CredenzialiService credenzialiService;
 	
-	@GetMapping(value = "/register")
+	@GetMapping(value = "/registerUtente")
 	public String showRegisterForm(Model model) {
 		model.addAttribute("utente", new Utente());
 		model.addAttribute("credenziali", new Credenziali());
-		return "formRegister.html";
+		return "formRegisterUtente.html";
 	}
 
 	@GetMapping(value = "/login")
@@ -59,7 +59,7 @@ public class AuthenticationController {
 		return "index.html";
 	}
 	
-	@PostMapping(value= {"/register"})
+	@PostMapping(value= {"/registerUtente"})
 	public String register(@ModelAttribute("utente") Utente utente,
 		BindingResult utenteBindingResult, 
 		@ModelAttribute("credenziali") Credenziali credenziali,
@@ -71,7 +71,7 @@ public class AuthenticationController {
 				model.addAttribute("utente", utente);
 				return "login.html";
 			}
-			return "formRegister.html";
+			return "formRegisterUtente.html";
 	}
 	
 }
