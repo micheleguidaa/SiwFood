@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 @Controller
 public class CuocoController {
@@ -19,6 +20,7 @@ public class CuocoController {
     private CuocoService cuocoService;
 
     private static String UPLOADED_FOLDER = "uploads/cuochi2/";
+    private static final Logger logger = Logger.getLogger(CuocoController.class.getName());
 
     @GetMapping(value = "/admin/formNewCuoco")
     public String formNewCuoco(Model model) {
@@ -84,8 +86,10 @@ public class CuocoController {
         if (cuoco != null) {
             // Elimina il file associato al cuoco
             try {
-                Path path = Paths.get(cuoco.getUrlImage());
-                Files.deleteIfExists(path);
+                Path path = Paths.get(UPLOADED_FOLDER).resolve(Paths.get(cuoco.getUrlImage()).getFileName().toString());
+                if (Files.exists(path)) {
+                    Files.delete(path);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -115,8 +119,10 @@ public class CuocoController {
         if (!file.isEmpty()) {
             // Elimina il file esistente
             try {
-                Path oldPath = Paths.get(existingCuoco.getUrlImage());
-                Files.deleteIfExists(oldPath);
+                Path oldPath = Paths.get(UPLOADED_FOLDER).resolve(Paths.get(existingCuoco.getUrlImage()).getFileName().toString());
+                if (Files.exists(oldPath)) {
+                    Files.delete(oldPath);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("messaggioErrore", "Errore nella cancellazione dell'immagine esistente");
