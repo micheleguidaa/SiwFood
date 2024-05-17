@@ -22,10 +22,10 @@ public class CuocoController {
     private static String UPLOADED_FOLDER = "uploads/cuochi2/";
     private static final Logger logger = Logger.getLogger(CuocoController.class.getName());
 
-    @GetMapping(value = "/admin/formNewCuoco")
+    @GetMapping(value = "/formNewCuoco")
     public String formNewCuoco(Model model) {
         model.addAttribute("cuoco", new Cuoco());
-        return "admin/formNewCuoco.html";
+        return "formNewCuoco.html";
     }
 
     @GetMapping(value = "/admin/indexCuochi")
@@ -34,7 +34,7 @@ public class CuocoController {
         return "admin/indexCuochi.html";
     }
 
-    @PostMapping("/admin/add/cuoco")
+    @PostMapping("add/cuoco")
     public String newCuoco(@ModelAttribute("cuoco") Cuoco cuoco,
                            @RequestParam("fileImage") MultipartFile file,
                            Model model) {
@@ -60,11 +60,11 @@ public class CuocoController {
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
-                return "admin/formNewCuoco.html";
+                return "formNewCuoco.html";
             }
         } else {
             model.addAttribute("messaggioErrore", "Questo cuoco esiste già");
-            return "admin/formNewCuoco.html";
+            return "formNewCuoco.html";
         }
     }
 

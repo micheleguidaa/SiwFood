@@ -1,60 +1,61 @@
 <!DOCTYPE html>
 <html lang="it">
 <head th:replace="~{fragments/header :: header(title='SiwFood - Login')}"></head>
-
 <body>
-	<div class="container mt-5">
-		<div class="row justify-content-center">
-			<div class="col-md-6 col-lg-4">
-				<div class="form-container">
-					<h2 class="mb-4">Login</h2>
-					<form th:action="@{/login}" method="post">
-						<div class="mb-3">
-							<label for="username" class="form-label">Username</label>
-							<input type="text" class="form-control" id="username" name="username" required>
-						</div>
-						<div class="mb-3">
-							<label for="password" class="form-label">Password</label>
-							<div class="input-group">
-								<input type="password" class="form-control" id="password" name="password" required>
-								<button type="button" class="btn btn-outline-secondary" id="togglePassword">
-									<i class="bi bi-eye"></i>
-								</button>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-primary w-100">Login</button>
-						<div class="text-center mt-3">
-							<a href="/forgot-password" class="text-primary">Password dimenticata?</a>
-						</div>
-						<hr>
-						<div class="text-center">
-							<a href="/register" class="btn btn-success">Crea nuovo account</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="mb-4 text-center">Login</h2>
+                        <form th:action="@{/login}" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                            <div class="text-center mt-3">
+                                <a href="/forgot-password" class="text-primary">Password dimenticata?</a>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <a href="/register" class="btn btn-success w-100 mb-2">Crea nuovo account</a>
+                                <a href="/register-cuoco" class="btn btn-warning w-100">Registrati come Cuoco</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- Includi gli script di Bootstrap e jQuery -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<!-- Icone di Bootstrap -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-	<script>
-		document.getElementById('togglePassword').addEventListener('click', function () {
-			var passwordField = document.getElementById('password');
-			var passwordFieldType = passwordField.getAttribute('type');
-			if (passwordFieldType === 'password') {
-				passwordField.setAttribute('type', 'text');
-				this.innerHTML = '<i class="bi bi-eye-slash"></i>';
-			} else {
-				passwordField.setAttribute('type', 'password');
-				this.innerHTML = '<i class="bi bi-eye"></i>';
-			}
-		});
-	</script>
+    <!-- Includi gli script di Bootstrap e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Icone di Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            var passwordField = document.getElementById('password');
+            var passwordFieldType = passwordField.getAttribute('type');
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+                this.innerHTML = '<i class="bi bi-eye-slash"></i>';
+            } else {
+                passwordField.setAttribute('type', 'password');
+                this.innerHTML = '<i class="bi bi-eye"></i>';
+            }
+        });
+    </script>
 </body>
-
 </html>
