@@ -27,7 +27,7 @@ a:hover {
 /* Jumbotron Styles */
 .jumbotron {
     text-align: center;
-    background-color: var(--light-color) !important;
+    background-color: var(--light-color) !important; /* Verde molto chiaro */
 }
 
 /* Body Styles */
@@ -42,25 +42,30 @@ body {
 /* Button Styles */
 .btn-primary {
     color: var(--white-color);
-    background-color: var(--primary-color);
+    background-color: var(--primary-color); /* Verde scuro */
     border-color: var(--primary-color);
 }
 
 .btn-outline-primary {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Testo verde scuro */
     border-color: var(--primary-color);
 }
 
 .btn-primary:hover,
 .btn-outline-primary:hover {
-    color: var(--white-color);
-    background-color: var(--secondary-color);
+    color: var(--white-color); /* Testo bianco */
+    background-color: var(--secondary-color); /* Verde ancora più scuro per hover */
     border-color: var(--secondary-color);
 }
 
 /* Navbar Styles */
 .navbar {
     background-color: var(--dark-color);
+}
+
+.form-inline,
+.navbar .btn {
+    margin-right: 10px; /* Aggiungi spazio a destra tra i pulsanti */
 }
 
 /* Form Container Styles */
@@ -81,6 +86,10 @@ body {
     border-color: var(--secondary-color);
 }
 
+.form-container .form-group {
+    margin-bottom: 1rem;
+}
+
 .form-container .form-control:focus {
     border-color: var(--dark-color);
     box-shadow: 0 0 0 0.2rem var(--focus-shadow-color);
@@ -94,9 +103,9 @@ body {
 
 /* Card Styles */
 .card {
-    margin: 1rem;
-    padding: 0.5rem;
-    box-shadow: 0 0.5rem 1rem var(--card-box-shadow);
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 8px var(--card-box-shadow); /* Aggiungere un'ombra per la profondità */
     transition: transform 0.3s ease-in-out;
 }
 
@@ -147,6 +156,7 @@ footer .container {
 
 /* Cuoco Image Styles */
 .cuoco-img {
+    height: auto;
     object-fit: cover;
     border-radius: 10px;
     max-width: 100%;
@@ -188,38 +198,59 @@ footer .container {
 /* Image Container Styles */
 .image-container img {
     width: 100%;
+    height: auto;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 10px; /* Per un aspetto più morbido */
 }
 
 /* Responsive Styles */
 @media (max-width: 1200px) {
-    .form-container,
-    footer .container {
+    .card {
+        margin: 15px;
+    }
+
+    .form-container {
         padding: 1.5rem;
+    }
+
+    footer .container {
+        padding: 1.5rem 0;
     }
 }
 
 @media (max-width: 992px) {
-    .form-container,
-    footer .container {
+    .card {
+        margin: 10px;
+    }
+
+    .form-container {
         padding: 1rem;
+    }
+
+    footer .container {
+        padding: 1rem 0;
     }
 }
 
 @media (max-width: 768px) {
-    .navbar .btn,
     .form-inline {
         margin-right: 5px;
     }
 
-    .card {
-        margin: 0.5rem;
+    .navbar .btn {
+        margin-right: 5px;
     }
 
-    .form-container,
-    footer .container {
+    .card {
+        margin: 10px 5px;
+    }
+
+    .form-container {
         padding: 0.5rem;
+    }
+
+    footer .container {
+        padding: 0.5rem 0;
     }
 }
 
@@ -229,11 +260,14 @@ footer .container {
     }
 
     .card {
-        margin: 0.25rem;
+        margin: 5px;
     }
 
-    .form-container,
+    .form-container {
+        padding: 0.5rem;
+    }
+
     footer .container {
-        padding: 0.25rem;
+        padding: 0.5rem 0;
     }
 }
