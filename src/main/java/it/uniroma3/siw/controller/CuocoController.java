@@ -11,7 +11,6 @@ import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.service.CuocoService;
 import it.uniroma3.siw.service.CredenzialiService;
-import it.uniroma3.siw.service.FileService;
 
 import java.io.IOException;
 
@@ -21,10 +20,6 @@ public class CuocoController {
     private CuocoService cuocoService;
     @Autowired
     private CredenzialiService credenzialiService;
-    @Autowired
-    private FileService fileService;
-
-    private static final String UPLOADED_FOLDER = "uploads/cuochi2/";
 
     @GetMapping(value = "/registerCuoco")
     public String formNewCuoco(Model model) {
@@ -46,18 +41,10 @@ public class CuocoController {
                                 BindingResult credenzialiBindingResult,
                                 @RequestParam("fileImage") MultipartFile file,
                                 Model model) {
-        if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors() && !cuocoService.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
+        if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
             try {
-                // Salva il file e imposta l'URL dell'immagine
-                String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
-                cuoco.setUrlImage(fileUrl);
-
-                // Salva le credenziali del cuoco
-                credenziali.setCuoco(cuoco);
+                cuocoService.registerCuoco(cuoco, credenziali, file);
                 credenzialiService.saveCredenziali(credenziali);
-                credenziali.setRuolo(Credenziali.CUOCO_ROLE);
-
-                cuocoService.save(cuoco);
                 model.addAttribute("cuoco", cuoco);
                 return "redirect:/admin/indexCuochi";
             } catch (IOException e) {
@@ -85,16 +72,7 @@ public class CuocoController {
 
     @PostMapping("/admin/delete/cuoco/{id}")
     public String deleteCuoco(@PathVariable("id") Long id) {
-        Cuoco cuoco = cuocoService.findById(id);
-        if (cuoco != null) {
-            try {
-                // Elimina il file associato al cuoco
-                fileService.deleteFile(cuoco.getUrlImage(), UPLOADED_FOLDER);
-                cuocoService.deleteById(id);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        cuocoService.deleteById(id);
         return "redirect:/admin/indexCuochi";
     }
 
@@ -111,25 +89,18 @@ public class CuocoController {
                               Model model) {
         Cuoco existingCuoco = cuocoService.findById(id);
 
-        // Aggiorna i dettagli del cuoco
-        existingCuoco.setNome(cuoco.getNome());
-        existingCuoco.setCognome(cuoco.getCognome());
-        existingCuoco.setDataDiNascita(cuoco.getDataDiNascita());
-
-        if (!file.isEmpty()) {
+        if (existingCuoco != null) {
             try {
-                // Elimina il file esistente e salva il nuovo file
-                fileService.deleteFile(existingCuoco.getUrlImage(), UPLOADED_FOLDER);
-                String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
-                existingCuoco.setUrlImage(fileUrl);
+                cuocoService.updateCuoco(existingCuoco, cuoco, file);
+                return "redirect:/admin/indexCuochi";
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("messaggioErrore", "Errore nella gestione dell'immagine");
                 return "admin/formModifyCuoco.html";
             }
+        } else {
+            model.addAttribute("messaggioErrore", "Cuoco non trovato");
+            return "admin/formModifyCuoco.html";
         }
-
-        cuocoService.save(existingCuoco);
-        return "redirect:/admin/indexCuochi";
     }
 }
