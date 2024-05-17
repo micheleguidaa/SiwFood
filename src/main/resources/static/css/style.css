@@ -27,13 +27,13 @@ a:hover {
 /* Jumbotron Styles */
 .jumbotron {
     text-align: center;
-    background-color: var(--light-color) !important; /* Verde molto chiaro */
+    background-color: var(--light-color); /* Verde molto chiaro */
 }
 
 /* Body Styles */
 body {
-    padding-top: 3rem !important;
-    background-color: var(--light-color) !important;
+    padding-top: 3rem;
+    background-color: var(--light-color);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -156,7 +156,6 @@ footer .container {
 
 /* Cuoco Image Styles */
 .cuoco-img {
-    height: auto;
     object-fit: cover;
     border-radius: 10px;
     max-width: 100%;
@@ -198,7 +197,6 @@ footer .container {
 /* Image Container Styles */
 .image-container img {
     width: 100%;
-    height: auto;
     object-fit: cover;
     border-radius: 10px; /* Per un aspetto più morbido */
 }
@@ -256,7 +254,7 @@ footer .container {
 
 @media (max-width: 576px) {
     body {
-        padding-top: 2rem !important;
+        padding-top: 2rem;
     }
 
     .card {
