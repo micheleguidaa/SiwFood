@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head th:replace="~{fragments/header :: header(title='SiwFood - Gestione Ricette')}"></head>
+
+<body>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbarAdmin :: navbarAdmin}"></div>
+
+	<div class="container mt-5">
+		<h2 class="text-center mb-4">Lista delle Ricette</h2>
+		<div class="text-center mb-4">
+			<a class="btn btn-primary btn-lg" href="/admin/formNewRicetta" role="button">Aggiungi Nuova Ricetta</a>
+		</div>
+		<div th:if="${ricette == null || ricette.isEmpty()}" class="alert alert-warning">
+			Non ci sono ricette nel sistema
+		</div>
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+			<div class="col" th:each="ricetta : ${ricette}">
+				<div class="card h-90">
+					<img th:src="${ricetta.urlsImages[0]}" class="card-img-top"alt="Immagine Ricetta" />
+
+					<div class="card-footer d-flex flex-column text-center mt-3">
+						<h5 class="card-title" th:text="${ricetta.nome}">Nome Ricetta</h5>
+						<div class="mt-3">
+							<div class="d-flex">
+								<a th:href="@{'/admin/edit/ricetta/' + ${ricetta.id}}"
+									class="btn btn-primary flex-grow-1 me-1">Modifica</a>
+								<form th:action="@{'/admin/delete/ricetta/' + ${ricetta.id}}" method="post"
+									class="flex-grow-1">
+									<button type="submit" class="btn btn-danger w-100">Elimina</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Include il footer -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+
+</html>

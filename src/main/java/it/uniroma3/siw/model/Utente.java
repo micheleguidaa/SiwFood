@@ -18,8 +18,6 @@ public class Utente {
 	private String email;
 	private LocalDate dataDiNascita;
 	
-	@OneToOne
-    private Credenziali credenziali;
 
 	public Long getId() {
 		return id;
@@ -61,13 +59,6 @@ public class Utente {
 		this.dataDiNascita = dataDiNascita;
 	}
 
-	public Credenziali getCredenziali() {
-		return credenziali;
-	}
-
-	public void setCredenziali(Credenziali credenziali) {
-		this.credenziali = credenziali;
-	}
 
 	
 }
