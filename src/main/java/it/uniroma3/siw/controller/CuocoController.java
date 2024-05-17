@@ -20,7 +20,6 @@ public class CuocoController {
     private CuocoService cuocoService;
 
     private static String UPLOADED_FOLDER = "uploads/cuochi2/";
-    private static final Logger logger = Logger.getLogger(CuocoController.class.getName());
 
     @GetMapping(value = "/registerCuoco")
     public String formNewCuoco(Model model) {
