@@ -1,6 +1,6 @@
 # Sistema Informativo per Ricette e Cuochi
 
-## Descrizione del progetto 2
+## Descrizione del progetto
 Questo progetto ha lo scopo di progettare e implementare un sistema informativo che fornisca informazioni relative a ricette e cuochi. Il sistema consente agli utenti di consultare informazioni dettagliate sulle ricette disponibili, sugli ingredienti necessari e sui cuochi coinvolti nella preparazione.
 
 ## Funzionalità del sistema
