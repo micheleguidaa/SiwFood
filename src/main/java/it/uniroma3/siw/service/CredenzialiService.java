@@ -37,4 +37,6 @@ public class CredenzialiService {
         credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
         return this.credentialsRepository.save(credentials);
     }
+
+ 
 }

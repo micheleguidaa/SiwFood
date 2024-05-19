@@ -30,4 +30,10 @@ public class RicettaController {
 		model.addAttribute("ricette", ricettaService.findAll());
 		return "admin/indexRicette.html";
 	}
+	
+	   @GetMapping("/le-mie-ricette")
+	    public String showLeMieRicette(Model model) {
+	        model.addAttribute("ricette", ricettaService.findAll());
+	        return "cuoco/indexRicettePersonali.html"; 
+	    }
 }

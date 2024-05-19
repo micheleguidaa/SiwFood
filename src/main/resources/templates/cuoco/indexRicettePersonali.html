@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head th:replace="~{fragments/header :: header(title='SiwFood - Ricette')}"></head>
+
+<body>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+	<div class="container mt-5">
+		<h1 class="mb-4">Ricette</h1>
+		<div th:if="${cuoco.ricette==null || cuoco.ricette.isEmpty()}" class="alert alert-warning">
+			Non ci sono ricette nel sistema
+		</div>
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+			<div class="col" th:each="ricetta : ${cuoco.ricette}">
+				<div class="card h-90">
+					<img th:src="${ricetta.urlsImages[0]}" class="card-img-top" alt="Immagine Ricetta" />
+					<div class="card-body">
+						<h5 class="card-title" th:text="${ricetta.nome}">Lasagna</h5>
+						<p class="card-text">
+							<a th:href="@{'/cuoco' + '/' + ${ricetta.cuoco.id}}"
+								th:text="'('+${ricetta.cuoco.nome}+ ' ' + ${ricetta.cuoco.cognome}+')'">Bruno
+								Barbieri</a>
+						</p>
+					</div>
+					<div class="card-footer">
+						<a th:href="@{'/ricetta' + '/' + ${ricetta.id}}" class="btn btn-primary">Visualizza Ricetta</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Include il footer -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
