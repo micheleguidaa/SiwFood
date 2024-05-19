@@ -2,6 +2,7 @@ package it.uniroma3.siw.controller;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,4 +18,14 @@ public class GlobalController {
 			utente = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
 		return utente;
 	}
+	
+    @ModelAttribute("ruolo")
+    public String getAuthorityAsString() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !authentication.getAuthorities().isEmpty()) {
+            GrantedAuthority authority = authentication.getAuthorities().iterator().next();
+            return authority.getAuthority();
+        }
+        return null;
+    }
 }

@@ -23,18 +23,29 @@
 
 					<!-- Inizio Elementi visibili per utenti non registrati e cuohi  -->
 					<li class="nav-item">
-						<a class="nav-link" href="/cuochi">Cuochi</a>
+						<a class="nav-link" th:if="${ruolo != 'ADMIN'}" href="/cuochi">Cuochi</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/ricette">Ricette</a>
+						<a class="nav-link" th:if="${ruolo != 'ADMIN'}" href="/ricette">Ricette</a>
 					</li>
 					<!-- Fine Elementi visibili per utenti non registrati e cuohi -->
 
 					<!-- Inizio Elementi visibili per cuohi -->
 					<li class="nav-item">
-						<a class="nav-link" th:if="${userDetails != null} and ${role}=='ADMIN'" href="/le-mie-ricette">Le Mie Ricette</a>
+						<a class="nav-link" th:if="${ruolo == 'DEFAULT'}" href="/le-mie-ricette">Le Mie
+							Ricette</a>
 					</li>
 					<!-- Fine Elementi visibili per cuohi -->
+					
+					<!-- Inizio Elementi visibili per admin -->
+					<li class="nav-item">
+						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/indexRicette">Ricette</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/indexCuochi">Cuochi</a>
+					</li>
+					<!-- Fine Elementi visibili per admin -->
+					
 				</ul>
 
 				<form class="d-flex">
