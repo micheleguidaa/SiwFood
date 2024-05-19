@@ -11,9 +11,8 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Credenziali {
 	
-	public static final String DEFAULT_ROLE = "DEFAULT";
+	public static final String DEFAULT_ROLE = "CUOCO";
 	public static final String ADMIN_ROLE = "ADMIN";
-	public static final String CUOCO_ROLE = "CUOCO";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +21,6 @@ public class Credenziali {
 	private String password;
 	private String ruolo;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Utente utente;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Cuoco cuoco;
@@ -61,13 +58,6 @@ public class Credenziali {
 		this.ruolo = ruolo;
 	}
 
-	public Utente getUtente() {
-		return utente;
-	}
-
-	public void setUtente(Utente utente) {
-		this.utente = utente;
-	}
 	
 	public Cuoco getCuoco() {
 		return cuoco;

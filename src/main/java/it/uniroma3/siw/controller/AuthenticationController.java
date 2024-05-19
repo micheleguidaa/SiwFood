@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Credenziali;
-import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CredenzialiService;
 
 @Controller
@@ -37,8 +36,6 @@ public class AuthenticationController {
             switch (credenziali.getRuolo()) {
                 case Credenziali.ADMIN_ROLE:
                     return "admin/indexAdmin.html";
-                case Credenziali.CUOCO_ROLE:
-                    return "cuoco/indexCuoco.html";
                 default:
                     return "index.html";
             }
@@ -52,27 +49,11 @@ public class AuthenticationController {
         switch (credenziali.getRuolo()) {
             case Credenziali.ADMIN_ROLE:
                 return "admin/indexAdmin.html";
-            case Credenziali.CUOCO_ROLE:
-                return "cuoco/indexAdmin.html";
             default:
                 return "index.html";
         }
     }
 
-    @PostMapping(value = {"/registerUtente"})
-    public String register(@ModelAttribute("utente") Utente utente,
-                           BindingResult utenteBindingResult, 
-                           @ModelAttribute("credenziali") Credenziali credenziali,
-                           BindingResult credenzialiBindingResult,
-                           Model model) {
-        if (!utenteBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
-            credenziali.setUtente(utente);
-            credenzialiService.saveCredenziali(credenziali);
-            model.addAttribute("utente", utente);
-            return "login.html";
-        }
-        return "formRegisterUtente.html";
-    }
 
 
 }	

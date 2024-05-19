@@ -57,7 +57,7 @@ public class CuocoService {
             cuoco.setUrlImage(fileUrl);
 
             credenziali.setCuoco(cuoco);
-            credenziali.setRuolo(Credenziali.CUOCO_ROLE);
+            credenziali.setRuolo(Credenziali.DEFAULT_ROLE);
 
             save(cuoco);
         }
