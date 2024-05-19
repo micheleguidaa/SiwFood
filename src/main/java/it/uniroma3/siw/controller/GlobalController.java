@@ -9,8 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @ControllerAdvice
 public class GlobalController {
-	@ModelAttribute("UserDetails")
-	
+	@ModelAttribute("userDetails")
 	public UserDetails getUtente() {
 		UserDetails  utente = null;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -44,11 +44,11 @@ public class AuthConfiguration {
 	// .requestMatchers("/**").permitAll()
 	// chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
 
-	.requestMatchers(HttpMethod.GET,"/**","/index","/registerUtente","/registerCuoco","/css/**", "/images/**", "favicon.ico").permitAll()
+	.requestMatchers(HttpMethod.GET,"/","/login","/index","/registerCuoco","/css/**", "/images/**", "favicon.ico").permitAll()
 
 	// chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register
 
-	.requestMatchers(HttpMethod.POST,"/","/registerUtente","/registerCuoco","/login").permitAll()
+	.requestMatchers(HttpMethod.POST,"/","/registerCuoco","/login").permitAll()
 	.requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
 	.requestMatchers(HttpMethod.POST,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
 
@@ -61,7 +61,7 @@ public class AuthConfiguration {
 	.and().formLogin()
 	.loginPage("/login")
 	.permitAll()
-	.defaultSuccessUrl("/success")
+	.defaultSuccessUrl("/success",true)
 	.failureUrl("/login?error=true")
 
 	// LOGOUT: qui definiamo il logout

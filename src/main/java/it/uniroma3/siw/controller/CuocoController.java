@@ -21,13 +21,6 @@ public class CuocoController {
     @Autowired
     private CredenzialiService credenzialiService;
 
-    @GetMapping(value = "/registerCuoco")
-    public String formNewCuoco(Model model) {
-        model.addAttribute("cuoco", new Cuoco());
-        model.addAttribute("credenziali", new Credenziali());
-        return "formRegisterCuoco.html";
-    }
-
     @GetMapping(value = "/admin/indexCuochi")
     public String indexCuochi(Model model) {
         model.addAttribute("cuochi", cuocoService.findAll());
@@ -46,7 +39,7 @@ public class CuocoController {
                 cuocoService.registerCuoco(cuoco, credenziali, file);
                 credenzialiService.saveCredenziali(credenziali);
                 model.addAttribute("cuoco", cuoco);
-                return "redirect:/admin/indexCuochi";
+                return "redirect:/login";
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
