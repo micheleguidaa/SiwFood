@@ -10,30 +10,30 @@ import it.uniroma3.siw.service.RicettaService;
 
 @Controller
 public class RicettaController {
-    @Autowired
-    private RicettaService ricettaService;
+	@Autowired
+	private RicettaService ricettaService;
 
-    @GetMapping("/ricette")
-    public String showRicette(Model model) {
-        model.addAttribute("ricette", ricettaService.findAll());
-        return "ricette.html"; 
-    }
-    
+	@GetMapping("/ricette")
+	public String showRicette(Model model) {
+		model.addAttribute("ricette", ricettaService.findAll());
+		return "ricette.html";
+	}
+
 	@GetMapping("/ricetta/{id}")
 	public String getRicetta(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("ricetta", this.ricettaService.findById(id));
 		return "ricetta.html";
 	}
-	
+
 	@GetMapping(value = "/admin/indexRicette")
 	public String indexRicette(Model model) {
 		model.addAttribute("ricette", ricettaService.findAll());
 		return "admin/indexRicette.html";
 	}
-	
-	   @GetMapping("/le-mie-ricette")
-	    public String showLeMieRicette(Model model) {
-	        model.addAttribute("ricette", ricettaService.findAll());
-	        return "cuoco/indexRicettePersonali.html"; 
-	    }
+
+	@GetMapping("/cuoco/{id}/le-mie-ricette")
+	public String showLeMieRicette(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("ricette", ricettaService.findAll());
+		return "cuoco/indexRicettePersonali.html";
+	}
 }
