@@ -31,7 +31,9 @@
 					<!-- Fine Elementi visibili per utenti non registrati e cuohi -->
 
 					<!-- Inizio Elementi visibili per cuohi -->
-
+					<li class="nav-item">
+						<a class="nav-link" th:if="${ruolo == 'DEFAULT'}" href="/le-mie-ricette"> Le mie Ricette</a>
+					</li>
 					<!-- Fine Elementi visibili per cuohi -->
 
 					<!-- Inizio Elementi visibili per admin -->
@@ -53,9 +55,16 @@
 					<div class="dropdown" th:if="${userDetails != null}">
 						<a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
 							id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-							<img th:src="@{${cuocoCorrente.urlImage}}" alt="Account Image" class="rounded-circle"
-								width="50" height="50">
-							<span th:text="${cuocoCorrente.nome}" class="text-capitalize d-none"></span>
+							
+							<!-- Se l'immagine è presente -->
+							<img th:if="${cuocoCorrente.urlImage}" th:src="@{${cuocoCorrente.urlImage}}"
+								alt="Account Image" class="rounded-circle" width="50" height="50">
+
+							<!-- Se l'immagine non è presente -->
+							<img th:if="${cuocoCorrente==null or cuocoCorrente.urlImage==null}" th:src="@{/images/SenzaFoto.jpeg}"
+								alt="Account Image" class="rounded-circle" width="50" height="50">
+							<span th:text="${userDetails.username}" class="text-capitalize d-none"></span>
+							
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="userDropdown">
 							<li><a class="dropdown-item" href="/profile">Profile</a></li>
