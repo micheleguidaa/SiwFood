@@ -43,4 +43,9 @@ public class RicettaController {
     	ricettaService.deleteById(id);
         return "redirect:/le-mie-ricette";
     }
+    
+	@GetMapping("/addRicetta")
+	public String addRicetta( Model model) {
+		return "cuoco/addRicetta.html";
+	}
 }

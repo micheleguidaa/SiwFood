@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Aggiungi Ricetta')">
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container mt-5 form-container">
+        <h2>Aggiungi Ricetta</h2>
+        <form th:action="@{/ricette/add}" method="post">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome della ricetta" required>
+            </div>
+            <div class="form-group">
+                <label for="descrizione">Descrizione</label>
+                <textarea class="form-control" id="descrizione" name="descrizione" rows="4" placeholder="Descrizione della ricetta"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="urlsImages">URL Immagini</label>
+                <input type="text" class="form-control" id="urlsImages" name="urlsImages" placeholder="URL delle immagini, separati da virgola">
+            </div>
+            <div class="form-group">
+                <label for="cuoco">Cuoco</label>
+                <select class="form-control" id="cuoco" name="cuoco" required>
+                    <option th:each="cuoco : ${cuochi}" th:value="${cuoco.id}" th:text="${cuoco.nome}">Cuoco</option>
+                </select>
+            </div>
+            <div id="ingredienti-section">
+                <h4>Ingredienti</h4>
+                <div class="ingredienti-group" th:each="ingrediente, iterStat : ${ingredienti}">
+                    <div class="form-row align-items-center mb-2">
+                        <div class="col-auto">
+                            <label class="sr-only" for="ingrediente">Ingrediente</label>
+                            <select class="form-control mb-2" name="righeRicetta[__${iterStat.index}__].ingrediente" required>
+                                <option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}">Ingrediente</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <label class="sr-only" for="quantita">Quantità</label>
+                            <input type="text" class="form-control mb-2" name="righeRicetta[__${iterStat.index}__].quantita" placeholder="Quantità">
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger mb-2 remove-ingrediente">Rimuovi</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="add-ingrediente">Aggiungi Ingrediente</button>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Salva Ricetta</button>
+        </form>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let ingredientiIndex = 0;
+
+            document.getElementById('add-ingrediente').addEventListener('click', function () {
+                let ingredientiSection = document.getElementById('ingredienti-section');
+                let newIngredientiGroup = document.createElement('div');
+                newIngredientiGroup.classList.add('ingredienti-group');
+                newIngredientiGroup.innerHTML = `
+                    <div class="form-row align-items-center mb-2">
+                        <div class="col-auto">
+                            <label class="sr-only" for="ingrediente">Ingrediente</label>
+                            <select class="form-control mb-2" name="righeRicetta[${ingredientiIndex}].ingrediente" required>
+                                <option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}">Ingrediente</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <label class="sr-only" for="quantita">Quantità</label>
+                            <input type="text" class="form-control mb-2" name="righeRicetta[${ingredientiIndex}].quantita" placeholder="Quantità">
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger mb-2 remove-ingrediente">Rimuovi</button>
+                        </div>
+                    </div>
+                `;
+                ingredientiSection.appendChild(newIngredientiGroup);
+                ingredientiIndex++;
+            });
+
+            document.getElementById('ingredienti-section').addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('remove-ingrediente')) {
+                    e.target.closest('.ingredienti-group').remove();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
