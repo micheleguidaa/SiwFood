@@ -25,4 +25,9 @@ public class RicettaService {
 		ricettaRepository.deleteById(id);
 	}
 
+	public void save(Ricetta ricetta) {
+		ricettaRepository.save(ricetta);
+	
+	}
+
 }
