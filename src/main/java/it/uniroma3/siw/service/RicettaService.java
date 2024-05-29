@@ -81,70 +81,32 @@ public class RicettaService {
             existingRicetta.setNome(updatedRicetta.getNome());
             existingRicetta.setDescrizione(updatedRicetta.getDescrizione());
 
-            List<String> urlsImages = handleFileUpload(files);
-            if (!urlsImages.isEmpty()) {
+            if (files != null && files.length > 0 && !files[0].isEmpty()) {
+                List<String> urlsImages = handleFileUpload(files);
                 existingRicetta.setUrlsImages(urlsImages);
             }
 
-            List<RigaRicetta> righeRicetta = new ArrayList<>();
-            for (int i = 0; i < ingredientiIds.size(); i++) {
-                Ingrediente ingrediente = ingredienteService.findById(ingredientiIds.get(i));
-                if (ingrediente != null) {
-                    RigaRicetta riga = new RigaRicetta();
-                    riga.setIngrediente(ingrediente);
-                    riga.setQuantita(quantitaList.get(i));
-                    riga.setRicetta(existingRicetta);
-                    righeRicetta.add(riga);
-                }
-            }
-            existingRicetta.setRigheRicetta(righeRicetta);
-
+            updateRigheRicetta(existingRicetta, ingredientiIds, quantitaList);
             save(existingRicetta);
         }
     }
-    
-    @Transactional
-    public void updateRicetta(Long id, Ricetta updatedRicetta, MultipartFile[] files) throws IOException {
-        Ricetta existingRicetta = findById(id);
-        if (existingRicetta != null) {
-            existingRicetta.setNome(updatedRicetta.getNome());
-            existingRicetta.setDescrizione(updatedRicetta.getDescrizione());
 
-            List<String> urlsImages = handleFileUpload(files);
-            if (!urlsImages.isEmpty()) {
-                existingRicetta.setUrlsImages(urlsImages);
+    private void updateRigheRicetta(Ricetta existingRicetta, List<Long> ingredientiIds, List<String> quantitaList) {
+        List<RigaRicetta> existingRigheRicetta = existingRicetta.getRigheRicetta();
+        existingRigheRicetta.clear();  // Clear existing collection
+
+        for (int i = 0; i < ingredientiIds.size(); i++) {
+            Ingrediente ingrediente = ingredienteService.findById(ingredientiIds.get(i));
+            if (ingrediente != null) {
+                RigaRicetta riga = new RigaRicetta();
+                riga.setIngrediente(ingrediente);
+                riga.setQuantita(quantitaList.get(i));
+                riga.setRicetta(existingRicetta);
+                existingRigheRicetta.add(riga);
             }
-
-            // Aggiornamento delle righe ricetta
-            List<RigaRicetta> newRigheRicetta = updatedRicetta.getRigheRicetta();
-            List<RigaRicetta> existingRigheRicetta = existingRicetta.getRigheRicetta();
-
-            // Rimuovi righe che non sono presenti nel nuovo elenco
-            existingRigheRicetta.removeIf(existingRiga -> newRigheRicetta.stream()
-                    .noneMatch(newRiga -> newRiga.getId() != null && newRiga.getId().equals(existingRiga.getId())));
-
-            // Aggiungi o aggiorna righe
-            for (RigaRicetta newRiga : newRigheRicetta) {
-                if (newRiga.getId() != null) {
-                    // Aggiorna riga esistente
-                    RigaRicetta existingRiga = existingRigheRicetta.stream()
-                            .filter(r -> r.getId().equals(newRiga.getId()))
-                            .findFirst()
-                            .orElse(null);
-                    if (existingRiga != null) {
-                        existingRiga.setIngrediente(newRiga.getIngrediente());
-                        existingRiga.setQuantita(newRiga.getQuantita());
-                    }
-                } else {
-                    // Aggiungi nuova riga
-                    newRiga.setRicetta(existingRicetta);
-                    existingRigheRicetta.add(newRiga);
-                }
-            }
-
-            save(existingRicetta);
         }
     }
+
 
     private List<String> handleFileUpload(MultipartFile[] files) throws IOException {
         List<String> urlsImages = new ArrayList<>();
@@ -156,5 +118,5 @@ public class RicettaService {
         }
         return urlsImages;
     }
-
 }
+
