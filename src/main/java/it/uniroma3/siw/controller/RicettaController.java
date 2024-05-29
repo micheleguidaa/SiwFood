@@ -28,13 +28,12 @@ public class RicettaController {
     @Autowired
     private IngredienteService ingredienteService;
 
-
     @GetMapping("/ricette")
     public String showRicette(Model model) {
         model.addAttribute("ricette", ricettaService.findAll());
         return "ricette.html";
     }
-    
+
     @GetMapping("/admin/indexRicette")
     public String indexRicette(Model model) {
         model.addAttribute("ricette", ricettaService.findAll());
@@ -45,6 +44,12 @@ public class RicettaController {
     public String getRicetta(@PathVariable("id") Long id, Model model) {
         model.addAttribute("ricetta", ricettaService.findById(id));
         return "ricetta.html";
+    }
+    
+    @GetMapping("/update/ricetta/{id}")
+    public String formModifyCuoco(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("ricetta", ricettaService.findById(id));
+        return "cuoco/formModifyRicetta.html";
     }
 
     @GetMapping("/leMieRicette")
@@ -58,7 +63,7 @@ public class RicettaController {
         ricettaService.deleteById(id);
         return "redirect:/leMieRicette";
     }
-    
+
     @PostMapping("/admin/delete/ricetta/{id}")
     public String deleteRicettaByAdmin(@PathVariable("id") Long id) {
         ricettaService.deleteById(id);
@@ -94,10 +99,33 @@ public class RicettaController {
 
         try {
             ricettaService.registerRicetta(ricetta, cuocoId, files, ingredientiIds, quantitaList);
-            return "redirect:/leMieRicette";
+            return "redirect:/leMieRicette.html";
         } catch (IOException e) {
             model.addAttribute("messaggioErrore", "Errore nel caricamento delle immagini");
             return "cuoco/addRicetta.html";
+        }
+    }
+
+    @PostMapping("/update/ricetta/{id}")
+    public String updateRicetta(@PathVariable("id") Long id,
+                                @ModelAttribute("ricetta") Ricetta ricetta,
+                                BindingResult ricettaBindingResult,
+                                @RequestParam("fileImages") MultipartFile[] files,
+                                @RequestParam("ingredientiIds") List<Long> ingredientiIds,
+                                @RequestParam("quantita") List<String> quantitaList,
+                                Model model) {
+        if (ricettaBindingResult.hasErrors()) {
+            List<Ingrediente> ingredienti = (List<Ingrediente>) ingredienteService.findAll();
+            model.addAttribute("ingredienti", ingredienti);
+            return "cuoco/formModifyRicetta.html";
+        }
+
+        try {
+            ricettaService.updateRicetta(id, ricetta, files, ingredientiIds, quantitaList);
+            return "redirect:/leMieRicette.html";
+        } catch (IOException e) {
+            model.addAttribute("messaggioErrore", "Errore nel caricamento delle immagini");
+            return "cuoco/formModifyRicetta.html";
         }
     }
 }

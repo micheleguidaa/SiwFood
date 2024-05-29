@@ -6,7 +6,7 @@
 	<!-- Include la navbar -->
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-3">
         <h1 class="mb-4">Cuochi</h1>
         <div th:if="${cuochi==null || cuochi.isEmpty()}" class="alert alert-warning">
             Non ci sono cuochi nel sistema

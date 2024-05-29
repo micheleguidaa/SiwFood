@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Ricetta')}"></head>
+
+<body>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+	<div class="container form-container mt-5">
+		<h2 class="text-center mb-4">Modifica Ricetta</h2>
+		<form th:action="@{/update/ricetta/{id}(id=${ricetta.id})}" method="post" enctype="multipart/form-data">
+			<div class="row">
+
+				<!-- Colonna Immagini attuali -->
+				<div class="col-md-6">
+					<div class="card mb-4">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Immagini Attuali</h5>
+						</div>
+						<div class="card-body p-0">
+							<div class="image-container overflow-hidden">
+								<div th:each="urlImage : ${ricetta.urlsImages}">
+									<img th:src="${urlImage}" class="img-fluid rounded mb-2"
+										style="object-fit: cover; object-position: top;" alt="Immagine Ricetta" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Colonna Modifica Ricetta -->
+				<div class="col-md-6">
+					<div class="mb-3">
+						<label for="nome" class="form-label">Nome</label>
+						<input type="text" class="form-control" id="nome" name="nome" th:value="${ricetta.nome}" required>
+					</div>
+					<div class="mb-3">
+						<label for="descrizione" class="form-label">Descrizione</label>
+						<textarea class="form-control" id="descrizione" name="descrizione" rows="5" required
+							th:text="${ricetta.descrizione}"></textarea>
+					</div>
+					<div class="mb-4">
+						<label for="fileImages" class="form-label">Carica nuove foto della ricetta (opzionale)</label>
+						<input type="file" class="form-control" id="fileImages" name="fileImages" accept="image/*" multiple>
+						<div class="form-text">Assicurati di caricare foto chiare e recenti della ricetta.</div>
+					</div>
+					<button type="submit" class="btn btn-primary w-100">Salva Modifiche</button>
+				</div>
+			</div>
+
+			<div class="row mt-4">
+				<div class="col-12">
+					<h2 class="mb-4">Ingredienti</h2>
+					<div th:if="${ricetta.righeRicetta==null || ricetta.righeRicetta.isEmpty()}"
+						class="alert alert-warning">
+						Non ci sono ingredienti per la ricetta nel sistema
+					</div>
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-6" th:each="rigaRicetta, iterStat : ${ricetta.righeRicetta}">
+									<div
+										class="ingredient-item d-flex justify-content-between align-items-center p-2 border-bottom">
+										<span th:text="${rigaRicetta.ingrediente.nome}"></span>
+										<span th:text="' ' + ${rigaRicetta.quantita}"></span>
+									</div>
+								</div>
+							</div>
+							<div class="mt-3">
+								<button type="button" class="btn btn-secondary">Aggiungi Ingrediente</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+	<!-- Include il footer -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>
