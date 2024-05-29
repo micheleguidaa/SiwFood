@@ -16,12 +16,14 @@ import java.io.IOException;
 
 @Controller
 public class CuocoController {
+
     @Autowired
     private CuocoService cuocoService;
+    
     @Autowired
     private CredenzialiService credenzialiService;
 
-    @GetMapping(value = "/admin/indexCuochi")
+    @GetMapping("/indexCuochi")
     public String indexCuochi(Model model) {
         model.addAttribute("cuochi", cuocoService.findAll());
         return "admin/indexCuochi.html";
@@ -34,19 +36,16 @@ public class CuocoController {
                                 BindingResult credenzialiBindingResult,
                                 @RequestParam("fileImage") MultipartFile file,
                                 Model model) {
-        if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
-            try {
-                cuocoService.registerCuoco(cuoco, credenziali, file);
-                credenzialiService.saveCredenziali(credenziali);
-                model.addAttribute("cuoco", cuoco);
-                return "redirect:/login";
-            } catch (IOException e) {
-                e.printStackTrace();
-                model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
-                return "formRegisterCuoco.html";
-            }
-        } else {
+        if (cuocoBindingResult.hasErrors() || credenzialiBindingResult.hasErrors()) {
             model.addAttribute("messaggioErrore", "Questo cuoco esiste già o ci sono errori nei dati inseriti");
+            return "formRegisterCuoco.html";
+        }
+        try {
+            cuocoService.registerCuoco(cuoco, credenziali, file);
+            credenzialiService.saveCredenziali(credenziali);
+            return "redirect:/login";
+        } catch (IOException e) {
+            model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
             return "formRegisterCuoco.html";
         }
     }
@@ -63,36 +62,28 @@ public class CuocoController {
         return "cuoco.html";
     }
 
-    @PostMapping("/admin/delete/cuoco/{id}")
+    @PostMapping("/delete/cuoco/{id}")
     public String deleteCuoco(@PathVariable("id") Long id) {
         cuocoService.deleteById(id);
         return "redirect:/admin/indexCuochi";
     }
 
-    @GetMapping("/admin/update/cuoco/{id}")
+    @GetMapping("/update/cuoco/{id}")
     public String formEditCuoco(@PathVariable("id") Long id, Model model) {
         model.addAttribute("cuoco", cuocoService.findById(id));
         return "admin/formModifyCuoco.html";
     }
 
-    @PostMapping("/admin/update/cuoco/{id}")
+    @PostMapping("/update/cuoco/{id}")
     public String updateCuoco(@PathVariable("id") Long id,
                               @ModelAttribute("cuoco") Cuoco cuoco,
                               @RequestParam("fileImage") MultipartFile file,
                               Model model) {
-        Cuoco existingCuoco = cuocoService.findById(id);
-
-        if (existingCuoco != null) {
-            try {
-                cuocoService.updateCuoco(existingCuoco, cuoco, file);
-                return "redirect:/admin/indexCuochi";
-            } catch (IOException e) {
-                e.printStackTrace();
-                model.addAttribute("messaggioErrore", "Errore nella gestione dell'immagine");
-                return "admin/formModifyCuoco.html";
-            }
-        } else {
-            model.addAttribute("messaggioErrore", "Cuoco non trovato");
+        try {
+            cuocoService.updateCuoco(id, cuoco, file);
+            return "redirect:/admin/indexCuochi";
+        } catch (IOException e) {
+            model.addAttribute("messaggioErrore", "Errore nella gestione dell'immagine");
             return "admin/formModifyCuoco.html";
         }
     }

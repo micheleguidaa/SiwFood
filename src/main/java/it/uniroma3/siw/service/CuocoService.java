@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class CuocoService {
+
     @Autowired
     private CuocoRepository cuocoRepository;
 
@@ -41,14 +42,14 @@ public class CuocoService {
     @Transactional
     public void deleteById(Long id) {
         Optional<Cuoco> cuoco = cuocoRepository.findById(id);
-        if (cuoco.isPresent()) {
+        cuoco.ifPresent(c -> {
             try {
-                fileService.deleteFile(cuoco.get().getUrlImage(), UPLOADED_FOLDER);
+                fileService.deleteFile(c.getUrlImage(), UPLOADED_FOLDER);
                 cuocoRepository.deleteById(id);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        });
     }
 
     public void registerCuoco(Cuoco cuoco, Credenziali credenziali, MultipartFile file) throws IOException {
@@ -63,16 +64,19 @@ public class CuocoService {
         }
     }
 
-    public void updateCuoco(Cuoco existingCuoco, Cuoco updatedCuoco, MultipartFile file) throws IOException {
-        updateCuocoDetails(existingCuoco, updatedCuoco);
+    public void updateCuoco(Long id, Cuoco updatedCuoco, MultipartFile file) throws IOException {
+        Cuoco existingCuoco = findById(id);
+        if (existingCuoco != null) {
+            updateCuocoDetails(existingCuoco, updatedCuoco);
 
-        if (!file.isEmpty()) {
-            fileService.deleteFile(existingCuoco.getUrlImage(), UPLOADED_FOLDER);
-            String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
-            existingCuoco.setUrlImage(fileUrl);
+            if (!file.isEmpty()) {
+                fileService.deleteFile(existingCuoco.getUrlImage(), UPLOADED_FOLDER);
+                String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
+                existingCuoco.setUrlImage(fileUrl);
+            }
+
+            save(existingCuoco);
         }
-
-        save(existingCuoco);
     }
 
     private void updateCuocoDetails(Cuoco existingCuoco, Cuoco updatedCuoco) {
