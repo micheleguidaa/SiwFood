@@ -69,13 +69,13 @@ public class CuocoController {
     }
     
 
-    @GetMapping("/update/cuoco/{id}")
+    @GetMapping("/admin/update/cuoco/{id}")
     public String formEditCuoco(@PathVariable("id") Long id, Model model) {
         model.addAttribute("cuoco", cuocoService.findById(id));
         return "admin/formModifyCuoco.html";
     }
 
-    @PostMapping("/update/cuoco/{id}")
+    @PostMapping("/admin/update/cuoco/{id}")
     public String updateCuoco(@PathVariable("id") Long id,
                               @ModelAttribute("cuoco") Cuoco cuoco,
                               @RequestParam("fileImage") MultipartFile file,

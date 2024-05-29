@@ -58,6 +58,12 @@ public class RicettaController {
         ricettaService.deleteById(id);
         return "redirect:/leMieRicette";
     }
+    
+    @PostMapping("/admin/delete/ricetta/{id}")
+    public String deleteRicettaByAdmin(@PathVariable("id") Long id) {
+        ricettaService.deleteById(id);
+        return "redirect:/admin/indexRicette";
+    }
 
     @GetMapping("/addRicetta")
     public String addRicetta(Model model) {
