@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="it">
 
-<head th:replace="~{fragments/header :: header(title='SiwFood - Cuoco')}"></head>
+<head th:replace="~{fragments/header :: header(title='SiwFood - Cuoco')}">
+</head>
 
 <body>
-	<!-- Include la navbar -->
-	<div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-	<div class="container mt-5">
-		<div class="mt-5"></div>
-		<div class="row mb-4">
-			<div class="col-md-4">
-				<img th:src="${cuoco.urlImage}" class="cuoco-img img-fluid rounded" alt="Immagine Cuoco" />
-			</div>
-			<div class="col-md-8">
-				<h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
-				<p>
-					Voglio raccontarvi una storia. La storia di un viaggio che parte da un piccola cittadina in
-					provincia di Bologna e attraversa tutto il mondo, dalla Spagna al Libano, dal Brasile alla Turchia,
-					con il cuore sempre diviso a metà, tra l’amore per la propria terra e la voglia di scoprire paesi
-					lontani.<br><br>
-					Lo avete capito, voglio raccontarvi la mia storia.
-				</p>
-			</div>
-		</div>
-		<h2>Ricette:</h2>
-		<div th:if="${cuoco.ricette == null || cuoco.ricette.isEmpty()}" class="alert alert-warning">
-			Non ci sono ricette del cuoco nel sistema
-		</div>
-		<div class="recipe-list row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-			<div class="col" th:each="ricetta : ${cuoco.ricette}">
-				<div class="card h-100">
-					<img th:src="${ricetta.urlsImages[0]}" class="card-img-top recipe-img" alt="Immagine Ricetta" />
-					<div class="card-body">
-						<h5 class="card-title" th:text="${ricetta.nome}">Lasagna</h5>
-						<a th:href="@{'/ricetta/' + ${ricetta.id}}" class="btn btn-primary">Visualizza Ricetta</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <img th:src="${cuoco.urlImage}" class="cuoco-img img-fluid rounded" alt="Immagine Cuoco" />
+            </div>
+            <div class="col-md-8">
+                <h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
+                <p>
+                    Voglio raccontarvi una storia. La storia di un viaggio che parte da un piccola cittadina in
+                    provincia di Bologna e attraversa tutto il mondo, dalla Spagna al Libano, dal Brasile alla Turchia,
+                    con il cuore sempre diviso a metà, tra l’amore per la propria terra e la voglia di scoprire paesi
+                    lontani.<br><br>
+                    Lo avete capito, voglio raccontarvi la mia storia.
+                </p>
+            </div>
+        </div>
+        <h2>Ricette:</h2>
+        <div th:if="${cuoco.ricette == null || cuoco.ricette.isEmpty()}" class="alert alert-warning">
+            Non ci sono ricette del cuoco nel sistema
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col mb-4" th:each="ricetta : ${cuoco.ricette}">
+                <div class="card h-100">
+                    <img th:src="${ricetta.urlsImages[0]}" class="card-img-top recipe-img" alt="Immagine Ricetta" />
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${ricetta.nome}">Lasagna</h5>
+                        <a th:href="@{'/ricetta/' + ${ricetta.id}}" class="btn btn-primary">Visualizza Ricetta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- Include il footer -->
-	<div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- Include il footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
 
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
