@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class RigaRicetta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
+	@Column(nullable=false)
 	private String quantita; //q.b, 200g, 1/2 bicchiere etc.
 	
 	@ManyToOne
