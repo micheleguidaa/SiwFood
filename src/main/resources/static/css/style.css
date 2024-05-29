@@ -1,222 +1,228 @@
 :root {
-	--primary-color: #388E3C;
-	--secondary-color: #2E7D32;
-	--light-color: #C8E6C9;
-	--dark-color: #81C784;
-	--text-color: rgb(103, 107, 110);
-	--hover-text-color: rgb(129, 199, 132);
-	--white-color: #ffffff;
-	--black-color: #000000;
-	--footer-bg-color: #388E3C;
-	--card-bg-color: #ffffff;
-	--card-border-color: #ddd;
-	--card-box-shadow: rgba(0, 0, 0, 0.1);
-	--focus-shadow-color: rgba(129, 199, 132, 0.25);
+    --primary-color: #388E3C;
+    --secondary-color: #2E7D32;
+    --light-color: #C8E6C9;
+    --dark-color: #81C784;
+    --text-color: rgb(103, 107, 110);
+    --hover-text-color: rgb(129, 199, 132);
+    --white-color: #ffffff;
+    --black-color: #000000;
+    --footer-bg-color: #388E3C;
+    --card-bg-color: #ffffff;
+    --card-border-color: #ddd;
+    --card-box-shadow: rgba(0, 0, 0, 0.1);
+    --focus-shadow-color: rgba(129, 199, 132, 0.25);
 }
 
 /* Link Styles */
 a {
-	text-decoration: underline;
-	color: var(--text-color);
+    text-decoration: underline;
+    color: var(--text-color);
 }
 
 a:hover {
-	color: var(--hover-text-color);
+    color: var(--hover-text-color);
 }
 
 /* Body Styles */
 body {
-	padding-top: 3rem;
-	background-color: var(--light-color);
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+    padding-top: 3rem;
+    background-color: var(--light-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Button Styles */
 .btn-primary {
-	color: var(--white-color);
-	background-color: var(--primary-color);
-	/* Verde scuro */
-	border-color: var(--primary-color);
+    color: var(--white-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-	background-color: var(--secondary-color);
-	border-color: var(--secondary-color);
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
 }
 
 /* Navbar Styles */
 .navbar {
-	background-color: var(--dark-color);
+    background-color: var(--dark-color);
 }
 
 /* Form Container Styles */
 .form-container {
-	background-color: var(--card-bg-color);
-	padding: 2rem;
-	border-radius: 0.5rem;
-	box-shadow: 0 0.5rem 1rem var(--card-box-shadow);
+    background-color: var(--card-bg-color);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem var(--card-box-shadow);
 }
 
 .form-container h2 {
-	color: var(--primary-color);
-	text-align: center;
-	margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
 }
 
 /* Card Styles */
 .card {
-	margin: 20px;
-	padding: 10px;
-	box-shadow: 0 4px 8px var(--card-box-shadow);
-	/* Aggiungere un'ombra per la profondità */
-	transition: transform 0.3s ease-in-out;
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 8px var(--card-box-shadow);
+    transition: transform 0.3s ease-in-out;
 }
 
 .card:hover {
-	transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+/* Specific class to disable hover effect */
+.no-hover {
+    transition: none;
+}
+
+.no-hover:hover {
+    transform: none;
 }
 
 .card-body {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-body .btn {
-	margin-top: auto;
+    margin-top: auto;
 }
 
 .card-img-top {
-	height: 200px;
-	object-fit: cover;
+    height: 200px;
+    object-fit: cover;
 }
 
 .card-title {
-	color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 /* Footer Styles */
 footer {
-	color: var(--white-color);
-	background-color: var(--footer-bg-color);
+    color: var(--white-color);
+    background-color: var(--footer-bg-color);
 }
 
 /* Cuoco Image Styles */
 .cuoco-img {
-	object-fit: cover;
-	border-radius: 10px;
-	max-width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    max-width: 100%;
 }
 
 /* Recipe List Styles */
 .recipe-list ul {
-	list-style: none;
-	padding: 0;
+    list-style: none;
+    padding: 0;
 }
 
 .recipe-list li {
-	background-color: var(--card-bg-color);
-	border: 1px solid var(--card-border-color);
-	border-radius: 5px;
-	margin-bottom: 10px;
-	padding: 10px;
-	box-shadow: 0 2px 4px var(--card-box-shadow);
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px var(--card-box-shadow);
 }
 
 .recipe-list li a {
-	color: var(--primary-color);
-	font-weight: bold;
-	text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .recipe-list li a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .recipe-img {
-	width: 100%;
-	height: 200px;
-	object-fit: cover;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 /* Image Container Styles */
 .image-container img {
-	width: 100%;
-	object-fit: cover;
-	border-radius: 10px;
-	/* Per un aspetto più morbido */
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 /* Responsive Styles */
 @media (max-width: 1200px) {
-	.card {
-		margin: 15px;
-	}
+    .card {
+        margin: 15px;
+    }
 
-	.form-container {
-		padding: 1.5rem;
-	}
+    .form-container {
+        padding: 1.5rem;
+    }
 
-	footer .container {
-		padding: 1.5rem 0;
-	}
+    footer .container {
+        padding: 1.5rem 0;
+    }
 }
 
 @media (max-width: 992px) {
-	.card {
-		margin: 10px;
-	}
+    .card {
+        margin: 10px;
+    }
 
-	.form-container {
-		padding: 1rem;
-	}
+    .form-container {
+        padding: 1rem;
+    }
 
-	footer .container {
-		padding: 1rem 0;
-	}
+    footer .container {
+        padding: 1rem 0;
+    }
 }
 
 @media (max-width: 768px) {
-	.form-inline {
-		margin-right: 5px;
-	}
+    .form-inline {
+        margin-right: 5px;
+    }
 
-	.navbar .btn {
-		margin-right: 5px;
-	}
+    .navbar .btn {
+        margin-right: 5px;
+    }
 
-	.card {
-		margin: 10px 5px;
-	}
+    .card {
+        margin: 10px 5px;
+    }
 
-	.form-container {
-		padding: 0.5rem;
-	}
+    .form-container {
+        padding: 0.5rem;
+    }
 
-	footer .container {
-		padding: 0.5rem 0;
-	}
+    footer .container {
+        padding: 0.5rem 0;
+    }
 }
 
 @media (max-width: 576px) {
-	body {
-		padding-top: 2rem;
-	}
+    body {
+        padding-top: 2rem;
+    }
 
-	.card {
-		margin: 5px;
-	}
+    .card {
+        margin: 5px;
+    }
 
-	.form-container {
-		padding: 0.5rem;
-	}
+    .form-container {
+        padding: 0.5rem;
+    }
 
-	footer .container {
-		padding: 0.5rem 0;
-	}
+    footer .container {
+        padding: 0.5rem 0;
+    }
 }

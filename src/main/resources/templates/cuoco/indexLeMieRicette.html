@@ -8,7 +8,7 @@
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 	<div class="container mt-5">
-		<h1 class="mb-4">Le Mie Ricette</h1>
+		<h1 class="mb-4 text-center">Le Mie Ricette</h1>
 		<div th:if="${cuocoCorrente.ricette==null || cuocoCorrente.ricette.isEmpty()}" class="alert alert-warning">
 			Non ci sono ricette nel sistema
 		</div>

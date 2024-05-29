@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head th:replace="~{fragments/header :: header(title='SiwFood - Cuoco')}">
-    <!-- Add your other head elements here -->
     <link rel="stylesheet" href="path/to/bootstrap.min.css">
     <link rel="stylesheet" href="path/to/your-custom-styles.css">
 </head>
-
 <body>
-    <!-- Include la navbar -->
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-
     <div class="container mt-5 mb-5">
         <div class="row mb-4 align-items-center">
             <div class="col-md-4 text-center">
@@ -19,8 +14,8 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <h1 class="display-4" th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
-                <p class="text-muted" th:text="'Nato il: ' + ${cuoco.dataDiNascita}">Nato il: 12/08/1962</p>
+                <h1 class="display-4 ms-4" th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
+                <p class="text-muted lead ms-4" th:text="'Nato il: ' + ${cuoco.dataDiNascita}">Nato il: 12/08/1962</p>
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <p class="lead">
@@ -36,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <h2 class="mb-4">Ricette:</h2>
+        <h2 class="mb-4 text-center">Ricette:</h2>
         <div th:if="${cuoco.ricette == null || cuoco.ricette.isEmpty()}" class="alert alert-warning">
             Non ci sono ricette del cuoco nel sistema
         </div>
@@ -52,11 +47,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Include il footer -->
     <div th:replace="~{fragments/footer :: footer}"></div>
-
     <script src="path/to/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
