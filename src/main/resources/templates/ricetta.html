@@ -1,54 +1,92 @@
 <!DOCTYPE html>
 <html lang="it">
-<head th:replace="~{fragments/header :: header(title='SiwFood - Ricetta')}"></head>
+<head th:replace="~{fragments/header :: header(title='SiwFood - Ricetta')}">
+    <!-- Add your other head elements here -->
+    <link rel="stylesheet" href="path/to/bootstrap.min.css">
+    <link rel="stylesheet" href="path/to/your-custom-styles.css">
+</head>
 
 <body>
-	<!-- Include la navbar -->
-	<div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-	<div class="container">
-		<div class="text-center mb-5">
-		</div>
-		<div th:if="${ricetta}">
-			<h1 class="text-center mb-5" th:text="${ricetta.nome}">Lasagna</h1>
-			<div class="row mb-4">
-				<div class="col-md-6" th:each="urlImage : ${ricetta.urlsImages}">
-					<img th:src="${urlImage}" class="img-fluid rounded-4 mb-3" />
-				</div>
-				<div class="col-md-6">
-					<p class="text-justify" th:text="${ricetta.descrizione}"></p>
-				</div>
-			</div>
-		</div>
-		<div th:unless="${ricetta}" class="text-center">Non esiste</div>
+    <div class="container mt-5 mb-5">
+        <div class="text-center mb-5">
+            <h1 class="text-center mb-5" th:text="${ricetta.nome}">Lasagna</h1>
+        </div>
+        <div th:if="${ricetta}">
+            <div class="row mb-4">
+                <!-- Colonna Immagini -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Immagini Ricetta</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="ricettaCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="carouselInner">
+                                    <div th:if="${ricetta.urlsImages.size() > 0}" class="carousel-item active">
+                                        <img th:src="${ricetta.urlsImages[0]}" class="d-block w-100" alt="Immagine Ricetta" />
+                                    </div>
+                                    <div th:each="urlImage, iterStat : ${ricetta.urlsImages}">
+                                        <div class="carousel-item" th:classappend="${iterStat.index == 0 ? 'active' : ''}">
+                                            <img th:src="${urlImage}" class="d-block w-100" alt="Immagine Ricetta" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div th:if="${ricetta.urlsImages.size() > 1}">
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#ricettaCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#ricettaCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Colonna Descrizione -->
+                <div class="col-md-8">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <p class="card-text text-justify" th:text="${ricetta.descrizione}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:unless="${ricetta}" class="text-center alert alert-warning">Non esiste</div>
 
-		<div class="row">
-			<div class="col-12">
-				<h2 class="mb-4">Ingredienti</h2>
-				<div th:if="${ricetta.righeRicetta==null || ricetta.righeRicetta.isEmpty()}"
-					class="alert alert-warning">
-					Non ci sono ingredienti per la ricetta nel sistema
-				</div>
-				<div class="card">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-6" th:each="rigaRicetta, iterStat : ${ricetta.righeRicetta}">
-								<div
-									class="ingredient-item d-flex justify-content-between align-items-center p-2 border-bottom">
-									<span th:text="${rigaRicetta.ingrediente.nome}"></span>
-									<span th:text="' ' + ${rigaRicetta.quantita}"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">Ingredienti</h2>
+                <div th:if="${ricetta.righeRicetta==null || ricetta.righeRicetta.isEmpty()}"
+                    class="alert alert-warning">
+                    Non ci sono ingredienti per la ricetta nel sistema
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6" th:each="rigaRicetta, iterStat : ${ricetta.righeRicetta}">
+                                <div class="ingredient-item d-flex justify-content-between align-items-center p-2 border-bottom">
+                                    <span th:text="${rigaRicetta.ingrediente.nome}"></span>
+                                    <span th:text="' ' + ${rigaRicetta.quantita}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- Include il footer -->
-	<div th:replace="~{fragments/footer :: footer}"></div>
-	
+    <!-- Include il footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="path/to/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
