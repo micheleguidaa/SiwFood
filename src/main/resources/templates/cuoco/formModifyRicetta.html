@@ -83,9 +83,9 @@
 						<div th:each="rigaRicetta : ${ricetta.righeRicetta}"
 							class="row align-items-center mb-2 ingredienti-group">
 							<div class="col-md-6">
-								<select select class="form-control" name="ingredientiIds" >
-									<option th:each="ing : ${ingredienti}" th:value="${rigaRicetta.id}"
-									th:text="${rigaRicetta.ingrediente.nome}" ></option>
+								<select class="form-control" name="ingredientiIds">
+									<option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}"
+										th:selected="${ing.id == rigaRicetta.ingrediente.id}"></option>
 								</select>
 							</div>
 							<div class="col-md-4">
@@ -105,12 +105,12 @@
 								<div class="col-md-6">
 									<select class="form-control" required>
 										<option th:each="ing : ${ingredienti}" th:value="${ing.id}"
-											th:text="${ing.nome}">Ingrediente</option>
+											th:text="${ing.nome}">
+											Ingrediente</option>
 									</select>
 								</div>
 								<div class="col-md-4">
-									<input type="text" class="form-control"
-										placeholder="Quantità">
+									<input type="text" class="form-control" placeholder="Quantità">
 								</div>
 								<div class="col-md-1 p-0">
 									<button type="button" class="btn btn-danger remove-ingrediente">
