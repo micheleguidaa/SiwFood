@@ -2,68 +2,121 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/header :: header('Aggiungi Ingrediente')">
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Definisce uno stile per i contenitori con scorrimento */
+        .scrollable-container {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        /* Stile per le immagini all'interno del contenitore */
+        .image-container img {
+            width: 100%;
+            object-fit: cover;
+            max-height: 220px;
+            min-height: 280px;
+        }
+    </style>
 </head>
 
 <body>
-	<div th:replace="fragments/navbar :: navbar"></div>
-	<div class="container mt-5">
-		<div class="form-container">
-			<h2 class="text-center mb-4">Aggiungi Ingredienti</h2>
-			<div class="row">
-				<div class="col-md-7">
-					<div class="card mb-4">
-						<div class="card-body p-0 image-container">
-							<img src="/images/Ingredienti.jpeg" alt="Ingredienti" class="img-fluid">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5">
-					<form th:action="@{/aggiungiIngredienti}" method="post">
-						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-						<div id="ingredienti-container">
-							<div class="form-group">
-								<label for="nome-0" class="form-label">Nome Ingrediente</label>
-								<input type="text" class="form-control" id="nome-0" name="ingredienti"
-									placeholder="Nome dell'ingrediente" required>
-							</div>
-						</div>
-						<div class="text-center">
-							<button type="button" class="btn btn-primary mt-3" onclick="aggiungiIngrediente()">
-								<i class="fas fa-plus"></i> Aggiungi Altro Ingrediente
-							</button>
-						</div>
-						<div class="text-center">
-							<button type="submit" class="btn btn-success mt-3">
-								<i class="fas fa-save"></i> Salva Ingredienti
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div th:replace="fragments/footer :: footer"></div>
+    <!-- Include la navbar dal frammento specificato -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container mt-5">
+        <div class="form-container">
+            <h2 class="text-center mb-4">Aggiungi Ingredienti</h2>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="card mb-4">
+                        <div class="card-body p-0 image-container">
+                            <!-- Immagine degli ingredienti -->
+                            <img src="/images/Ingredienti.jpeg" alt="Ingredienti" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <!-- Form per l'aggiunta degli ingredienti -->
+                    <form th:action="@{/aggiungiIngredienti}" method="post">
+                        <!-- CSRF token per la sicurezza -->
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <div id="ingredienti-container" class="scrollable-container overflow-auto" style="max-height: 400px;">
+                            <div class="form-group ingredienti-group">
+                                <label for="nome-0" class="form-label">Nome Ingrediente</label>
+                                <div class="input-group mb-3 ">
+                                    <input type="text" class="form-control" id="nome-0" name="ingredienti" placeholder="Nome dell'ingrediente" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-danger remove-ingrediente ms-3 " type="button" onclick="eliminaIngrediente(this)">
+                                            <!-- Icona del cestino per rimuovere un ingrediente -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <!-- Bottone per aggiungere un altro ingrediente -->
+                            <button type="button" class="btn btn-primary mt-3" onclick="aggiungiIngrediente()">
+                                <i class="fas fa-plus"></i> Aggiungi Altro Ingrediente
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <!-- Bottone per salvare gli ingredienti -->
+                            <button type="submit" class="btn btn-success mt-3">
+                                <i class="fas fa-save"></i> Salva Ingredienti
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Include il footer dal frammento specificato -->
+    <div th:replace="fragments/footer :: footer"></div>
 
-	<!-- Script per Bootstrap e gestione dinamica degli ingredienti -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-	<script>
-		let ingredienteIndex = 1;
+    <!-- Script per Bootstrap e gestione dinamica degli ingredienti -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        let ingredienteIndex = 1;
 
-		function aggiungiIngrediente() {
-			const ingredientiContainer = document.getElementById('ingredienti-container');
-			const newIngredienteDiv = document.createElement('div');
-			newIngredienteDiv.classList.add('form-group');
-			newIngredienteDiv.innerHTML = `
+        function aggiungiIngrediente() {
+            // Trova il contenitore degli ingredienti
+            const ingredientiContainer = document.getElementById('ingredienti-container');
+            // Crea un nuovo div per un nuovo ingrediente
+            const newIngredienteDiv = document.createElement('div');
+            newIngredienteDiv.classList.add('form-group', 'ingredienti-group');
+            newIngredienteDiv.innerHTML = `
                 <label for="nome-${ingredienteIndex}" class="form-label">Nome Ingrediente</label>
-                <input type="text" class="form-control" id="nome-${ingredienteIndex}" name="ingredienti" placeholder="Nome dell'ingrediente" required>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="nome-${ingredienteIndex}" name="ingredienti" placeholder="Nome dell'ingrediente" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-danger remove-ingrediente ms-3" type="button" onclick="eliminaIngrediente(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             `;
-			ingredientiContainer.appendChild(newIngredienteDiv);
-			ingredienteIndex++;
-		}
-	</script>
+            // Aggiunge il nuovo div al contenitore
+            ingredientiContainer.appendChild(newIngredienteDiv);
+            // Incrementa l'indice per il prossimo ingrediente
+            ingredienteIndex++;
+        }
+
+        function eliminaIngrediente(button) {
+            // Trova il gruppo di ingredienti e lo rimuove
+            const ingredientiGroup = button.closest('.ingredienti-group');
+            ingredientiGroup.remove();
+        }
+    </script>
 </body>
 
 </html>
