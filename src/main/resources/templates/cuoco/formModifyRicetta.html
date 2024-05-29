@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it"></html>
+<html lang="it">
 
 <head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Ricetta')}">
 	<style>
@@ -76,59 +76,60 @@
 				</div>
 
 				<!-- Colonna Ingredienti -->
-				<div class="col-md-4 ">
+				<div class="col-md-4">
 					<div>Ingredienti</div>
 					<div id="ingredienti-section" class="scrollable-container overflow-auto" style="max-height: 350px;">
 						<!-- Visualizza le righe ricetta esistenti -->
-						<div th:each="rigaRicetta, iterStat : ${ricetta.righeRicetta}"
+						<div th:each="rigaRicetta : ${ricetta.righeRicetta}"
 							class="row align-items-center mb-2 ingredienti-group">
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="ingrediente"
-									th:value="${rigaRicetta.ingrediente.nome}" placeholder="Ingrediente">
+								<select select class="form-control" name="ingredientiIds" >
+									<option th:each="ing : ${ingredienti}" th:value="${rigaRicetta.id}"
+									th:text="${rigaRicetta.ingrediente.nome}" ></option>
+								</select>
 							</div>
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="quantita"
+								<input type="text" class="form-control" name="rigaRicetta.quantita"
 									th:value="${rigaRicetta.quantita}" placeholder="Quantità">
 							</div>
-							<div class="col-md-1  p-0">
+							<div class="col-md-1 p-0">
 								<button type="button" class="btn btn-danger remove-ingrediente">
 									<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
 								</button>
-
 							</div>
 						</div>
 						<!-- Template per aggiungere nuovi ingredienti -->
 						<template id="ingredient-template">
 							<div class="row align-items-center mb-2 ingredienti-group">
+								<input type="hidden" name="righeRicetta[${ricetta.righeRicetta.size()}].id">
 								<div class="col-md-6">
-									<select class="form-control" name="ingredientiIds" required>
+									<select class="form-control" required>
 										<option th:each="ing : ${ingredienti}" th:value="${ing.id}"
 											th:text="${ing.nome}">Ingrediente</option>
 									</select>
 								</div>
-								<div class="col-md-4 ">
-									<input type="text" class="form-control" name="quantita" placeholder="Quantità">
+								<div class="col-md-4">
+									<input type="text" class="form-control"
+										placeholder="Quantità">
 								</div>
-								<div class="col-md-1  p-0">
+								<div class="col-md-1 p-0">
 									<button type="button" class="btn btn-danger remove-ingrediente">
 										<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
-
 									</button>
 								</div>
 							</div>
 						</template>
 					</div>
-
 					<div class="d-flex justify-content-center">
 						<button type="button" class="btn btn-primary mb-3" id="add-ingrediente">Aggiungi
 							Ingrediente</button>
 					</div>
-
 					<div class="d-flex justify-content-center">
-						<a href="/addIngredienti" class=" text-primary mb-3">Non trovi l'ingrediente che cerchi?
+						<a href="/addIngredienti" class="text-primary mb-3">Non trovi l'ingrediente che cerchi?
 							Aggiungilo qui!</a>
 					</div>
 				</div>
+
 			</div>
 		</form>
 	</div>

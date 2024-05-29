@@ -115,7 +115,32 @@ public class RicettaService {
                 existingRicetta.setUrlsImages(urlsImages);
             }
 
-            
+            // Aggiornamento delle righe ricetta
+            List<RigaRicetta> newRigheRicetta = updatedRicetta.getRigheRicetta();
+            List<RigaRicetta> existingRigheRicetta = existingRicetta.getRigheRicetta();
+
+            // Rimuovi righe che non sono presenti nel nuovo elenco
+            existingRigheRicetta.removeIf(existingRiga -> newRigheRicetta.stream()
+                    .noneMatch(newRiga -> newRiga.getId() != null && newRiga.getId().equals(existingRiga.getId())));
+
+            // Aggiungi o aggiorna righe
+            for (RigaRicetta newRiga : newRigheRicetta) {
+                if (newRiga.getId() != null) {
+                    // Aggiorna riga esistente
+                    RigaRicetta existingRiga = existingRigheRicetta.stream()
+                            .filter(r -> r.getId().equals(newRiga.getId()))
+                            .findFirst()
+                            .orElse(null);
+                    if (existingRiga != null) {
+                        existingRiga.setIngrediente(newRiga.getIngrediente());
+                        existingRiga.setQuantita(newRiga.getQuantita());
+                    }
+                } else {
+                    // Aggiungi nuova riga
+                    newRiga.setRicetta(existingRicetta);
+                    existingRigheRicetta.add(newRiga);
+                }
+            }
 
             save(existingRicetta);
         }
@@ -131,4 +156,5 @@ public class RicettaService {
         }
         return urlsImages;
     }
+
 }

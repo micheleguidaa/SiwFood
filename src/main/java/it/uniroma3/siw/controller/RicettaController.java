@@ -48,7 +48,10 @@ public class RicettaController {
     
     @GetMapping("/update/ricetta/{id}")
     public String formModifyCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("ricetta", ricettaService.findById(id));
+        Ricetta ricetta = ricettaService.findById(id);
+        List<Ingrediente> ingredienti = (List<Ingrediente>) ingredienteService.findAll();
+        model.addAttribute("ricetta", ricetta);
+        model.addAttribute("ingredienti", ingredienti);
         return "cuoco/formModifyRicetta";
     }
 
@@ -113,7 +116,7 @@ public class RicettaController {
                                 @RequestParam("fileImages") MultipartFile[] files,
                                 Model model) {
         if (ricettaBindingResult.hasErrors()) {
-            List<Ingrediente> ingredienti = (List<Ingrediente>) ingredienteService.findAll();
+            List<Ingrediente> ingredienti = (List<Ingrediente>)ingredienteService.findAll();
             model.addAttribute("ingredienti", ingredienti);
             return "cuoco/formModifyRicetta";
         }
@@ -126,4 +129,5 @@ public class RicettaController {
             return "cuoco/formModifyRicetta";
         }
     }
+
 }
