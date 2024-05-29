@@ -59,16 +59,16 @@ public class RicettaController {
         return "admin/indexRicette.html";
     }
 
-    @GetMapping("/le-mie-ricette")
+    @GetMapping("/leMieRicette")
     public String showLeMieRicette(Model model) {
         model.addAttribute("ricette", ricettaService.findAll());
-        return "cuoco/indexRicettePersonali.html";
+        return "cuoco/indexLeMieRicette.html";
     }
 
     @PostMapping("/delete/ricetta/{id}")
     public String deleteCuoco(@PathVariable("id") Long id) {
         ricettaService.deleteById(id);
-        return "redirect:/le-mie-ricette";
+        return "redirect:/leMieRicette";
     }
 
     @GetMapping("/addRicetta")
