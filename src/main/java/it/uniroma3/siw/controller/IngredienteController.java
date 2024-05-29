@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.uniroma3.siw.model.Ingrediente;
-import it.uniroma3.siw.repository.IngredienteRepository;
+import it.uniroma3.siw.service.IngredienteService;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class IngredienteController {
 
     @Autowired
-    private IngredienteRepository ingredienteRepository;
+    private IngredienteService ingredienteService;
 
     @GetMapping("/addIngredienti")
     public String showAddIngredienteForm(Model model) {
@@ -25,13 +24,7 @@ public class IngredienteController {
 
     @PostMapping("/aggiungiIngredienti")
     public String addIngrediente(@RequestParam("ingredienti") List<String> ingredienti, Model model) {
-        for (String nomeIngrediente : ingredienti) {
-            Ingrediente ingrediente = new Ingrediente();
-            ingrediente.setNome(nomeIngrediente);
-            ingredienteRepository.save(ingrediente);
-        }
-
-        // Redirect to the previous page URL
+        ingredienteService.addIngredienti(ingredienti);
         return "redirect:/addRicetta";
     }
 }
