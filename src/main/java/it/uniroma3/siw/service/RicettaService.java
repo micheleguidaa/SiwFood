@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Cuoco;
+import it.uniroma3.siw.model.Ingrediente;
 import it.uniroma3.siw.model.Ricetta;
+import it.uniroma3.siw.model.RigaRicetta;
 import it.uniroma3.siw.repository.RicettaRepository;
 
 import jakarta.transaction.Transactional;
@@ -26,6 +28,9 @@ public class RicettaService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private IngredienteService ingredienteService;
+
     private static final String UPLOAD_DIR = "uploads/ricette2/";
 
     public Ricetta findById(Long id) {
@@ -45,12 +50,25 @@ public class RicettaService {
         ricettaRepository.save(ricetta);
     }
 
-    public void registerRicetta(Ricetta ricetta, Long cuocoId, MultipartFile[] files) throws IOException {
+    public void registerRicetta(Ricetta ricetta, Long cuocoId, MultipartFile[] files, List<Long> ingredientiIds, List<String> quantitaList) throws IOException {
         Cuoco cuoco = cuocoService.findById(cuocoId);
         ricetta.setCuoco(cuoco);
 
         List<String> urlsImages = handleFileUpload(files);
         ricetta.setUrlsImages(urlsImages);
+
+        List<RigaRicetta> righeRicetta = new ArrayList<>();
+        for (int i = 0; i < ingredientiIds.size(); i++) {
+            Ingrediente ingrediente = ingredienteService.findById(ingredientiIds.get(i));
+            if (ingrediente != null) {
+                RigaRicetta riga = new RigaRicetta();
+                riga.setIngrediente(ingrediente);
+                riga.setQuantita(quantitaList.get(i));
+                riga.setRicetta(ricetta);
+                righeRicetta.add(riga);
+            }
+        }
+        ricetta.setRigheRicetta(righeRicetta);
 
         save(ricetta);
     }

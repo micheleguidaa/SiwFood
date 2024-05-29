@@ -24,4 +24,8 @@ public class IngredienteService {
             ingredienteRepository.save(ingrediente);
         }
     }
+    
+    public Ingrediente findById(Long id) {
+    	return ingredienteRepository.findById(id).orElse(null);
+    }
 }
