@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="it">
 <head th:replace="~{fragments/header :: header(title='SiwFood - Ricetta')}">
-    <!-- Add your other head elements here -->
     <link rel="stylesheet" href="path/to/bootstrap.min.css">
     <link rel="stylesheet" href="path/to/your-custom-styles.css">
 </head>
-
 <body>
-    <!-- Include la navbar -->
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-
     <div class="container mt-5 mb-5">
         <div class="text-center mb-5">
-            <h1 class="text-center mb-5" th:text="${ricetta.nome}">Lasagna</h1>
+            <h1 class="display-4" th:text="${ricetta.nome}">Lasagna</h1>
         </div>
         <div th:if="${ricetta}">
             <div class="row mb-4">
-                <!-- Colonna Immagini -->
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -48,23 +43,20 @@
                         </div>
                     </div>
                 </div>
-                <!-- Colonna Descrizione -->
                 <div class="col-md-8">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
-                            <p class="card-text text-justify" th:text="${ricetta.descrizione}"></p>
+                            <p class="card-text text-justify lead" th:text="${ricetta.descrizione}"></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div th:unless="${ricetta}" class="text-center alert alert-warning">Non esiste</div>
-
         <div class="row">
             <div class="col-12">
                 <h2 class="mb-4">Ingredienti</h2>
-                <div th:if="${ricetta.righeRicetta==null || ricetta.righeRicetta.isEmpty()}"
-                    class="alert alert-warning">
+                <div th:if="${ricetta.righeRicetta==null || ricetta.righeRicetta.isEmpty()}" class="alert alert-warning">
                     Non ci sono ingredienti per la ricetta nel sistema
                 </div>
                 <div class="card shadow-sm">
@@ -82,11 +74,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Include il footer -->
     <div th:replace="~{fragments/footer :: footer}"></div>
-
     <script src="path/to/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
