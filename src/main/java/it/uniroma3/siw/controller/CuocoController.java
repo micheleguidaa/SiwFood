@@ -23,7 +23,7 @@ public class CuocoController {
     @Autowired
     private CredenzialiService credenzialiService;
 
-    @GetMapping("/indexCuochi")
+    @GetMapping("/admin/indexCuochi")
     public String indexCuochi(Model model) {
         model.addAttribute("cuochi", cuocoService.findAll());
         return "admin/indexCuochi.html";
@@ -61,12 +61,13 @@ public class CuocoController {
         model.addAttribute("cuoco", cuocoService.findById(id));
         return "cuoco.html";
     }
-
-    @PostMapping("/delete/cuoco/{id}")
+    
+    @PostMapping("/admin/delete/cuoco/{id}")
     public String deleteCuoco(@PathVariable("id") Long id) {
         cuocoService.deleteById(id);
         return "redirect:/admin/indexCuochi";
     }
+    
 
     @GetMapping("/update/cuoco/{id}")
     public String formEditCuoco(@PathVariable("id") Long id, Model model) {
