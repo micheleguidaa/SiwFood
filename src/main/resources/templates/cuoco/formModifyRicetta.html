@@ -1,6 +1,21 @@
 <!DOCTYPE html>
-<html lang="it">
-<head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Ricetta')}"></head>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Ricetta')}">
+	<style>
+		.image-container img {
+			width: 100%;
+			object-fit: cover;
+			max-height: 280px;
+			min-height: 280px;
+		}
+
+		.scrollable-container {
+			max-height: 300px;
+			overflow-y: auto;
+		}
+	</style>
+</head>
 
 <body>
 	<!-- Include la navbar -->
@@ -10,76 +25,148 @@
 		<h2 class="text-center mb-4">Modifica Ricetta</h2>
 		<form th:action="@{/update/ricetta/{id}(id=${ricetta.id})}" method="post" enctype="multipart/form-data">
 			<div class="row">
-
 				<!-- Colonna Immagini attuali -->
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="card mb-4">
 						<div class="card-header">
 							<h5 class="card-title mb-0">Immagini Attuali</h5>
 						</div>
 						<div class="card-body p-0">
-							<div class="image-container overflow-hidden">
-								<div th:each="urlImage : ${ricetta.urlsImages}">
-									<img th:src="${urlImage}" class="img-fluid rounded mb-2"
-										style="object-fit: cover; object-position: top;" alt="Immagine Ricetta" />
+							<div id="ricettaCarousel" class="carousel slide" data-bs-ride="carousel">
+								<div class="carousel-inner" id="carouselInner">
+									<div th:each="urlImage, iterStat : ${ricetta.urlsImages}" class="carousel-item"
+										th:classappend="${iterStat.index == 0} ? 'active'">
+										<img th:src="${urlImage}" class="d-block w-100" alt="Immagine Ricetta" />
+									</div>
 								</div>
+								<button class="carousel-control-prev" type="button" data-bs-target="#ricettaCarousel"
+									data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button" data-bs-target="#ricettaCarousel"
+									data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 
 				<!-- Colonna Modifica Ricetta -->
-				<div class="col-md-6">
-					<div class="mb-3">
+				<div class="col-md-4">
+					<div class="md-3">
 						<label for="nome" class="form-label">Nome</label>
-						<input type="text" class="form-control" id="nome" name="nome" th:value="${ricetta.nome}" required>
+						<input type="text" class="form-control" id="nome" name="nome" th:value="${ricetta.nome}"
+							required>
 					</div>
-					<div class="mb-3">
+					<div class="md-3">
 						<label for="descrizione" class="form-label">Descrizione</label>
 						<textarea class="form-control" id="descrizione" name="descrizione" rows="5" required
 							th:text="${ricetta.descrizione}"></textarea>
 					</div>
-					<div class="mb-4">
+					<div class="md-4">
 						<label for="fileImages" class="form-label">Carica nuove foto della ricetta (opzionale)</label>
-						<input type="file" class="form-control" id="fileImages" name="fileImages" accept="image/*" multiple>
+						<input type="file" class="form-control" id="fileImages" name="fileImages" accept="image/*"
+							multiple onchange="loadFiles(event)">
 						<div class="form-text">Assicurati di caricare foto chiare e recenti della ricetta.</div>
 					</div>
 					<button type="submit" class="btn btn-primary w-100">Salva Modifiche</button>
 				</div>
-			</div>
 
-			<div class="row mt-4">
-				<div class="col-12">
-					<h2 class="mb-4">Ingredienti</h2>
-					<div th:if="${ricetta.righeRicetta==null || ricetta.righeRicetta.isEmpty()}"
-						class="alert alert-warning">
-						Non ci sono ingredienti per la ricetta nel sistema
-					</div>
-					<div class="card">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-6" th:each="rigaRicetta, iterStat : ${ricetta.righeRicetta}">
-									<div
-										class="ingredient-item d-flex justify-content-between align-items-center p-2 border-bottom">
-										<span th:text="${rigaRicetta.ingrediente.nome}"></span>
-										<span th:text="' ' + ${rigaRicetta.quantita}"></span>
-									</div>
-								</div>
+				<!-- Colonna Ingredienti -->
+				<div class="col-md-4 ">
+					<div>Ingredienti</div>
+					<div id="ingredienti-section" class="scrollable-container overflow-auto" style="max-height: 350px;">
+						<!-- Visualizza le righe ricetta esistenti -->
+						<div th:each="rigaRicetta, iterStat : ${ricetta.righeRicetta}"
+							class="row align-items-center mb-2 ingredienti-group">
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="ingrediente"
+									th:value="${rigaRicetta.ingrediente.nome}" placeholder="Ingrediente">
 							</div>
-							<div class="mt-3">
-								<button type="button" class="btn btn-secondary">Aggiungi Ingrediente</button>
+							<div class="col-md-3">
+								<input type="text" class="form-control" name="quantita"
+									th:value="${rigaRicetta.quantita}" placeholder="Quantità">
+							</div>
+							<div class="col-md-1  p-0">
+								<button type="button" class="btn btn-danger remove-ingrediente">
+									<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
+								</button>
+
 							</div>
 						</div>
+						<!-- Template per aggiungere nuovi ingredienti -->
+						<template id="ingredient-template">
+							<div class="row align-items-center mb-2 ingredienti-group">
+								<div class="col-md-6">
+									<select class="form-control" name="ingredientiIds" required>
+										<option th:each="ing : ${ingredienti}" th:value="${ing.id}"
+											th:text="${ing.nome}">Ingrediente</option>
+									</select>
+								</div>
+								<div class="col-md-3 ">
+									<input type="text" class="form-control" name="quantita" placeholder="Quantità">
+								</div>
+								<div class="col-md-1  p-0">
+									<button type="button" class="btn btn-danger remove-ingrediente">
+										<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
+
+									</button>
+								</div>
+							</div>
+						</template>
+					</div>
+
+					<div class="d-flex justify-content-center">
+						<button type="button" class="btn btn-primary mb-3" id="add-ingrediente">Aggiungi
+							Ingrediente</button>
+					</div>
+
+					<div class="d-flex justify-content-center">
+						<a href="/addIngredienti" class=" text-primary mb-3">Non trovi l'ingrediente che cerchi?
+							Aggiungilo qui!</a>
 					</div>
 				</div>
 			</div>
-
 		</form>
 	</div>
 
 	<!-- Include il footer -->
 	<div th:replace="~{fragments/footer :: footer}"></div>
 
+	<!-- Script per la preview delle nuove immagini e la gestione degli ingredienti -->
+	<script>
+		function loadFiles(event) {
+			const files = event.target.files;
+			const carouselInner = document.getElementById('carouselInner');
+			carouselInner.innerHTML = '';
+
+			for (let i = 0; i < files.length; i++) {
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					const div = document.createElement('div');
+					div.className = 'carousel-item';
+					if (i === 0) div.classList.add('active');
+					div.innerHTML = `<img src="${e.target.result}" class="d-block w-100" alt="Immagine Ricetta ${i + 1}" />`;
+					carouselInner.appendChild(div);
+				};
+				reader.readAsDataURL(files[i]);
+			}
+		}
+
+		document.getElementById('add-ingrediente').addEventListener('click', function () {
+			const template = document.getElementById('ingredient-template').content.cloneNode(true);
+			document.getElementById('ingredienti-section').appendChild(template);
+		});
+
+		document.addEventListener('click', function (e) {
+			if (e.target && e.target.classList.contains('remove-ingrediente')) {
+				e.target.closest('.ingredienti-group').remove();
+			}
+		});
+	</script>
 </body>
 
 </html>

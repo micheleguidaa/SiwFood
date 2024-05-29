@@ -19,35 +19,12 @@ public class CuocoController {
 
     @Autowired
     private CuocoService cuocoService;
-    
-    @Autowired
-    private CredenzialiService credenzialiService;
+
 
     @GetMapping("/admin/indexCuochi")
     public String indexCuochi(Model model) {
         model.addAttribute("cuochi", cuocoService.findAll());
         return "admin/indexCuochi.html";
-    }
-
-    @PostMapping("/registerCuoco")
-    public String registerCuoco(@ModelAttribute("cuoco") Cuoco cuoco,
-                                BindingResult cuocoBindingResult, 
-                                @ModelAttribute("credenziali") Credenziali credenziali,
-                                BindingResult credenzialiBindingResult,
-                                @RequestParam("fileImage") MultipartFile file,
-                                Model model) {
-        if (cuocoBindingResult.hasErrors() || credenzialiBindingResult.hasErrors()) {
-            model.addAttribute("messaggioErrore", "Questo cuoco esiste già o ci sono errori nei dati inseriti");
-            return "formRegisterCuoco.html";
-        }
-        try {
-            cuocoService.registerCuoco(cuoco, credenziali, file);
-            credenzialiService.saveCredenziali(credenziali);
-            return "redirect:/login";
-        } catch (IOException e) {
-            model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
-            return "formRegisterCuoco.html";
-        }
     }
 
     @GetMapping("/cuochi")

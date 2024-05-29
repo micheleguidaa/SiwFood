@@ -102,6 +102,24 @@ public class RicettaService {
             save(existingRicetta);
         }
     }
+    
+    @Transactional
+    public void updateRicetta(Long id, Ricetta updatedRicetta, MultipartFile[] files) throws IOException {
+        Ricetta existingRicetta = findById(id);
+        if (existingRicetta != null) {
+            existingRicetta.setNome(updatedRicetta.getNome());
+            existingRicetta.setDescrizione(updatedRicetta.getDescrizione());
+
+            List<String> urlsImages = handleFileUpload(files);
+            if (!urlsImages.isEmpty()) {
+                existingRicetta.setUrlsImages(urlsImages);
+            }
+
+            
+
+            save(existingRicetta);
+        }
+    }
 
     private List<String> handleFileUpload(MultipartFile[] files) throws IOException {
         List<String> urlsImages = new ArrayList<>();
