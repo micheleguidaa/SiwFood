@@ -12,6 +12,7 @@
 		<h2 class="text-center mb-4">Aggiungi Nuovo Cuoco</h2>
 		<form th:action="@{/registerCuoco}" method="post" enctype="multipart/form-data">
 			<div class="row">
+
 				<!-- Colonna Immagine -->
 				<div class="col-md-4">
 					<div class="card mb-4">
@@ -38,6 +39,8 @@
 					<div class="mb-3">
 						<label for="cognome" class="form-label">Cognome</label>
 						<input type="text" class="form-control" id="cognome" name="cognome" required>
+						<span th:if="${#fields.hasErrors('cuoco.cognome')}" th:errors="${cuoco.cognome   }"
+							th:style="'color:red'"></span>
 					</div>
 					<div class="mb-3">
 						<label for="dataDiNascita" class="form-label">Data di Nascita</label>
@@ -66,7 +69,7 @@
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Password</label>
-						<div class="input-group">
+						<div class="input-group">+
 							<input type="password" class="form-control" id="password" name="password" required>
 							<span th:if="${#fields.hasErrors('credenziali.password')}"
 								th:errors="${credenziali.password}" th:style="'color:red'"></span>
