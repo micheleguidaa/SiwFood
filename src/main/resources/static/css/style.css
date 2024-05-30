@@ -165,6 +165,16 @@ footer {
     border-radius: 10px;
 }
 
+.scrollable-container {
+    max-height: 240px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.remove-ingrediente img {
+    filter: invert(1);
+}
+
 /* Responsive Styles */
 @media (max-width: 1200px) {
     .card {

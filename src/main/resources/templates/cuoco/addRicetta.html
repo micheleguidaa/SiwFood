@@ -6,7 +6,7 @@
 
 <body>
 	<div th:replace="fragments/navbar :: navbar"></div>
-	<div class="container mt-5 form-container ">
+	<div class="container mt-5 form-container mb-5">
 		<h2 class="text-center mb-4">Aggiungi Ricetta</h2>
 		<form th:action="@{/addRicetta}" method="post" enctype="multipart/form-data">
 			<!-- Aggiungi il campo nascosto per l'ID del cuoco -->
@@ -66,23 +66,22 @@
 				<div class="col-md-4">
 					<!-- Sezione Ingredienti -->
 					<div>Ingredienti</div>
-					<div id="ingredienti-section" class="scrollable-container overflow-auto" style="max-height: 240px;">
+					<div id="ingredienti-section" class="scrollable-container">
 						<!-- Template per gli ingredienti -->
 						<template id="ingredient-template">
 							<div class="row align-items-center mb-2 ingredienti-group">
-								<div class="col-md-6 p-1">
+								<div class="col-7">
 									<select class="form-control" name="ingredientiIds" required>
 										<option th:each="ing : ${ingredienti}" th:value="${ing.id}"
 											th:text="${ing.nome}">Ingrediente</option>
 									</select>
 								</div>
-								<div class="col-md-4  p-2">
+								<div class="col-3 p-1">
 									<input type="text" class="form-control" name="quantita" placeholder="Quantità">
 								</div>
-								<div class="col-md-1  p-0">
+								<div class="col-1 p-0">
 									<button type="button" class="btn btn-danger remove-ingrediente">
-										<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
-
+										<img src="/images/trash.svg" alt="Remove" class="remove-ingrediente-img">
 									</button>
 								</div>
 							</div>
@@ -95,10 +94,11 @@
 					</div>
 
 					<div class="d-flex justify-content-center">
-						<a href="/addIngredienti" class=" text-primary mb-3">Non trovi l'ingrediente che cerchi?
+						<a href="/addIngredienti" class="text-primary mb-3">Non trovi l'ingrediente che cerchi?
 							Aggiungilo qui!</a>
 					</div>
 				</div>
+
 
 				<button type="submit" class="btn btn-success mt-1">Salva Ricetta</button>
 		</form>
