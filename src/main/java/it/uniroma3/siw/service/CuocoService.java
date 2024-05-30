@@ -20,6 +20,9 @@ public class CuocoService {
 
     @Autowired
     private FileService fileService;
+    
+    @Autowired
+    private CredenzialiService credenzialiService;
 
     private static final String UPLOADED_FOLDER = "uploads/cuochi2/";
 
@@ -62,9 +65,9 @@ public class CuocoService {
             }
             credenziali.setCuoco(cuoco);
             credenziali.setRuolo(Credenziali.DEFAULT_ROLE);
+            
             save(cuoco);
-            // Save credenziali to the appropriate repository or service
-            // credenzialiService.saveCredenziali(credenziali); 
+            credenzialiService.saveCredenziali(credenziali); 
         }
     }
 
@@ -89,4 +92,8 @@ public class CuocoService {
         existingCuoco.setCognome(updatedCuoco.getCognome());
         existingCuoco.setDataDiNascita(updatedCuoco.getDataDiNascita());
     }
+
+	public long countCuochi() {
+		return cuocoRepository.count();
+	}
 }

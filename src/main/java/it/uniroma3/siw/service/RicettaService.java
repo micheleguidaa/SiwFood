@@ -118,5 +118,9 @@ public class RicettaService {
         }
         return urlsImages;
     }
+
+	public long countRicette() {
+		return ricettaRepository.count();
+	}
 }
 

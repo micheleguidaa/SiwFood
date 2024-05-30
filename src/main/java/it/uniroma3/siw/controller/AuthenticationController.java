@@ -22,6 +22,7 @@ import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.CuocoService;
+import it.uniroma3.siw.service.RicettaService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -31,6 +32,9 @@ public class AuthenticationController {
 	
     @Autowired
     private CuocoService cuocoService;
+    
+    @Autowired
+    private RicettaService ricettaService;
     
     @Autowired
     private CuocoValidator cuocoValidator;
@@ -53,6 +57,10 @@ public class AuthenticationController {
 			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Credenziali credentials = credenzialiService.getCredenziali(userDetails.getUsername());
 			if (credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
+            	long numeroCuochi = cuocoService.countCuochi();
+                long numeroRicette = ricettaService.countRicette();
+                model.addAttribute("numeroCuochi", numeroCuochi);
+                model.addAttribute("numeroRicette", numeroRicette);
 				return "admin/indexAdmin.html";
 			}
 		}
