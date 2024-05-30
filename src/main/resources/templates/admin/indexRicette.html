@@ -7,7 +7,7 @@
 	<!-- Include la navbar -->
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-	<div class="container mt-5">
+	<div class="container mt-5 mb-3">
 		<h2 class="text-center mb-4">Lista delle Ricette</h2>
 		<div th:if="${ricette == null || ricette.isEmpty()}" class="alert alert-warning">
 			Non ci sono ricette nel sistema

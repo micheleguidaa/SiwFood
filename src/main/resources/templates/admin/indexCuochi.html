@@ -7,7 +7,7 @@
 	<!-- Include la navbar -->
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-	<div class="container mt-5">
+	<div class="container mt-5 mb-3">
 		<h2 class="text-center mb-4">Lista dei Cuochi</h2>
 		<div class="text-center mb-4">
 			<a class="btn btn-primary btn-lg" href="/registerCuoco" role="button">Aggiungi Nuovo Cuoco</a>
@@ -19,7 +19,7 @@
 			<div class="col" th:each="cuoco : ${cuochi}">
 				<div class="card">
 					<div class="image-container overflow-hidden">
-						<img th:src="${cuoco.urlImage}" class="card-img-top h-100 w-100"
+						<img th:src="${cuoco.urlImage}" class="card-img-top cuoco-img "
 							style="object-fit: cover; object-position: top;" alt="Immagine Cuoco" />
 					</div>
 					<div class="card-footer d-flex flex-column text-center mt-3">
