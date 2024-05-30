@@ -7,9 +7,8 @@
     <div th:replace="~{fragments/formRicetta :: formRicetta(
             titolo='Aggiungi Ricetta',
             action='/addRicetta',
-            ricetta=${null},
+            ricetta=${ricetta},
             ingredienti=${ingredienti},
-            cuocoCorrente=${cuocoCorrente}
         )}"></div>
     <div th:replace="~{fragments/footer :: footer}"></div>
     <div th:replace="~{fragments/scripts :: scripts}"></div>

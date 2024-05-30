@@ -102,6 +102,7 @@ public class RicettaController {
 
 	@GetMapping("/addRicetta")
 	public String addRicetta(Model model) {
+		model.addAttribute("ricetta", new Ricetta());
 		List<Ingrediente> ingredienti = (List<Ingrediente>) ingredienteService.findAll();
 		model.addAttribute("ingredienti", ingredienti);
 
