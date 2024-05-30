@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siw.controller.validator.CredenzialiValidator;
 import it.uniroma3.siw.controller.validator.CuocoValidator;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Cuoco;
@@ -32,6 +33,9 @@ public class AuthenticationController {
     
     @Autowired
     private CuocoValidator cuocoValidator;
+    
+    @Autowired
+    private CredenzialiValidator credenzialiValidator;
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {
@@ -81,17 +85,15 @@ public class AuthenticationController {
                                 @RequestParam("fileImage") MultipartFile file,
                                 Model model) {
     	this.cuocoValidator.validate(cuoco, cuocoBindingResult);
-        if (cuocoBindingResult.hasErrors() || credenzialiBindingResult.hasErrors()) {
-            model.addAttribute("messaggioErrore", "Questo cuoco esiste già o ci sono errori nei dati inseriti");
-            return "formRegisterCuoco";
-        }
-        try {
-            cuocoService.registerCuoco(cuoco, credenziali, file);
+        this.credenzialiValidator.validate(credenziali, credenzialiBindingResult);
+     // se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
+        if(!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
+        	cuocoService.save(cuoco);
+            credenziali.setCuoco(cuoco);
             credenzialiService.saveCredenziali(credenziali);
-            return "redirect:/login";
-        } catch (IOException e) {
-            model.addAttribute("messaggioErrore", "Errore nel caricamento dell'immagine");
-            return "formRegisterCuoco";
+            model.addAttribute("cuoco", cuoco);
+            return "login";
         }
+        return "formRegisterCuoco";
     }
 }

@@ -8,5 +8,6 @@ import it.uniroma3.siw.model.Credenziali;
 
 public interface CredenzialiRepository extends CrudRepository<Credenziali, Long>{
 	public Optional<Credenziali> findByUsername(String username);
+	public boolean existsByUsername(String Username); 
 
 }
