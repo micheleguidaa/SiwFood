@@ -54,24 +54,20 @@
 				<div class="d-flex align-items-center">
 					<a type="button" class="btn btn-success me-2" th:if="${userDetails == null}" href="/login">Login</a>
 					<div class="dropdown" th:if="${userDetails != null}">
-						
-						<a class="nav-link " role="button"
-							id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-
+						<a class="nav-link" role="button" id="userDropdown" data-bs-toggle="dropdown"
+							aria-expanded="false">
 							<!-- Se l'immagine è presente -->
 							<img th:if="${cuocoCorrente.urlImage}" th:src="@{${cuocoCorrente.urlImage}}"
 								alt="Account Image" class="account-icon">
-
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="userDropdown">
-							<li><a class="dropdown-item" href="/profile">Profile</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="/logout">Logout</a></li>
+							<div th:text="${userDetails.username}" class="p-2 ms-2 text-capitalize">Profile</div>
+							<hr class="dropdown-divider">
+							<li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
 						</ul>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</nav>
