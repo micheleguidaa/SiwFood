@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 
 @Entity
@@ -20,11 +22,17 @@ public class Cuoco {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
 	@NotBlank
     private String nome;
+	
 	@NotBlank
     private String cognome;
+	
+    @NotNull
+    @PastOrPresent
     private LocalDate dataDiNascita;
+    
     private String urlImage;
     
     @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL, orphanRemoval = true)
