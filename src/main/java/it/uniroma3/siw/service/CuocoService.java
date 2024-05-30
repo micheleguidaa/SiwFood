@@ -25,6 +25,7 @@ public class CuocoService {
     private CredenzialiService credenzialiService;
 
     private static final String UPLOADED_FOLDER = "uploads/cuochi2/";
+    private static final String DEFAULT_IMAGE = "/images/default/senzaFoto.jpeg";
 
     public Cuoco findById(Long id) {
         return cuocoRepository.findById(id).orElse(null);
@@ -58,7 +59,7 @@ public class CuocoService {
     public void registerCuoco(Cuoco cuoco, Credenziali credenziali, MultipartFile file) throws IOException {
         if (!existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
             if (file.isEmpty()) {
-                cuoco.setUrlImage("/images/SenzaFoto.jpeg");
+                cuoco.setUrlImage(DEFAULT_IMAGE);
             } else {
                 String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
                 cuoco.setUrlImage(fileUrl);
@@ -70,7 +71,6 @@ public class CuocoService {
             credenzialiService.saveCredenziali(credenziali); 
         }
     }
-
 
     public void updateCuoco(Long id, Cuoco updatedCuoco, MultipartFile file) throws IOException {
         Cuoco existingCuoco = findById(id);
@@ -93,7 +93,7 @@ public class CuocoService {
         existingCuoco.setDataDiNascita(updatedCuoco.getDataDiNascita());
     }
 
-	public long countCuochi() {
-		return cuocoRepository.count();
-	}
+    public long countCuochi() {
+        return cuocoRepository.count();
+    }
 }

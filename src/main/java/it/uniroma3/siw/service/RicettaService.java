@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RicettaService {
@@ -32,6 +33,7 @@ public class RicettaService {
     private IngredienteService ingredienteService;
 
     private static final String UPLOAD_DIR = "uploads/ricette2/";
+    private static final String DEFAULT_IMAGE = "/images/default/senzaRicetta.jpeg";
 
     public Ricetta findById(Long id) {
         return ricettaRepository.findById(id).orElse(null);
@@ -41,13 +43,23 @@ public class RicettaService {
         return ricettaRepository.findAll();
     }
 
-    @Transactional
-    public void deleteById(Long id) {
-        ricettaRepository.deleteById(id);
-    }
-
     public void save(Ricetta ricetta) {
         ricettaRepository.save(ricetta);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        Optional<Ricetta> ricetta = ricettaRepository.findById(id);
+        ricetta.ifPresent(r -> {
+            try {
+                for (String imageUrl : r.getUrlsImages()) {
+                    fileService.deleteFile(imageUrl, UPLOAD_DIR);
+                }
+                ricettaRepository.deleteById(id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Transactional
@@ -56,6 +68,9 @@ public class RicettaService {
         ricetta.setCuoco(cuoco);
 
         List<String> urlsImages = handleFileUpload(files);
+        if (urlsImages.isEmpty()) {
+            urlsImages.add(DEFAULT_IMAGE);
+        }
         ricetta.setUrlsImages(urlsImages);
 
         List<RigaRicetta> righeRicetta = new ArrayList<>();
@@ -78,10 +93,12 @@ public class RicettaService {
     public void updateRicetta(Long id, Ricetta updatedRicetta, MultipartFile[] files, List<Long> ingredientiIds, List<String> quantitaList) throws IOException {
         Ricetta existingRicetta = findById(id);
         if (existingRicetta != null) {
-            existingRicetta.setNome(updatedRicetta.getNome());
-            existingRicetta.setDescrizione(updatedRicetta.getDescrizione());
+            updateRicettaDetails(existingRicetta, updatedRicetta);
 
             if (files != null && files.length > 0 && !files[0].isEmpty()) {
+                for (String imageUrl : existingRicetta.getUrlsImages()) {
+                    fileService.deleteFile(imageUrl, UPLOAD_DIR);
+                }
                 List<String> urlsImages = handleFileUpload(files);
                 existingRicetta.setUrlsImages(urlsImages);
             }
@@ -91,9 +108,14 @@ public class RicettaService {
         }
     }
 
+    private void updateRicettaDetails(Ricetta existingRicetta, Ricetta updatedRicetta) {
+        existingRicetta.setNome(updatedRicetta.getNome());
+        existingRicetta.setDescrizione(updatedRicetta.getDescrizione());
+    }
+
     private void updateRigheRicetta(Ricetta existingRicetta, List<Long> ingredientiIds, List<String> quantitaList) {
         List<RigaRicetta> existingRigheRicetta = existingRicetta.getRigheRicetta();
-        existingRigheRicetta.clear();  // Clear existing collection
+        existingRigheRicetta.clear();
 
         for (int i = 0; i < ingredientiIds.size(); i++) {
             Ingrediente ingrediente = ingredienteService.findById(ingredientiIds.get(i));
@@ -107,7 +129,6 @@ public class RicettaService {
         }
     }
 
-
     private List<String> handleFileUpload(MultipartFile[] files) throws IOException {
         List<String> urlsImages = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -119,8 +140,7 @@ public class RicettaService {
         return urlsImages;
     }
 
-	public long countRicette() {
-		return ricettaRepository.count();
-	}
+    public long countRicette() {
+        return ricettaRepository.count();
+    }
 }
-
