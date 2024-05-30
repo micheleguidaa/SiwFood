@@ -97,10 +97,6 @@ body {
     margin-top: auto;
 }
 
-.card-img-top {
-    height: 200px;
-    object-fit: cover;
-}
 
 .card-title {
     color: var(--primary-color);
@@ -157,13 +153,6 @@ footer {
     border-radius: 10px; /* Optional: Keep the same border radius */
 }
 
-
-/* Image Container Styles */
-.image-container img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-}
 
 .scrollable-container {
     max-height: 240px;

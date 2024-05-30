@@ -7,7 +7,7 @@
 	<!-- Include la navbar -->
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-	<div class="container mt-5">
+	<div class="container mt-5 mb-3">
 		<h1 class="mb-4 text-center">Le Mie Ricette</h1>
 		<div th:if="${cuocoCorrente.ricette==null || cuocoCorrente.ricette.isEmpty()}" class="alert alert-warning">
 			Non ci sono ricette nel sistema
@@ -15,7 +15,7 @@
 		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
 			<div class="col" th:each="ricetta : ${cuocoCorrente.ricette}">
 				<div class="card h-90">
-					<img th:src="${ricetta.urlsImages[0]}" class="card-img-top" alt="Immagine Ricetta" />
+					<img th:src="${ricetta.urlsImages[0]}" class="recipe-img" alt="Immagine Ricetta" />
 					<div class="card-body text-center">
 						<h5 class="card-title" th:text="${ricetta.nome}">Lasagna</h5>
 					</div>

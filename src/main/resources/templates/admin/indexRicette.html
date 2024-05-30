@@ -15,7 +15,7 @@
 		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 			<div class="col" th:each="ricetta : ${ricette}">
 				<div class="card h-90">
-					<img th:src="${ricetta.urlsImages[0]}" class="card-img-top"alt="Immagine Ricetta" />
+					<img th:src="${ricetta.urlsImages[0]}" class="recipe-img"alt="Immagine Ricetta" />
 
 					<div class="card-footer d-flex flex-column text-center mt-3">
 						<h5 class="card-title" th:text="${ricetta.nome}">Nome Ricetta</h5>
