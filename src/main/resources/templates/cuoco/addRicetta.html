@@ -1,56 +1,28 @@
 <!DOCTYPE html>
 <html lang="it">
 
-<head th:replace="fragments/header :: header('Aggiungi Ricetta')">
-	<style>
-		.image-container img {
-			width: 100%;
-			object-fit: cover;
-			max-height: 280px;
-			min-height: 280px;
-		}
-
-		.scrollable-container {
-			max-height: 300px;
-			overflow-y: auto;
-		}
-	</style>
-</head>
+<head th:replace="~{fragments/header :: header(title='SiwFood - Inserimento Cuoco')}"></head>
 
 <body>
-	<div th:replace="fragments/navbar :: navbar"></div>
-	<div class="container mt-5 form-container ">
-		<h2 class="text-center mb-4">Aggiungi Ricetta</h2>
-		<form th:action="@{/addRicetta}" method="post" enctype="multipart/form-data">
-			<!-- Aggiungi il campo nascosto per l'ID del cuoco -->
-			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-			<input type="hidden" id="cuocoId" name="cuocoId" th:value="${cuocoCorrente.id}" />
-
+	<!-- Include la navbar -->
+	<div th:if="${ruolo == 'ADMIN'}">
+		<div th:replace="~{fragments/navbar :: navbar}"></div>
+	</div>
+	<div class="container form-container mt-5">
+		<h2 class="text-center mb-4">Aggiungi Nuovo Cuoco</h2>
+		<form th:action="@{/registerCuoco}" method="post" enctype="multipart/form-data">
 			<div class="row">
-				<!-- Colonna Immagini -->
+
+				<!-- Colonna Immagine -->
 				<div class="col-md-4">
 					<div class="card mb-4">
 						<div class="card-header">
-							<h5 class="card-title mb-0">Immagini Ricetta</h5>
+							<h5 class="card-title mb-0">Immagine Cuoco</h5>
 						</div>
 						<div class="card-body p-0">
-							<div id="ricettaCarousel" class="carousel slide" data-bs-ride="carousel">
-								<div class="carousel-inner" id="carouselInner">
-									<div class="carousel-item active">
-										<img src="/images/SenzaRicetta.jpeg" class="d-block w-100"
-											alt="Immagine Ricetta" />
-									</div>
-								</div>
-								<button class="carousel-control-prev" type="button" data-bs-target="#ricettaCarousel"
-									data-bs-slide="prev">
-									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Previous</span>
-								</button>
-								<button class="carousel-control-next" type="button" data-bs-target="#ricettaCarousel"
-									data-bs-slide="next">
-									<span class="carousel-control-next-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Next</span>
-								</button>
+							<div class="image-container">
+								<img src="/images/SenzaFoto.jpeg" class="rounded" alt="Immagine Cuoco"
+									id="cuocoImagePreview" />
 							</div>
 						</div>
 					</div>
@@ -60,94 +32,101 @@
 				<div class="col-md-4">
 					<div class="mb-3">
 						<label for="nome" class="form-label">Nome</label>
-						<input type="text" class="form-control" id="nome" name="nome" placeholder="Nome della ricetta"
-							required>
+						<input type="text" class="form-control" id="nome" name="nome" required>
+						<span th:if="${#fields.hasErrors('cuoco.nome')}" th:errors="${cuoco.nome}"
+							th:style="'color:red'"></span>
 					</div>
 					<div class="mb-3">
-						<label for="descrizione" class="form-label">Descrizione</label>
-						<textarea class="form-control" id="descrizione" name="descrizione" rows="4"
-							placeholder="Descrizione della ricetta"></textarea>
+						<label for="cognome" class="form-label">Cognome</label>
+						<input type="text" class="form-control" id="cognome" name="cognome" required>
+						<span th:if="${#fields.hasErrors('cuoco.cognome')}" th:errors="${cuoco.cognome   }"
+							th:style="'color:red'"></span>
 					</div>
-
 					<div class="mb-3">
-						<label for="fileImages" class="form-label">Carica immagini della ricetta</label>
-						<input type="file" class="form-control" id="fileImages" name="fileImages" accept="image/*"
-							multiple required onchange="loadFiles(event)">
-						<div class="form-text">Assicurati di caricare foto chiare e invitanti della ricetta.</div>
+						<label for="dataDiNascita" class="form-label">Data di Nascita</label>
+						<input type="date" class="form-control" id="dataDiNascita" name="dataDiNascita" required>
+					</div>
+					<div class="mb-3">
+						<label for="fileImage" class="form-label">Carica una foto del cuoco (opzionale)</label>
+						<input type="file" class="form-control" id="fileImage" name="fileImage" accept="image/*"
+							onchange="loadFile(event)">
+						<div class="form-text">Assicurati di caricare una foto chiara e recente del cuoco.</div>
 					</div>
 				</div>
+
+				<!-- Colonna Dati di Accesso -->
 				<div class="col-md-4">
-					<!-- Sezione Ingredienti -->
-					<div>Ingredienti</div>
-					<div id="ingredienti-section" class="scrollable-container overflow-auto" style="max-height: 350px;">
-						<!-- Template per gli ingredienti -->
-						<template id="ingredient-template">
-							<div class="row align-items-center mb-2 ingredienti-group">
-								<div class="col-md-6 p-1">
-									<select class="form-control" name="ingredientiIds" required>
-										<option th:each="ing : ${ingredienti}" th:value="${ing.id}"
-											th:text="${ing.nome}">Ingrediente</option>
-									</select>
-								</div>
-								<div class="col-md-4  p-2">
-									<input type="text" class="form-control" name="quantita" placeholder="Quantità">
-								</div>
-								<div class="col-md-1  p-0">
-									<button type="button" class="btn btn-danger remove-ingrediente">
-										<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
+					<div class="mb-3">
+						<label for="username" class="form-label">Username</label>
+						<input type="text" class="form-control" id="username" name="username" required>
+						<span th:if="${#fields.hasErrors('credenziali.username')}" th:errors="${credenziali.username}"
+							th:style="'color:red'"></span>
 
-									</button>
-								</div>
-							</div>
-						</template>
+
 					</div>
-
-					<div class="d-flex justify-content-center">
-						<button type="button" class="btn btn-primary mb-3" id="add-ingrediente">Aggiungi
-							Ingrediente</button>
+					<div class="mb-3">
+						<label for="email" class="form-label">Email</label>
+						<input type="email" class="form-control" id="email" name="email" required>
 					</div>
-
-					<div class="d-flex justify-content-center">
-						<a href="/addIngredienti" class=" text-primary mb-3">Non trovi l'ingrediente che cerchi?
-							Aggiungilo qui!</a>
+					<div class="mb-3">
+						<label for="password" class="form-label">Password</label>
+						<div class="input-group">
+							<input type="password" class="form-control" id="password" name="password" required>
+							<span th:if="${#fields.hasErrors('credenziali.password')}"
+								th:errors="${credenziali.password}" th:style="'color:red'"></span>
+							<button type="button" class="btn btn-outline-secondary" id="togglePassword">
+								<i class="bi bi-eye"></i>
+							</button>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="confirmPassword" class="form-label">Conferma Password</label>
+						<div class="input-group">
+							<input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+								required>
+							<button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+								<i class="bi bi-eye"></i>
+							</button>
+						</div>
 					</div>
 				</div>
 
-				<button type="submit" class="btn btn-success mt-1">Salva Ricetta</button>
+				<button type="submit" class="btn btn-primary w-100">Salva Cuoco</button>
+			</div>
 		</form>
 	</div>
-	</div>
 
-	<div th:replace="fragments/footer :: footer"></div>
+	<!-- Include il footer -->
+	<div th:if="${ruolo == 'ADMIN'}" th:replace="~{fragments/footer :: footer}"></div>
 
-	<!-- Script per la preview delle immagini e la gestione degli ingredienti -->
+	<!-- Script per la preview dell'immagine -->
 	<script>
-		function loadFiles(event) {
-			const files = event.target.files;
-			const carouselInner = document.getElementById('carouselInner');
-			carouselInner.innerHTML = '';
-
-			for (let i = 0; i < files.length; i++) {
-				const reader = new FileReader();
-				reader.onload = function (e) {
-					const div = document.createElement('div');
-					div.className = 'carousel-item';
-					if (i === 0) div.classList.add('active');
-					div.innerHTML = `<img src="${e.target.result}" class="d-block w-100" alt="Immagine Ricetta ${i + 1}" />`;
-					carouselInner.appendChild(div);
-				};
-				reader.readAsDataURL(files[i]);
-			}
+		function loadFile(event) {
+			var image = document.getElementById('cuocoImagePreview');
+			image.src = URL.createObjectURL(event.target.files[0]);
 		}
 
-		document.getElementById('add-ingrediente').addEventListener('click', function () {
-			const template = document.getElementById('ingredient-template').content.cloneNode(true);
-			document.getElementById('ingredienti-section').appendChild(template);
+		document.getElementById('togglePassword').addEventListener('click', function () {
+			var passwordField = document.getElementById('password');
+			var passwordFieldType = passwordField.getAttribute('type');
+			if (passwordFieldType === 'password') {
+				passwordField.setAttribute('type', 'text');
+				this.innerHTML = '<i class="bi bi-eye-slash"></i>';
+			} else {
+				passwordField.setAttribute('type', 'password');
+				this.innerHTML = '<i class="bi bi-eye"></i>';
+			}
 		});
 
-		document.addEventListener('click', function (e) {
-			if (e.target && e.target.classList.contains('remove-ingrediente')) {
-				e.target.closest('.ingredienti-group').remove();
+		document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+			var confirmPasswordField = document.getElementById('confirmPassword');
+			var confirmPasswordFieldType = confirmPasswordField.getAttribute('type');
+			if (confirmPasswordFieldType === 'password') {
+				confirmPasswordField.setAttribute('type', 'text');
+				this.innerHTML = '<i class="bi bi-eye-slash"></i>';
+			} else {
+				confirmPasswordField.setAttribute('type', 'password');
+				this.innerHTML = '<i class="bi bi-eye"></i>';
 			}
 		});
 	</script>

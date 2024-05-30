@@ -22,6 +22,7 @@ import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.CuocoService;
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthenticationController {
@@ -78,7 +79,7 @@ public class AuthenticationController {
 	
 
     @PostMapping("/registerCuoco")
-    public String registerCuoco(@ModelAttribute("cuoco") Cuoco cuoco,
+    public String registerCuoco(@Valid @ModelAttribute("cuoco") Cuoco cuoco,
                                 BindingResult cuocoBindingResult, 
                                 @ModelAttribute("credenziali") Credenziali credenziali,
                                 BindingResult credenzialiBindingResult,
