@@ -1,33 +1,19 @@
 <!DOCTYPE html>
 <html lang="it">
 
-<head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Ricetta')}">
-	<style>
-		.image-container img {
-			width: 100%;
-			object-fit: cover;
-			max-height: 280px;
-			min-height: 280px;
-		}
-
-		.scrollable-container {
-			max-height: 300px;
-			overflow-y: auto;
-		}
-	</style>
-</head>
+<head th:replace="~{fragments/header :: header(title='SiwFood - Modifica Ricetta')}"></head>
 
 <body>
 	<!-- Include la navbar -->
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-	<div class="container form-container mt-5">
+	<div class="container form-container mt-5 mb-5">
 		<h2 class="text-center mb-4">Modifica Ricetta</h2>
 		<form th:action="@{/update/ricetta/{id}(id=${ricetta.id})}" method="post" enctype="multipart/form-data">
 			<div class="row">
 				<!-- Colonna Immagini attuali -->
 				<div class="col-md-4">
-					<div class="card mb-4">
+					<div class="card mb-4 no-hover">
 						<div class="card-header">
 							<h5 class="card-title mb-0">Immagini Attuali</h5>
 						</div>
@@ -36,7 +22,7 @@
 								<div class="carousel-inner" id="carouselInner">
 									<div th:each="urlImage, iterStat : ${ricetta.urlsImages}" class="carousel-item"
 										th:classappend="${iterStat.index == 0} ? 'active'">
-										<img th:src="${urlImage}" class="d-block w-100" alt="Immagine Ricetta" />
+										<img th:src="${urlImage}" class="recipe-img" alt="Immagine Ricetta" />
 									</div>
 								</div>
 								<button class="carousel-control-prev" type="button" data-bs-target="#ricettaCarousel"
@@ -74,47 +60,44 @@
 					</div>
 				</div>
 
-
 				<!-- Colonna Ingredienti -->
 				<div class="col-md-4">
 					<div>Ingredienti</div>
-					<div id="ingredienti-section" class="scrollable-container overflow-auto" style="max-height: 350px;">
+					<div id="ingredienti-section" class="scrollable-container">
 						<!-- Visualizza le righe ricetta esistenti -->
 						<div th:each="rigaRicetta : ${ricetta.righeRicetta}"
 							class="row align-items-center mb-2 ingredienti-group">
-							<div class="col-md-6">
+							<div class="col-md-7">
 								<select class="form-control" name="ingredientiIds">
 									<option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}"
 										th:selected="${ing.id == rigaRicetta.ingrediente.id}"></option>
 								</select>
 							</div>
-							<div class="col-md-4">
+							<div class="col-3 p-1">
 								<input type="text" class="form-control" name="quantita"
 									th:value="${rigaRicetta.quantita}" placeholder="Quantità">
 							</div>
-							<div class="col-md-1 p-0">
+							<div class="col-1 p-0">
 								<button type="button" class="btn btn-danger remove-ingrediente">
-									<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
+									<img src="/images/trash.svg" alt="Remove" class="remove-ingrediente-img">
 								</button>
 							</div>
 						</div>
 						<!-- Template per aggiungere nuovi ingredienti -->
 						<template id="ingredient-template">
 							<div class="row align-items-center mb-2 ingredienti-group">
-								<input type="hidden" name="righeRicetta[__index__].id">
-								<div class="col-md-6">
-									<select class="form-control" name="righeRicetta[__index__].ingrediente.id" required>
+								<div class="col-7">
+									<select class="form-control" name="ingredientiIds" required>
 										<option th:each="ing : ${ingredienti}" th:value="${ing.id}"
 											th:text="${ing.nome}">Ingrediente</option>
 									</select>
 								</div>
-								<div class="col-md-4">
-									<input type="text" class="form-control" name="righeRicetta[__index__].quantita"
-										placeholder="Quantità">
+								<div class="col-3 p-1">
+									<input type="text" class="form-control" name="quantita" placeholder="Quantità">
 								</div>
-								<div class="col-md-1 p-0">
+								<div class="col-1 p-0">
 									<button type="button" class="btn btn-danger remove-ingrediente">
-										<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
+										<img src="/images/trash.svg" alt="Remove" class="remove-ingrediente-img">
 									</button>
 								</div>
 							</div>
@@ -131,11 +114,10 @@
 				</div>
 
 
-			</div>
-			<button type="submit" class="btn btn-primary w-100">Salva Modifiche</button>
+				<button type="submit" class="btn btn-success mt-1">Salva Modifiche</button>
 
 		</form>
-
+	</div>
 	</div>
 
 	<!-- Include il footer -->

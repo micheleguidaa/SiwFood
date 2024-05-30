@@ -10,7 +10,6 @@
 		<h2 class="text-center mb-4">Aggiungi Ricetta</h2>
 		<form th:action="@{/addRicetta}" method="post" enctype="multipart/form-data">
 			<!-- Aggiungi il campo nascosto per l'ID del cuoco -->
-			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			<input type="hidden" id="cuocoId" name="cuocoId" th:value="${cuocoCorrente.id}" />
 
 			<div class="row">
