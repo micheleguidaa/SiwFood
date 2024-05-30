@@ -155,7 +155,7 @@ footer {
 
 
 .scrollable-container {
-    max-height: 240px;
+    max-height: 250px;
     overflow-y: auto;
     overflow-x: hidden;
 }
