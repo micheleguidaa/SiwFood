@@ -92,6 +92,7 @@ body {
     flex-direction: column;
 }
 
+
 .card-body .btn {
     margin-top: auto;
 }
@@ -104,6 +105,7 @@ body {
 .card-title {
     color: var(--primary-color);
 }
+
 
 /* Footer Styles */
 footer {
@@ -150,6 +152,17 @@ footer {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
+
+/* Cuoco Image Styles */
+.cuoco-img {
+    width: 100%; /* Ensures the image fits within the card's width */
+    height: 350px; /* Set a fixed height */
+    object-fit: cover; /* Ensure the image covers the set dimensions without distortion */
+    object-position: center; /* Centers the image vertically */
+    border-radius: 10px; /* Optional: Keep the same border radius */
+}
+
 
 /* Image Container Styles */
 .image-container img {
