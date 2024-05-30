@@ -54,15 +54,20 @@ public class CuocoService {
 
     public void registerCuoco(Cuoco cuoco, Credenziali credenziali, MultipartFile file) throws IOException {
         if (!existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
-            String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
-            cuoco.setUrlImage(fileUrl);
-
+            if (file.isEmpty()) {
+                cuoco.setUrlImage("/images/SenzaFoto.jpeg");
+            } else {
+                String fileUrl = fileService.saveFile(file, UPLOADED_FOLDER);
+                cuoco.setUrlImage(fileUrl);
+            }
             credenziali.setCuoco(cuoco);
             credenziali.setRuolo(Credenziali.DEFAULT_ROLE);
-
             save(cuoco);
+            // Save credenziali to the appropriate repository or service
+            // credenzialiService.saveCredenziali(credenziali); 
         }
     }
+
 
     public void updateCuoco(Long id, Cuoco updatedCuoco, MultipartFile file) throws IOException {
         Cuoco existingCuoco = findById(id);

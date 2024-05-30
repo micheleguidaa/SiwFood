@@ -78,23 +78,28 @@ public class AuthenticationController {
 	}
 	
 
-    @PostMapping("/registerCuoco")
-    public String registerCuoco(@Valid @ModelAttribute("cuoco") Cuoco cuoco,
-                                BindingResult cuocoBindingResult, 
-                                @ModelAttribute("credenziali") Credenziali credenziali,
-                                BindingResult credenzialiBindingResult,
-                                @RequestParam("fileImage") MultipartFile file,
-                                Model model) {
-    	this.cuocoValidator.validate(cuoco, cuocoBindingResult);
-        this.credenzialiValidator.validate(credenziali, credenzialiBindingResult);
-     // se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
-        if(!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
-        	cuocoService.save(cuoco);
-            credenziali.setCuoco(cuoco);
-            credenzialiService.saveCredenziali(credenziali);
-            model.addAttribute("cuoco", cuoco);
-            return "login";
-        }
-        return "formRegisterCuoco";
-    }
+	@PostMapping("/registerCuoco")
+	public String registerCuoco(@Valid @ModelAttribute("cuoco") Cuoco cuoco,
+	                            BindingResult cuocoBindingResult, 
+	                            @ModelAttribute("credenziali") Credenziali credenziali,
+	                            BindingResult credenzialiBindingResult,
+	                            @RequestParam("fileImage") MultipartFile file,
+	                            Model model) {
+	    this.cuocoValidator.validate(cuoco, cuocoBindingResult);
+	    this.credenzialiValidator.validate(credenziali, credenzialiBindingResult);
+	    // se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
+	    if(!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
+	        try {
+	            cuocoService.registerCuoco(cuoco, credenziali, file);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            model.addAttribute("fileUploadError", "Errore nel caricamento dell'immagine");
+	            return "formRegisterCuoco";
+	        }
+	        model.addAttribute("cuoco", cuoco);
+	        return "login";
+	    }
+	    return "formRegisterCuoco";
+	}
+
 }
