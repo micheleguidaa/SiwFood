@@ -113,13 +113,6 @@ footer {
     background-color: var(--footer-bg-color);
 }
 
-/* Cuoco Image Styles */
-.cuoco-img {
-    object-fit: cover;
-    border-radius: 10px;
-    max-width: 100%;
-}
-
 /* Recipe List Styles */
 .recipe-list ul {
     list-style: none;
@@ -147,8 +140,9 @@ footer {
 
 .recipe-img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 260px;
+    object-fit: cover; /* Ensure the image covers the set dimensions without distortion */
+    object-position: center; /* Centers the image vertically */
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
