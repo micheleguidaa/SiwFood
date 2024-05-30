@@ -22,7 +22,7 @@ public class Cuoco {
     private Long id;
 	@NotBlank
     private String nome;
-	@Column(nullable=false)
+	@NotBlank
     private String cognome;
     private LocalDate dataDiNascita;
     private String urlImage;
