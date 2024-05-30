@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="scripts">
+        <!-- Script per la preview delle nuove immagini e la gestione degli ingredienti -->
+        <script>
+            let initialImages = document.getElementById('carouselInner')?.innerHTML;
+
+            function loadFiles(event) {
+                const files = event.target.files;
+                const carouselInner = document.getElementById('carouselInner');
+
+                if (files.length === 0 && initialImages) {
+                    carouselInner.innerHTML = initialImages;
+                    return;
+                }
+
+                carouselInner.innerHTML = '';
+
+                for (let i = 0; i < files.length; i++) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const div = document.createElement('div');
+                        div.className = 'carousel-item';
+                        if (i === 0) div.classList.add('active');
+                        div.innerHTML = `<img src="${e.target.result}" class="d-block w-100" alt="Immagine Ricetta ${i + 1}" />`;
+                        carouselInner.appendChild(div);
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+
+            document.getElementById('add-ingrediente')?.addEventListener('click', function () {
+                const template = document.getElementById('ingredient-template').content.cloneNode(true);
+                const section = document.getElementById('ingredienti-section');
+
+                const newIndex = section.getElementsByClassName('ingredienti-group').length;
+
+                const newGroup = template.querySelector('.ingredienti-group');
+                newGroup.innerHTML = newGroup.innerHTML.replace(/__index__/g, newIndex);
+
+                section.appendChild(template);
+            });
+
+            document.addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('remove-ingrediente')) {
+                    e.target.closest('.ingredienti-group').remove();
+                }
+            });
+        </script>
+
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<body th:fragment="formRicetta(titolo, action, ricetta, ingredienti, cuocoCorrente)">
+	<div>
+		<div class="container form-container my-5">
+			<h2 class="text-center mb-4" th:text="${titolo}"></h2>
+			<form th:action="@{${action}}" method="post" enctype="multipart/form-data">
+				<input type="hidden" id="cuocoId" name="cuocoId" th:value="${cuocoCorrente?.id}" />
+				<div class="row">
+					<div class="col-md-4">
+						<div th:replace="~{fragments/immagini :: immagini(ricetta=${ricetta})}"></div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="mb-3">
+							<label for="nome" class="form-label">Nome</label>
+							<input type="text" class="form-control" id="nome" name="nome" th:value="${ricetta?.nome}"
+								required>
+						</div>
+						<div class="mb-3">
+							<label for="descrizione" class="form-label">Descrizione</label>
+							<textarea class="form-control" id="descrizione" name="descrizione" rows="5"
+								th:text="${ricetta?.descrizione}" required></textarea>
+						</div>
+						<div class="mb-4">
+							<label for="fileImages" class="form-label">Carica nuove foto della ricetta
+								(opzionale)</label>
+							<input type="file" class="form-control" id="fileImages" name="fileImages" accept="image/*"
+								multiple onchange="loadFiles(event)">
+							<div class="form-text">Assicurati di caricare foto chiare e recenti della ricetta.</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div
+							th:replace="~{fragments/ingredienti :: ingredienti(ricetta=${ricetta}, ingredienti=${ingredienti})}">
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-center">
+					<button type="submit" class="btn btn-success mt-1">Salva Modifiche</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

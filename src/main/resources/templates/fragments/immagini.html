@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<body th:fragment="immagini(ricetta)">
+	<div>
+		<div class="card mb-4">
+			<div class="card-header">
+				<h5 class="card-title mb-0">Immagini</h5>
+			</div>
+			<div class="card-body p-0">
+				<div id="ricettaCarousel" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner" id="carouselInner">
+						<!-- Ensure ricetta is not null before accessing urlsImages -->
+						<div th:if="${ricetta != null}">
+							<div th:each="urlImage, iterStat : ${ricetta.urlsImages}" class="carousel-item"
+								th:classappend="${iterStat.index == 0} ? 'active'">
+								<img th:src="${urlImage}" class="d-block w-100" alt="Immagine Ricetta" />
+							</div>
+						</div>
+						<div th:if="${ricetta == null}" class="carousel-item active">
+							<img src="/images/default/senzaRicetta.jpeg" class="d-block w-100"
+								alt="Immagine Predefinita" />
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#ricettaCarousel"
+						data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#ricettaCarousel"
+						data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
