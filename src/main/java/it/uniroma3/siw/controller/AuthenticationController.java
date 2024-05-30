@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siw.controller.validator.CuocoValidator;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.service.CredenzialiService;
@@ -28,6 +29,9 @@ public class AuthenticationController {
 	
     @Autowired
     private CuocoService cuocoService;
+    
+    @Autowired
+    private CuocoValidator cuocoValidator;
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {
@@ -76,6 +80,7 @@ public class AuthenticationController {
                                 BindingResult credenzialiBindingResult,
                                 @RequestParam("fileImage") MultipartFile file,
                                 Model model) {
+    	this.cuocoValidator.validate(cuoco, cuocoBindingResult);
         if (cuocoBindingResult.hasErrors() || credenzialiBindingResult.hasErrors()) {
             model.addAttribute("messaggioErrore", "Questo cuoco esiste già o ci sono errori nei dati inseriti");
             return "formRegisterCuoco";
