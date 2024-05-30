@@ -164,6 +164,18 @@ footer {
     filter: invert(1);
 }
 
+
+.account-icon {
+    width: 50px;          /* Imposta la larghezza dell'icona */
+    height: 50px;         /* Imposta l'altezza dell'icona */
+    border-radius: 50%;   /* Trasforma l'immagine in un cerchio */
+    object-fit: cover;    /* Ritaglia l'immagine per riempire il contenitore */
+    display: block;             /* Assicura che l'elemento sia un blocco (utile per margini) */
+    margin: 0 auto;             /* Centra l'immagine orizzontalmente */
+    box-shadow: 0 0 0 2px white; /* Aggiunge un margine esterno bianco di 5 pixel */
+}
+
+
 /* Responsive Styles */
 @media (max-width: 1200px) {
     .card {
