@@ -11,6 +11,9 @@
 					<div class="form-container-body">
 						<h2 class="mb-4 text-center">Login</h2>
 						<form th:action="@{/login}" method="post">
+							<div th:if="${param.error != null}" class="alert alert-danger text-center" role="alert">
+								<strong>Errore:</strong> Username o password errati
+							</div>
 							<div class="mb-3">
 								<label for="username" class="form-label">Username</label>
 								<input type="text" class="form-control" id="username" name="username" required>
@@ -27,9 +30,6 @@
 							<button type="submit" class="btn btn-primary w-100">Login</button>
 							<div class="text-center mt-3">
 
-								<div th:if="${param.error != null}" class="alert alert-danger text-center" role="alert">
-									<strong>Errore:</strong> Username o password errati
-								</div>
 								<a href="/forgot-password" class="text-primary">Password dimenticata?</a>
 							</div>
 							<hr>
