@@ -67,21 +67,5 @@ public class CuocoController {
         }
     }
     
-    @PostMapping("/searchCuochi")
-    public String searchCuochi(@RequestParam String stringa, Model model) {
-        if (stringa.length() == 0) {
-            model.addAttribute("cuochi", this.cuocoService.findAll());
-        } else {
-        	List<Cuoco> cuochiTrovati = this.cuocoService.findByNome(stringa);
-        	cuochiTrovati.addAll(this.cuocoService.findByCognome(stringa));
-            model.addAttribute("cuochi", cuochiTrovati);
-        }
-        return "foundCuochi";
-    }
 
-    @GetMapping("/foundCuochi")
-    public String foundCuochi(Model model) {
-        model.addAttribute("cuochi", this.cuocoService.findAll());
-        return "foundCuochi";
-    }
 }
