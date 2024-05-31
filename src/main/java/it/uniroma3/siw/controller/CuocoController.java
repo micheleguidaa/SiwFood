@@ -21,7 +21,7 @@ public class CuocoController {
     private CuocoService cuocoService;
 
 
-    @GetMapping("/admin/indexCuochi")
+    @GetMapping("/admin/cuochi")
     public String indexCuochi(Model model) {
         model.addAttribute("cuochi", cuocoService.findAll());
         return "admin/indexCuochi.html";

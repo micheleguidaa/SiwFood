@@ -60,7 +60,7 @@ body {
     box-shadow: 0 0.5rem 1rem var(--card-box-shadow);
 }
 
-.form-container h2 {
+.form-container h2{
     color: var(--primary-color);
     text-align: center;
     margin-bottom: 1.5rem;

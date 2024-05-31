@@ -27,4 +27,10 @@ public class IngredienteController {
         ingredienteService.addIngredienti(ingredienti);
         return "redirect:/addRicetta";
     }
+    
+    @GetMapping("/admin/ingredienti")
+    public String indexCuochi(Model model) {
+        model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
+        return "admin/indexIngredienti";
+    }
 }

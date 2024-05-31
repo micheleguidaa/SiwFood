@@ -28,4 +28,9 @@ public class IngredienteService {
     public Ingrediente findById(Long id) {
     	return ingredienteRepository.findById(id).orElse(null);
     }
+    
+    // Metodo per ottenere tutti gli ingredienti ordinati alfabeticamente
+    public List<Ingrediente> findAllOrderedByNome() {
+        return ingredienteRepository.findAllByOrderByNomeAsc();
+    }
 }

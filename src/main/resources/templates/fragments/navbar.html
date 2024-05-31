@@ -35,10 +35,13 @@
 
 					<!-- Inizio Elementi visibili per admin -->
 					<li class="nav-item">
-						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/indexRicette">Ricette</a>
+						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/ricette">Ricette</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/indexCuochi">Cuochi</a>
+						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/cuochi">Cuochi</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/ingredienti">Ingredienti</a>
 					</li>
 					<!-- Fine Elementi visibili per admin -->
 

@@ -41,7 +41,7 @@ public class RicettaController {
 		return "ricette";
 	}
 
-	@GetMapping("/admin/indexRicette")
+	@GetMapping("/admin/ricette")
 	public String indexRicette(Model model) {
 		model.addAttribute("ricette", ricettaService.findAll());
 		return "admin/indexRicette";

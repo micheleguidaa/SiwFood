@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head th:replace="~{fragments/header :: header(title='SiwFood - Gestione Ingredienti')}"></head>
+
+<body>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Lista degli Ingredienti</h2>
+        <div class="text-center mb-4">
+            <a class="btn btn-primary btn-lg" href="/registerIngrediente" role="button">Aggiungi Nuovo Ingrediente</a>
+        </div>
+        <div th:if="${ingredienti == null || ingredienti.isEmpty()}" class="alert alert-warning">
+            Non ci sono ingredienti nel sistema
+        </div>
+        <div class="row">
+            <div th:each="col : ${#numbers.sequence(0, 2)}" class="col-md-4">
+                <ul class="list-group list-group-flush">
+                    <li th:each="ingrediente, iterStat : ${ingredienti}" 
+                        th:if="${iterStat.index} >= ${col} * ${ingredienti.size()} / 3 and ${iterStat.index} < (${col} + 1) * ${ingredienti.size()} / 3"
+                        class="list-group-item d-flex justify-content-between align-items-center">
+                        <span th:text="${#strings.substring(ingrediente.nome, 0, 1)}">A</span>
+                        <span th:text="${ingrediente.nome}">Nome Ingrediente</span>
+                        <span>
+                            <form th:action="@{'/admin/delete/ingrediente/' + ${ingrediente.id}}" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Elimina</button>
+                            </form>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include il footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+
+</html>
