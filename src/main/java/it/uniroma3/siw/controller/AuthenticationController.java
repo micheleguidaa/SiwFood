@@ -23,6 +23,8 @@ import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.CuocoService;
 import it.uniroma3.siw.service.RicettaService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -79,10 +81,14 @@ public class AuthenticationController {
 	}
 
 	@GetMapping("/registerCuoco")
-	public String formNewCuoco(Model model) {
-		model.addAttribute("cuoco", new Cuoco());
-		model.addAttribute("credenziali", new Credenziali());
-		return "formRegisterCuoco";
+	public String formNewCuoco(HttpServletRequest request, HttpSession session, Model model) {
+	    String referer = request.getHeader("Referer");
+	    if (referer != null) {
+	        session.setAttribute("prevPage", referer);
+	    }
+	    model.addAttribute("cuoco", new Cuoco());
+	    model.addAttribute("credenziali", new Credenziali());
+	    return "formRegisterCuoco";
 	}
 	
 
@@ -92,11 +98,12 @@ public class AuthenticationController {
 	                            @ModelAttribute("credenziali") Credenziali credenziali,
 	                            BindingResult credenzialiBindingResult,
 	                            @RequestParam("fileImage") MultipartFile file,
+	                            HttpSession session,
 	                            Model model) {
 	    this.cuocoValidator.validate(cuoco, cuocoBindingResult);
 	    this.credenzialiValidator.validate(credenziali, credenzialiBindingResult);
 	    // se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
-	    if(!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
+	    if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
 	        try {
 	            cuocoService.registerCuoco(cuoco, credenziali, file);
 	        } catch (IOException e) {
@@ -105,6 +112,13 @@ public class AuthenticationController {
 	            return "formRegisterCuoco";
 	        }
 	        model.addAttribute("cuoco", cuoco);
+	        
+	        // Reindirizza alla pagina precedente
+	        String prevPage = (String) session.getAttribute("prevPage");
+	        if (prevPage != null) {
+	            session.removeAttribute("prevPage"); // Rimuovi l'URL dalla sessione
+	            return "redirect:" + prevPage;
+	        }
 	        return "login";
 	    }
 	    return "formRegisterCuoco";
