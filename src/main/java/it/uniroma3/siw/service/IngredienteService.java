@@ -33,4 +33,8 @@ public class IngredienteService {
     public List<Ingrediente> findAllOrderedByNome() {
         return ingredienteRepository.findAllByOrderByNomeAsc();
     }
+
+	public void deleteById(Long id) {
+		ingredienteRepository.deleteById(id);
+	}
 }
