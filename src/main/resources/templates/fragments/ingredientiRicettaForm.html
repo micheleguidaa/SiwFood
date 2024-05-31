@@ -8,13 +8,14 @@
 
 <body>
 	<div th:fragment="ingredientiRicettaForm(ricetta, ingredienti)">
-		<div>Ingredienti</div>
-		<div id="ingredienti-section" class="scrollable-container">
-			<!-- Verifica che ricetta non sia null e che abbia righeRicetta -->
-			<div th:if="${ricetta != null && ricetta.righeRicetta!=null}">
+		<!-- Colonna Ingredienti -->
+		<div class="col">
+			<div>Ingredienti</div>
+			<div id="ingredienti-section" class="scrollable-container">
+				<!-- Visualizza le righe ricetta esistenti -->
 				<div th:each="rigaRicetta : ${ricetta.righeRicetta}"
 					class="row align-items-center mb-2 ingredienti-group">
-					<div class="col-7">
+					<div class="col-md-7">
 						<select class="form-control" name="ingredientiIds">
 							<option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}"
 								th:selected="${ing.id == rigaRicetta.ingrediente.id}"></option>
@@ -24,57 +25,39 @@
 						<input type="text" class="form-control" name="quantita" th:value="${rigaRicetta.quantita}"
 							placeholder="Quantità">
 					</div>
-					<div class="col-2">
+					<div class="col-1 p-0">
 						<button type="button" class="btn btn-danger remove-ingrediente">
-							<img src="/images/trash.svg" alt="Remove" class="img-fluid">
+							<img src="/images/trash.svg" alt="Remove" class="remove-ingrediente-img">
 						</button>
 					</div>
 				</div>
+				<!-- Template per aggiungere nuovi ingredienti -->
+				<template id="ingredient-template">
+					<div class="row align-items-center mb-2 ingredienti-group">
+						<div class="col-md-7">
+							<select class="form-control" name="ingredientiIds" required>
+								<option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}">
+									Ingrediente</option>
+							</select>
+						</div>
+						<div class="col-3 p-1">
+							<input type="text" class="form-control" name="quantita" placeholder="Quantità">
+						</div>
+						<div class="col-1 p-0">
+							<button type="button" class="btn btn-danger remove-ingrediente">
+								<img src="/images/trash.svg" alt="Remove" class="remove-ingrediente-img">
+							</button>
+						</div>
+					</div>
+				</template>
 			</div>
-
-
-			<div class="row align-items-center mb-2 ingredienti-group">
-				<div class="col-7">
-					<select class="form-control" name="ingredientiIds" required>
-						<option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}">Ingrediente
-						</option>
-					</select>
-				</div>
-				<div class="col-3 p-1">
-					<input type="text" class="form-control" name="quantita" placeholder="Quantità">
-				</div>
-				<div class="col-2">
-					<button type="button" class="btn btn-danger remove-ingrediente">
-						<img src="/images/trash.svg" alt="Remove" class="img-fluid">
-					</button>
-				</div>
+			<div class="d-flex justify-content-center">
+				<button type="button" class="btn btn-primary mb-3" id="add-ingrediente">Aggiungi Ingrediente</button>
 			</div>
-		</div>
-	</div>
-	<template id="ingredient-template">
-		<div class="row align-items-center mb-2 ingredienti-group">
-			<div class="col-7">
-				<select class="form-control" name="ingredientiIds" required>
-					<option th:each="ing : ${ingredienti}" th:value="${ing.id}" th:text="${ing.nome}">Ingrediente
-					</option>
-				</select>
-			</div>
-			<div class="col-3 p-1">
-				<input type="text" class="form-control" name="quantita" placeholder="Quantità">
-			</div>
-			<div class="col-2">
-				<button type="button" class="btn btn-danger remove-ingrediente">
-					<img src="/images/trash.svg" alt="Remove" class="img-fluid">
-				</button>
+			<div class="d-flex justify-content-center">
+				<a href="/addIngredienti" class="text-primary mb-3">Non trovi l'ingrediente che cerchi? Aggiungilo qui!</a>
 			</div>
 		</div>
-	</template>
-	<div class="d-flex justify-content-center">
-		<button type="button" class="btn btn-primary mb-3" id="add-ingrediente">Aggiungi Ingrediente</button>
-	</div>
-	<div class="d-flex justify-content-center">
-		<a href="/addIngredienti" class="text-primary mb-3">Non trovi l'ingrediente che cerchi? Aggiungilo qui!</a>
-	</div>
 	</div>
 
 	<script>
