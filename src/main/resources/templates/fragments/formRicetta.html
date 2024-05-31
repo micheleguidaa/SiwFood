@@ -8,7 +8,8 @@
 				<input type="hidden" id="cuocoId" name="cuocoId" th:value="${cuocoCorrente?.id}" />
 				<div class="row">
 					<div class="col-md-4">
-						<div th:replace="~{fragments/immaginiRicettaForm :: immaginiRicettaForm(ricetta=${ricetta})}"></div>
+						<div th:replace="~{fragments/immaginiRicettaForm :: immaginiRicettaForm(ricetta=${ricetta})}">
+						</div>
 					</div>
 
 					<div class="col-md-4">
@@ -37,7 +38,7 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center">
-					<button type="submit" class="btn btn-success mt-1">Salva Modifiche</button>
+					<button type="submit" class="btn btn-success mt-1 w-100">Salva Modifiche</button>
 				</div>
 			</form>
 		</div>
