@@ -9,9 +9,9 @@
         <h1 class="mb-3 text-center">Risultati Trovati</h1>
 
         <!-- Sezione Cuochi -->
-        <h2 class="mb-3 text-center">Cuochi Trovati</h2>
-        <div th:if="${cuochi == null || cuochi.isEmpty()}" class="alert alert-warning">
-            Non ci sono cuochi nel sistema
+        <h2 class="my-5 text-center">Cuochi Trovati</h2>
+        <div th:if="${cuochi == null || cuochi.isEmpty()}" class="alert alert-warning text-center w-75 mx-auto">
+            <strong>Nessun cuoco trovato.</strong> Prova a modificare i criteri di ricerca o aggiungi nuovi cuochi al sistema.
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <div class="col" th:each="cuoco : ${cuochi}">
@@ -28,9 +28,9 @@
         </div>
 
         <!-- Sezione Ricette -->
-        <h2 class="mb-3 text-center">Ricette Trovate</h2>
-        <div th:if="${ricette == null || ricette.isEmpty()}" class="alert alert-warning">
-            Non ci sono ricette nel sistema
+        <h2 class="my-5 text-center">Ricette Trovate</h2>
+        <div th:if="${ricette == null || ricette.isEmpty()}" class="alert alert-warning text-center w-75 mx-auto">
+            <strong>Nessuna ricetta trovata.</strong> Prova a cercare con altri termini o aggiungi nuove ricette al sistema.
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
             <div class="col" th:each="ricetta : ${ricette}">
