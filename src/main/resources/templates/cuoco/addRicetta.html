@@ -6,7 +6,7 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div th:replace="~{fragments/formRicetta :: formRicetta(
             titolo='Aggiungi Ricetta',
-            action='/addRicetta/',
+            action='/addRicetta',
             ricetta=${ricetta},
             ingredienti=${ingredienti},
         )}"></div>
