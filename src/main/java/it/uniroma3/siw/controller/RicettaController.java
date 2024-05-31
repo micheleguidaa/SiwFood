@@ -55,10 +55,8 @@ public class RicettaController {
 
 	@GetMapping("/update/ricetta/{id}")
 	public String formModifyRicetta(@PathVariable("id") Long id, Model model) {
-		Ricetta ricetta = ricettaService.findById(id);
-		List<Ingrediente> ingredienti = (List<Ingrediente>) ingredienteService.findAll();
-		model.addAttribute("ricetta", ricetta);
-		model.addAttribute("ingredienti", ingredienti);
+		model.addAttribute("ricetta", ricettaService.findById(id));
+		model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
 		return "cuoco/formModifyRicetta";
 	}
 
@@ -103,14 +101,7 @@ public class RicettaController {
 	@GetMapping("/addRicetta")
 	public String addRicetta(Model model) {
 		model.addAttribute("ricetta", new Ricetta());
-		List<Ingrediente> ingredienti = (List<Ingrediente>) ingredienteService.findAll();
-		model.addAttribute("ingredienti", ingredienti);
-
-		if (ingredienti.isEmpty()) {
-			Ingrediente ingrediente = new Ingrediente();
-			model.addAttribute("ingredienti", List.of(ingrediente));
-		}
-
+		model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
 		return "cuoco/addRicetta";
 	}
 
