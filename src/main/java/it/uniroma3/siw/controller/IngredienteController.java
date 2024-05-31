@@ -46,10 +46,5 @@ public class IngredienteController {
 		model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
 		return "admin/indexIngredienti";
 	}
-	
-    @PostMapping("/admin/delete/ingrediente/{id}")
-    public String deleteIngrediente(@PathVariable("id") Long id) {
-    	ingredienteService.deleteById(id);
-        return "redirect:/admin/ingredienti";
-    }
+
 }

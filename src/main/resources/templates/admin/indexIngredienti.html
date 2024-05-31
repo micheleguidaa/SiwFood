@@ -24,13 +24,6 @@
 						<span th:text="${#strings.substring(ingrediente.nome, 0, 1)}" class="lead fw-bold">A</span>
 						<span th:text="${ingrediente.nome}" class="lead">Nome Ingrediente</span>
 						<span>
-							<form th:action="@{'/admin/delete/ingrediente/' + ${ingrediente.id}}" method="post"
-								class="d-inline">
-								<button type="submit" class="btn btn-danger btn-sm remove-ingrediente">
-									<img src="/images/trash.svg" alt="Remove" class="remove-ingrediente-img">
-								</button>
-							</form>
-
 						</span>
 					</li>
 				</ul>
