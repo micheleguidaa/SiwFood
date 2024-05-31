@@ -46,9 +46,18 @@
 					<!-- Fine Elementi visibili per admin -->
 				</ul>
 				
-				<form class="d-flex" th:action="@{/search}" method="post">
+				<!-- Inizio Barra di Ricerca per Cuochi e Utenti Non Registrati -->
+				<form class="d-flex" th:if="${ruolo != 'ADMIN'}"  th:action="@{/search}" method="post">
 					<input class="form-control me-2" type="search" name="stringa"  placeholder="Search" aria-label="Search">
 				</form>
+				<!-- Fine Barra di Ricerca per Cuochi e Utenti Non Registrati -->
+				
+				<!-- Inizio Barra di Ricerca per Admin -->
+				<form class="d-flex" th:if="${ruolo == 'ADMIN'}" th:action="@{/admin/search}" method="post">
+					<input class="form-control me-2" type="search" name="stringa"  placeholder="Search" aria-label="Search">
+				</form>
+				<!-- Fine Barra di Ricerca per Admin-->
+
 				
 				<div class="d-flex align-items-center">
 					<a type="button" class="btn btn-success me-2 my-2" th:if="${userDetails == null}" href="/login">Login</a>

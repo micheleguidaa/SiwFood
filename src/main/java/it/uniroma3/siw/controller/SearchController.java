@@ -44,5 +44,27 @@ public class SearchController {
     public String foundCuochi(Model model) {
         return "founds";
     }
+    
+    @PostMapping("/admin/search")
+    public String searchCuochiAdmin(@RequestParam String stringa, RedirectAttributes redirectAttributes) {
+        if (stringa.length() == 0) {
+            redirectAttributes.addFlashAttribute("cuochi", this.cuocoService.findAll());
+            redirectAttributes.addFlashAttribute("ricette", this.ricettaService.findAll());
+        } else {
+            List<Cuoco> cuochiTrovati = this.cuocoService.findByNome(stringa);
+            cuochiTrovati.addAll(this.cuocoService.findByCognome(stringa));
+            redirectAttributes.addFlashAttribute("cuochi", cuochiTrovati);
+            
+            List<Ricetta> ricetteTrovate = this.ricettaService.findByNome(stringa);
+            redirectAttributes.addFlashAttribute("ricette", ricetteTrovate);
+        }
+        return "redirect:/admin/founds";
+    }
+
+    @GetMapping("/admin/founds")
+    public String foundCuochiAdmin(Model model) {
+        return "admin/foundsAdmin";
+    }
+    
 
 }

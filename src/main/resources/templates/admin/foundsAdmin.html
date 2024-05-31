@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head th:replace="~{fragments/header :: header(title='SiwFood - Gestione Risultati')}"></head>
+
+<body>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container my-5">
+        <h1 class="mb-3 text-center">Gestione Risultati Trovati</h1>
+
+        <!-- Sezione Cuochi -->
+        <h2 class="my-5 text-center">Cuochi Trovati</h2>
+        <div th:if="${cuochi == null || cuochi.isEmpty()}" class="alert alert-warning text-center w-75 mx-auto">
+            <strong>Nessun cuoco trovato.</strong> Prova a modificare i criteri di ricerca o aggiungi nuovi cuochi al sistema.
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col" th:each="cuoco : ${cuochi}">
+                <div class="card">
+                    <div class="image-container overflow-hidden">
+                        <img th:src="${cuoco.urlImage}" class="card-img-top cuoco-img" style="object-fit: cover; object-position: top;" alt="Immagine Cuoco" />
+                    </div>
+                    <div class="card-footer d-flex flex-column text-center mt-3">
+                        <h5 class="card-title" th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Nome Cuoco</h5>
+                        <div class="mt-3">
+                            <div class="d-flex">
+                                <a th:href="@{'/admin/update/cuoco/' + ${cuoco.id}}" class="btn btn-primary flex-grow-1 me-1">Modifica</a>
+                                <form th:action="@{'/admin/delete/cuoco/' + ${cuoco.id}}" method="post" class="flex-grow-1">
+                                    <button type="submit" class="btn btn-danger w-100">Elimina</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione Ricette -->
+        <h2 class="my-5 text-center">Ricette Trovate</h2>
+        <div th:if="${ricette == null || ricette.isEmpty()}" class="alert alert-warning text-center w-75 mx-auto">
+            <strong>Nessuna ricetta trovata.</strong> Prova a cercare con altri termini o aggiungi nuove ricette al sistema.
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+            <div class="col" th:each="ricetta : ${ricette}">
+                <div class="card h-90">
+                    <img th:src="${ricetta.urlsImages[0]}" class="recipe-img" alt="Immagine Ricetta" />
+                    <div class="card-footer d-flex flex-column text-center mt-3">
+                        <h5 class="card-title" th:text="${ricetta.nome}">Nome Ricetta</h5>
+                        <div class="mt-3">
+                            <div class="d-flex">
+                                <form th:action="@{'/admin/delete/ricetta/' + ${ricetta.id}}" method="post" class="flex-grow-1">
+                                    <button type="submit" class="btn btn-danger w-100">Elimina</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include il footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+
+</html>
