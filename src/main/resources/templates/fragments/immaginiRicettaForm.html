@@ -10,14 +10,12 @@
 			<div class="card-body p-0">
 				<div id="ricettaCarousel" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-inner" id="carouselInner">
-						<!-- Ensure ricetta is not null before accessing urlsImages -->
-						<div th:if="${ricetta != null}">
-							<div th:each="urlImage, iterStat : ${ricetta.urlsImages}" class="carousel-item"
-								th:classappend="${iterStat.index == 0} ? 'active'">
-								<img th:src="${urlImage}" class="recipe-img" alt="Immagine Ricetta" />
-							</div>
+
+						<div th:each="urlImage, iterStat : ${ricetta.urlsImages}" class="carousel-item"
+							th:classappend="${iterStat.index == 0} ? 'active'">
+							<img th:src="${urlImage}" class="recipe-img" alt="Immagine Ricetta" />
 						</div>
-						<div th:if="${ricetta == null}" class="carousel-item active">
+						<div th:if="${ricetta.urlsImages==null || ricetta.urlsImages.isEmpty()}" class="carousel-item active">
 							<img src="/images/default/senzaRicetta.jpeg" class="recipe-img"
 								alt="Immagine Predefinita" />
 						</div>
