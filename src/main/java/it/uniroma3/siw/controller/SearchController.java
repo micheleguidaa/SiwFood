@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.model.Ricetta;
@@ -24,26 +25,23 @@ public class SearchController {
     private CuocoService cuocoService;
 	
     @PostMapping("/search")
-    public String searchCuochi(@RequestParam String stringa, Model model) {
+    public String searchCuochi(@RequestParam String stringa, RedirectAttributes redirectAttributes) {
         if (stringa.length() == 0) {
-            model.addAttribute("cuochi", this.cuocoService.findAll());
-            model.addAttribute("ricette", this.ricettaService.findAll());
-
+            redirectAttributes.addFlashAttribute("cuochi", this.cuocoService.findAll());
+            redirectAttributes.addFlashAttribute("ricette", this.ricettaService.findAll());
         } else {
-        	List<Cuoco> cuochiTrovati = this.cuocoService.findByNome(stringa);
-        	cuochiTrovati.addAll(this.cuocoService.findByCognome(stringa));
-            model.addAttribute("cuochi", cuochiTrovati);
+            List<Cuoco> cuochiTrovati = this.cuocoService.findByNome(stringa);
+            cuochiTrovati.addAll(this.cuocoService.findByCognome(stringa));
+            redirectAttributes.addFlashAttribute("cuochi", cuochiTrovati);
             
-        	List<Ricetta> ricetteTrovate = this.ricettaService.findByNome(stringa);
-            model.addAttribute("ricette", ricetteTrovate);
+            List<Ricetta> ricetteTrovate = this.ricettaService.findByNome(stringa);
+            redirectAttributes.addFlashAttribute("ricette", ricetteTrovate);
         }
         return "redirect:/founds";
     }
 
     @GetMapping("/founds")
     public String foundCuochi(Model model) {
-        model.addAttribute("cuochi", this.cuocoService.findAll());
-        model.addAttribute("ricette", this.ricettaService.findAll());
         return "founds";
     }
 
