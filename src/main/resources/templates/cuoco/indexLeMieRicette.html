@@ -12,18 +12,25 @@
 		<div class="text-center mb-4">
 			<a class="btn btn-primary btn-lg" href="/addRicetta" role="button">Aggiungi Nuova Ricetta</a>
 		</div>
-		<div th:if="${cuocoCorrente.ricette==null || cuocoCorrente.ricette.isEmpty()}"
-			class="alert alert-warning text-center d-flex justify-content-center">
+		<div th:if="${cuocoCorrente.ricette==null || cuocoCorrente.ricette.isEmpty()}">
 			<div class="container">
-				<div class="row d-flex justify-content-center">
-					<div class="col-12 col-lg-10">
-						<p>Ops! Non ci sono ancora ricette nel sistema. Non vediamo l'ora di scoprire le tue deliziose
-							creazioni culinarie!</p>
-						<div class="card no-hover">
-							<img src="/images/WeWantYourRecipes.png" alt="We want your recipes" class="card-img-top">
+				<div class="row justify-content-center">
+					<div class="col-lg-9 alert alert-warning text-center d-flex justify-content-center">
+						<div class="row d-flex justify-content-center">
+							<div class="col-12 col-lg-10">
+								<p>Ops! Non ci sono ancora ricette nel sistema. Non vediamo l'ora di scoprire le tue
+									deliziose
+									creazioni culinarie!</p>
+								<div class="card no-hover">
+									<img src="/images/WeWantYourRecipes.png" alt="We want your recipes"
+										class="card-img-top">
+								</div>
+							</div>
 						</div>
 					</div>
+
 				</div>
+
 			</div>
 		</div>
 
