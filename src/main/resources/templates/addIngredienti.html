@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/header :: header('Aggiungi Ingrediente')">
-	<style>
-		/* Stile per le immagini all'interno del contenitore */
-		.image-container img {
-			width: 100%;
-			object-fit: cover;
-			max-height: 220px;
-			min-height: 280px;
-		}
-	</style>
-</head>
+<head th:replace="fragments/header :: header('Aggiungi Ingrediente')"></head>
 
 <body>
 	<!-- Include la navbar dal frammento specificato -->
@@ -20,34 +10,34 @@
 		<div class="form-container">
 			<h2 class="text-center mb-4">Aggiungi Ingredienti</h2>
 			<div class="row">
-				<div class="col-md-7">
+				<div class="col-12 col-md-6 mx-auto">
 					<div class="card mb-4 no-hover">
-						<div class="card-body p-0 image-container ">
+						<div class="card-body p-0 image-container">
 							<!-- Immagine degli ingredienti -->
 							<img src="/images/Ingredienti.jpeg" alt="Ingredienti" class="img-fluid">
 						</div>
 					</div>
 				</div>
-				<div class="col-md-5">
+				<div class="col-12 col-md-6 mx-auto">
 					<!-- Form per l'aggiunta degli ingredienti -->
 					<form th:action="@{/aggiungiIngredienti}" method="post">
-						<!-- CSRF token per la sicurezza -->
-						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-						<div id="ingredienti-container" class="scrollable-container overflow-auto"
-							style="max-height: 400px;">
+						<div id="ingredienti-container" class="scrollable-container overflow-auto">
 							<div class="form-group ingredienti-group">
-								<label for="nome-0" class="form-label">Nome Ingrediente</label>
-								<div class="input-group mb-3 ">
-									<input type="text" class="form-control" id="nome-0" name="ingredienti"
-										placeholder="Nome dell'ingrediente" required>
-									<div class="input-group-append">
-										<button class="btn btn-danger remove-ingrediente ms-3 " type="button"
-											onclick="eliminaIngrediente(this)">
-											<!-- Icona del cestino per rimuovere un ingrediente -->
-											<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
-										</button>
+								<!-- Template per aggiungere nuovi ingredienti -->
+								<template id="create-ingredient-template">
+									<div class="row align-items-center mb-2 justify-content-center">
+										<div class="col-10 col-md-9 ms-auto  me-0">
+											<input type="text" class="form-control" name="ingredienti"
+												placeholder="Nome dell'ingrediente" required>
+										</div>
+										<div class="col-1 col-md-1 me-auto p-0">
+											<button type="button" class="btn btn-danger remove-ingrediente"
+												onclick="eliminaIngrediente(this)">
+												<img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
+											</button>
+										</div>
 									</div>
-								</div>
+								</template>
 							</div>
 						</div>
 						<div class="text-center">
@@ -56,57 +46,54 @@
 								<i class="fas fa-plus"></i> Aggiungi Altro Ingrediente
 							</button>
 						</div>
+						<!-- Bottone per salvare gli ingredienti -->
+						<div class="text-center">
+							<button type="submit" class="btn btn-success mt-3">
+								Salva Ingredienti
+							</button>
+						</div>
+					</form>
 				</div>
-				<!-- Bottone per salvare gli ingredienti -->
-				<button type="submit" class="btn btn-success mt-3">
-					Salva Ingredienti
-				</button>
-				</form>
 			</div>
 		</div>
 	</div>
 	<!-- Include il footer dal frammento specificato -->
 	<div th:replace="fragments/footer :: footer"></div>
 
-	<!-- Script per Bootstrap e gestione dinamica degli ingredienti -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 	<script>
-		let ingredienteIndex = 1;
-
-		function aggiungiIngrediente() {
-			// Trova il contenitore degli ingredienti
+		document.addEventListener('DOMContentLoaded', function () {
+			const addButton = document.querySelector('button[onclick="aggiungiIngrediente()"]');
 			const ingredientiContainer = document.getElementById('ingredienti-container');
-			// Crea un nuovo div per un nuovo ingrediente
-			const newIngredienteDiv = document.createElement('div');
-			newIngredienteDiv.classList.add('form-group', 'ingredienti-group');
-			newIngredienteDiv.innerHTML = `
-                <label for="nome-${ingredienteIndex}" class="form-label">Nome Ingrediente</label>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="nome-${ingredienteIndex}" name="ingredienti" placeholder="Nome dell'ingrediente" required>
-                    <div class="input-group-append">
-                        <button class="btn btn-danger remove-ingrediente ms-3" type="button" onclick="eliminaIngrediente(this)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                <img src="/images/trash.svg" alt="Remove" style="filter: invert(1);">
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            `;
-			// Aggiunge il nuovo div al contenitore
-			ingredientiContainer.appendChild(newIngredienteDiv);
-			// Incrementa l'indice per il prossimo ingrediente
-			ingredienteIndex++;
-		}
+			const ingredientTemplate = document.getElementById('create-ingredient-template').content;
+
+			function aggiungiIngrediente() {
+				const clone = document.importNode(ingredientTemplate, true);
+				ingredientiContainer.appendChild(clone);
+			}
+
+			addButton.addEventListener('click', aggiungiIngrediente);
+
+			// Aggiungi un ingrediente iniziale al caricamento della pagina
+			aggiungiIngrediente();
+
+			ingredientiContainer.addEventListener('click', function (event) {
+				if (event.target.closest('.remove-ingrediente')) {
+					const row = event.target.closest('.row');
+					if (row) {
+						row.remove();
+					}
+				}
+			});
+		});
 
 		function eliminaIngrediente(button) {
-			// Trova il gruppo di ingredienti e lo rimuove
-			const ingredientiGroup = button.closest('.ingredienti-group');
-			ingredientiGroup.remove();
+			const row = button.closest('.row');
+			if (row) {
+				row.remove();
+			}
 		}
 	</script>
+
 </body>
 
 </html>
