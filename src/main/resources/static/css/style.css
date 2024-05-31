@@ -144,6 +144,16 @@ footer {
 }
 
 
+.recipe-img-lg {
+    width: 100%;
+    height: 320px;
+    object-fit: cover; /* Ensure the image covers the set dimensions without distortion */
+    object-position: center; /* Centers the image vertically */
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+
 /* Cuoco Image Styles */
 .cuoco-img {
     width: 100%; /* Ensures the image fits within the card's width */

@@ -1,84 +1,102 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head th:replace="~{fragments/header :: header(title='SiwFood - Ricetta')}">
-    <!-- Includi i fogli di stile di Bootstrap e quelli personalizzati -->
-    <link rel="stylesheet" href="path/to/bootstrap.min.css">
-    <link rel="stylesheet" href="path/to/your-custom-styles.css">
+	<!-- Aggiungi il link a Bootstrap CSS -->
+	<link href="path/to/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    <!-- Includi la navbar dal frammento navbar -->
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <div class="container mt-5 mb-5">
-        <!-- Titolo della ricetta -->
-        <div class="text-center mb-5">
-            <h1 class="display-4" th:text="${ricetta.nome}">Lasagna</h1>
-        </div>
-        <div th:if="${ricetta}">
-            <div class="card mb-4 no-hover">
-                <div class="row mb-4">
-                    <!-- Colonna sinistra per il carosello delle immagini -->
-                    <div class="col-md-5">
-                        <div id="ricettaCarousel" class="carousel slide card" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <!-- Cicla attraverso le immagini e crea un elemento del carosello per ciascuna -->
-                                <div th:each="urlImage, iterStat : ${ricetta.urlsImages}" class="carousel-item" th:classappend="${iterStat.index == 0 ? 'active' : ''}">
-                                    <img th:src="${urlImage}" class="d-block w-100" alt="Immagine Ricetta" />
-                                </div>
-                            </div>
-                            <!-- Se ci sono più di una immagine, aggiungi i controlli per navigare il carosello -->
-                            <div th:if="${ricetta.urlsImages.size() > 1}">
-                                <button class="carousel-control-prev" type="button" data-bs-target="#ricettaCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#ricettaCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Colonna destra per la descrizione della ricetta -->
-                    <div class="col-md-7">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <p class="card-text text-justify lead" th:text="${ricetta.descrizione}"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Se non esiste una ricetta, mostra un avviso -->
-        <div th:unless="${ricetta}" class="text-center alert alert-warning">Non esiste</div>
-        <!-- Sezione degli ingredienti -->
-        <div class="row">
-            <div class="col-12">
-                <h2 class="mb-4 text-center">Ingredienti</h2>
-                <!-- Avviso se non ci sono ingredienti -->
-                <div th:if="${ricetta.righeRicetta == null || ricetta.righeRicetta.isEmpty()}" class="alert alert-warning">
-                    Non ci sono ingredienti per la ricetta nel sistema
-                </div>
-                <!-- Lista degli ingredienti -->
-                <div class="card shadow-sm" th:if="${ricetta.righeRicetta != null && !ricetta.righeRicetta.isEmpty()}">
-                    <div class="card-body">
-                        <div class="row">
-                            <!-- Cicla attraverso gli ingredienti e crea un elemento per ciascuno -->
-                            <div class="col-md-6" th:each="rigaRicetta : ${ricetta.righeRicetta}">
-                                <div class="ingredient-item d-flex justify-content-between align-items-center p-2 border-bottom">
-                                    <span th:text="${rigaRicetta.ingrediente.nome}"></span>
-                                    <span th:text="' ' + ${rigaRicetta.quantita}"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Includi il footer dal frammento footer -->
-    <div th:replace="~{fragments/footer :: footer}"></div>
-    <!-- Includi gli script di Bootstrap -->
-    <script src="path/to/bootstrap.bundle.min.js"></script>
+	<!-- Includi la navbar dal frammento navbar -->
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+	<div class="container mt-5 mb-5">
+		<!-- Titolo della ricetta -->
+		<div class="text-center mb-5">
+			<h1 class="display-4" th:text="${ricetta.nome}">Lasagna</h1>
+		</div>
+		<div th:if="${ricetta}">
+			<div class="card mb-4 no-hover">
+
+
+
+
+				<div class="row mb-4 same-height">
+					<!-- Colonna sinistra per il carosello delle immagini -->
+					<div class="col-md-5">
+						<div id="ricettaCarousel" class="carousel slide card h-100" data-bs-ride="carousel">
+							<div class="carousel-inner h-100">
+								<!-- Cicla attraverso le immagini e crea un elemento del carosello per ciascuna -->
+								<div th:each="urlImage, iterStat : ${ricetta.urlsImages}" class="carousel-item h-100"
+									th:classappend="${iterStat.index == 0} ? 'active'">
+									<img th:src="${urlImage}" class="d-block w-100 h-100 recipe-img-lg"
+										alt="Immagine Ricetta" />
+								</div>
+								<!-- Immagine predefinita se non ci sono immagini -->
+								<div th:if="${ricetta.urlsImages == null || ricetta.urlsImages.isEmpty()}"
+									class="carousel-item active">
+									<img src="/images/default/senzaRicetta.jpeg"
+										class="d-block w-100 h-100 recipe-img-lg" alt="Immagine Predefinita" />
+								</div>
+							</div>
+							<!-- Se ci sono più di una immagine, aggiungi i controlli per navigare il carosello -->
+							<div th:if="${ricetta.urlsImages.size() > 1}">
+								<button class="carousel-control-prev" type="button" data-bs-target="#ricettaCarousel"
+									data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button" data-bs-target="#ricettaCarousel"
+									data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Colonna destra per la descrizione della ricetta -->
+					<div class="col-md-7">
+						<div class="card mb-4 shadow-sm h-100 card-description">
+							<div class="card-body">
+								<p class="card-text text-justify lead" th:text="${ricetta.descrizione}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Se non esiste una ricetta, mostra un avviso -->
+		<div th:unless="${ricetta}" class="text-center alert alert-warning">Non esiste</div>
+		<!-- Sezione degli ingredienti -->
+		<div class="row">
+			<div class="col-12">
+				<h2 class="mb-4 text-center">Ingredienti</h2>
+				<!-- Avviso se non ci sono ingredienti -->
+				<div th:if="${ricetta.righeRicetta == null || ricetta.righeRicetta.isEmpty()}"
+					class="alert alert-warning">
+					Non ci sono ingredienti per la ricetta nel sistema
+				</div>
+				<!-- Lista degli ingredienti -->
+				<div class="card shadow-sm" th:if="${ricetta.righeRicetta != null && !ricetta.righeRicetta.isEmpty()}">
+					<div class="card-body">
+						<div class="row">
+							<!-- Cicla attraverso gli ingredienti e crea un elemento per ciascuno -->
+							<div class="col-md-6" th:each="rigaRicetta : ${ricetta.righeRicetta}">
+								<div
+									class="ingredient-item d-flex justify-content-between align-items-center p-2 border-bottom">
+									<span th:text="${rigaRicetta.ingrediente.nome}"></span>
+									<span th:text="' ' + ${rigaRicetta.quantita}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Includi il footer dal frammento footer -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
+	<!-- Includi gli script di Bootstrap -->
+	<script src="path/to/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
