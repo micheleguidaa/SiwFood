@@ -44,21 +44,20 @@
 						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/ingredienti">Ingredienti</a>
 					</li>
 					<!-- Fine Elementi visibili per admin -->
-
 				</ul>
-				<!--
-				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+				
+				<form class="d-flex" th:action="@{/searchCuochi}" method="post">
+					<input class="form-control me-2" type="search" name="stringa"  placeholder="Search" aria-label="Search">
 				</form>
-				 -->
+				
 				<div class="d-flex align-items-center">
-					<a type="button" class="btn btn-success me-2" th:if="${userDetails == null}" href="/login">Login</a>
+					<a type="button" class="btn btn-success me-2 my-2" th:if="${userDetails == null}" href="/login">Login</a>
 					<div class="dropdown" th:if="${userDetails != null}">
 						<a class="nav-link" role="button" id="userDropdown" data-bs-toggle="dropdown"
 							aria-expanded="false">
 							<!-- Se l'immagine è presente -->
 							<img th:if="${cuocoCorrente.urlImage}" th:src="@{${cuocoCorrente.urlImage}}"
-								alt="Account Image" class="account-icon">
+								alt="Account Image" class="account-icon my-2">
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="userDropdown">
 							<div th:text="${userDetails.username}" class="p-2 ms-2 text-capitalize">Profile</div>

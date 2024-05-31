@@ -10,6 +10,7 @@ import it.uniroma3.siw.repository.CuocoRepository;
 
 import jakarta.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -95,5 +96,13 @@ public class CuocoService {
 
     public long countCuochi() {
         return cuocoRepository.count();
+    }
+    
+    public List<Cuoco> findByNome(String nome) {
+    	return cuocoRepository.findByNomeStartingWithIgnoreCase(nome);
+    }
+    
+    public List<Cuoco> findByCognome(String cognome) {
+    	return cuocoRepository.findByCognomeStartingWithIgnoreCase(cognome);
     }
 }

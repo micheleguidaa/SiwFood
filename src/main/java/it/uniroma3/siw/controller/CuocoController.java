@@ -1,18 +1,19 @@
 package it.uniroma3.siw.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Cuoco;
-import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.service.CuocoService;
-import it.uniroma3.siw.service.CredenzialiService;
-
 import java.io.IOException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class CuocoController {
@@ -64,5 +65,23 @@ public class CuocoController {
             model.addAttribute("messaggioErrore", "Errore nella gestione dell'immagine");
             return "admin/formModifyCuoco.html";
         }
+    }
+    
+    @PostMapping("/searchCuochi")
+    public String searchCuochi(@RequestParam String stringa, Model model) {
+        if (stringa.length() == 0) {
+            model.addAttribute("cuochi", this.cuocoService.findAll());
+        } else {
+        	List<Cuoco> cuochiTrovati = this.cuocoService.findByNome(stringa);
+        	cuochiTrovati.addAll(this.cuocoService.findByCognome(stringa));
+            model.addAttribute("cuochi", cuochiTrovati);
+        }
+        return "foundCuochi";
+    }
+
+    @GetMapping("/foundCuochi")
+    public String foundCuochi(Model model) {
+        model.addAttribute("cuochi", this.cuocoService.findAll());
+        return "foundCuochi";
     }
 }
