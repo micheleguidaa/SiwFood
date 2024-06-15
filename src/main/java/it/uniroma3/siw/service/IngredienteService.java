@@ -2,6 +2,7 @@ package it.uniroma3.siw.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.model.Ingrediente;
 import it.uniroma3.siw.repository.IngredienteRepository;
@@ -17,6 +18,7 @@ public class IngredienteService {
         return ingredienteRepository.findAll();
     }
 
+    @Transactional
     public void addIngredienti(List<String> ingredienti) {
         for (String nomeIngrediente : ingredienti) {
             Ingrediente ingrediente = new Ingrediente();
@@ -26,15 +28,15 @@ public class IngredienteService {
     }
     
     public Ingrediente findById(Long id) {
-    	return ingredienteRepository.findById(id).orElse(null);
+        return ingredienteRepository.findById(id).orElse(null);
     }
     
-    // Metodo per ottenere tutti gli ingredienti ordinati alfabeticamente
     public List<Ingrediente> findAllOrderedByNome() {
         return ingredienteRepository.findAllByOrderByNomeAsc();
     }
 
-	public void deleteById(Long id) {
-		ingredienteRepository.deleteById(id);
-	}
+    @Transactional
+    public void deleteById(Long id) {
+        ingredienteRepository.deleteById(id);
+    }
 }

@@ -27,19 +27,24 @@ public class CuocoService {
 
     private static final String UPLOADED_FOLDER = "uploads/cuochi2/";
     private static final String DEFAULT_IMAGE = "/images/default/senzaFoto.jpeg";
-
+    
+    
+    @Transactional
     public Cuoco findById(Long id) {
         return cuocoRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public Iterable<Cuoco> findAll() {
         return cuocoRepository.findAll();
     }
 
+    @Transactional
     public boolean existsByNomeAndCognome(String nome, String cognome) {
         return cuocoRepository.existsByNomeAndCognome(nome, cognome);
     }
 
+    @Transactional
     public void save(Cuoco cuoco) {
         cuocoRepository.save(cuoco);
     }
@@ -57,6 +62,7 @@ public class CuocoService {
         });
     }
 
+    @Transactional
     public void registerCuoco(Cuoco cuoco, Credenziali credenziali, MultipartFile file) throws IOException {
         if (!existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
             if (file.isEmpty()) {
@@ -73,6 +79,7 @@ public class CuocoService {
         }
     }
 
+    @Transactional
     public void updateCuoco(Long id, Cuoco updatedCuoco, MultipartFile file) throws IOException {
         Cuoco existingCuoco = findById(id);
         if (existingCuoco != null) {
@@ -88,20 +95,24 @@ public class CuocoService {
         }
     }
 
+    @Transactional
     private void updateCuocoDetails(Cuoco existingCuoco, Cuoco updatedCuoco) {
         existingCuoco.setNome(updatedCuoco.getNome());
         existingCuoco.setCognome(updatedCuoco.getCognome());
         existingCuoco.setDataDiNascita(updatedCuoco.getDataDiNascita());
     }
 
+    @Transactional
     public long countCuochi() {
         return cuocoRepository.count();
     }
     
+    @Transactional
     public List<Cuoco> findByNome(String nome) {
     	return cuocoRepository.findByNomeStartingWithIgnoreCase(nome);
     }
     
+    @Transactional
     public List<Cuoco> findByCognome(String cognome) {
     	return cuocoRepository.findByCognomeStartingWithIgnoreCase(cognome);
     }
