@@ -13,5 +13,6 @@ public interface CuocoRepository extends CrudRepository<Cuoco, Long>{
 
     public List<Cuoco> findByNomeStartingWithIgnoreCase(String nome);
     public List<Cuoco> findByCognomeStartingWithIgnoreCase(String cognome);
+    public List<Cuoco> findByNomeStartingWithIgnoreCaseAndCognomeStartingWithIgnoreCase(String nome, String cognome);
 }
  

@@ -116,4 +116,9 @@ public class CuocoService {
     public List<Cuoco> findByCognome(String cognome) {
     	return cuocoRepository.findByCognomeStartingWithIgnoreCase(cognome);
     }
+    
+    @Transactional
+    public List<Cuoco> findByNomeAndCognome(String nome, String cognome) {
+        return cuocoRepository.findByNomeStartingWithIgnoreCaseAndCognomeStartingWithIgnoreCase(nome, cognome);
+    }
 }

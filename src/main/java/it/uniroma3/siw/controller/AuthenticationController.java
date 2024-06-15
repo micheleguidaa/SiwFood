@@ -34,10 +34,7 @@ public class AuthenticationController {
 	
     @Autowired
     private CuocoService cuocoService;
-    
-    @Autowired
-    private RicettaService ricettaService;
-    
+        
     @Autowired
     private CuocoValidator cuocoValidator;
     
@@ -46,38 +43,34 @@ public class AuthenticationController {
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {
-		return "login.html";
+		return "login";
 	}
 
 	@GetMapping("/") 
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
-	        return "index.html";
+	        return "index";
 		}
 		else {		
 			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Credenziali credentials = credenzialiService.getCredenziali(userDetails.getUsername());
 			if (credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-            	long numeroCuochi = cuocoService.countCuochi();
-                long numeroRicette = ricettaService.countRicette();
-                model.addAttribute("numeroCuochi", numeroCuochi);
-                model.addAttribute("numeroRicette", numeroRicette);
-				return "admin/indexAdmin.html";
+				return "admin/indexAdmin";
 			}
 		}
-        return "index.html";
+        return "index";
 	}
 
 	
 	@GetMapping("/success")
 	public String defaultAfterLogin(Model model) {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
-		if(credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
+		Credenziali credentials = credenzialiService.getCredenziali(userDetails.getUsername());
+		if(credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
 			return "admin/indexAdmin";
 		}
-		return "success.html";
+		return "success";
 	}
 
 	@GetMapping("/registerCuoco")
