@@ -1,4 +1,4 @@
-package it.uniroma3.siw.Configuration;
+package it.uniroma3.siw.authentication;
 
 import javax.sql.DataSource;
 
