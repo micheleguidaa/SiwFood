@@ -43,7 +43,7 @@
 					</div>
 					<div class="card-footer d-flex">
 						<a th:href="@{'/update/ricetta' + '/' + ${ricetta.id}}"
-							class="btn btn-primary w-50 me-2">Visualizza</a>
+							class="btn btn-primary w-50 me-2">Modifica</a>
 						<form th:action="@{'/delete/ricetta/' + ${ricetta.id}}" method="post" class="flex-grow-1">
 							<button type="submit" class="btn btn-danger w-100">Elimina</button>
 						</form>

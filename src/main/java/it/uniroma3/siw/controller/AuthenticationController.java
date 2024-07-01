@@ -93,8 +93,11 @@ public class AuthenticationController {
 	                            @RequestParam("fileImage") MultipartFile file,
 	                            HttpSession session,
 	                            Model model) {
+		
 	    this.cuocoValidator.validate(cuoco, cuocoBindingResult);
 	    this.credenzialiValidator.validate(credenziali, credenzialiBindingResult);
+	    
+	    
 	    // se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
 	    if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
 	        try {

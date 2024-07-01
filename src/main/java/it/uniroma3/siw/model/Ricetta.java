@@ -20,6 +20,7 @@ public class Ricetta {
 	@NotBlank
 	private String nome;
 	@Column(length = 2000)
+	@NotBlank
 	private String descrizione;
 	private List<String> urlsImages;
 	
@@ -28,7 +29,6 @@ public class Ricetta {
 	
     @ManyToOne 
 	private Cuoco cuoco; 
-
 	
 	public Long getId() {
 		return id;

@@ -37,25 +37,47 @@ public class RicettaController {
 
 	@GetMapping("/ricette")
 	public String showRicette(Model model) {
-		model.addAttribute("ricette", ricettaService.findAll());
+		model.addAttribute("ricette", ricettaService.getAllRicette());
 		return "ricette";
 	}
 
 	@GetMapping("/admin/ricette")
 	public String indexRicette(Model model) {
-		model.addAttribute("ricette", ricettaService.findAll());
+		model.addAttribute("ricette", ricettaService.getAllRicette());
 		return "admin/indexRicette";
 	}
 
 	@GetMapping("/ricetta/{id}")
 	public String getRicetta(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("ricetta", ricettaService.findById(id));
+		model.addAttribute("ricetta", ricettaService.getRicetta(id));
 		return "ricetta";
 	}
+	
+	@GetMapping("/addRicetta")
+	public String addRicetta(Model model) {
+		model.addAttribute("ricetta", new Ricetta());
+		model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
+		return "cuoco/addRicetta";
+	}
+	
+	@PostMapping("/addRicetta")
+	public String addRicetta(@Valid @ModelAttribute("ricetta") Ricetta ricetta, BindingResult ricettaBindingResult,
+			@RequestParam("fileImages") MultipartFile[] files, @RequestParam("cuocoId") Long cuocoId,
+			@RequestParam("ingredientiIds") List<Long> ingredientiIds,
+			@RequestParam("quantita") List<String> quantitaList, Model model) {
+    	this.ricettaValidator.validate(ricetta, ricettaBindingResult);
+		try {
+			ricettaService.registerRicetta(ricetta, cuocoId, files, ingredientiIds, quantitaList);
+			return "redirect:/leMieRicette";
+		} catch (IOException e) {
+			return "cuoco/addRicetta";
+		}
+	}
+
 
 	@GetMapping("/update/ricetta/{id}")
 	public String formModifyRicetta(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("ricetta", ricettaService.findById(id));
+		model.addAttribute("ricetta", ricettaService.getRicetta(id));
 		model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
 		return "cuoco/formModifyRicetta";
 	}
@@ -82,7 +104,7 @@ public class RicettaController {
 
 	@GetMapping("/leMieRicette")
 	public String showLeMieRicette(Model model) {
-		model.addAttribute("ricette", ricettaService.findAll());
+		model.addAttribute("ricette", ricettaService.getAllRicette());
 		return "cuoco/indexLeMieRicette";
 	}
 
@@ -95,31 +117,8 @@ public class RicettaController {
 	@PostMapping("/admin/delete/ricetta/{id}")
 	public String deleteRicettaByAdmin(@PathVariable("id") Long id) {
 		ricettaService.deleteById(id);
-		return "redirect:/admin/indexRicette";
+		return "redirect:/admin/ricette";
 	}
-
-	@GetMapping("/addRicetta")
-	public String addRicetta(Model model) {
-		model.addAttribute("ricetta", new Ricetta());
-		model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
-		return "cuoco/addRicetta";
-	}
-
-	@PostMapping("/addRicetta")
-	public String addRicetta(@Valid @ModelAttribute("ricetta") Ricetta ricetta, BindingResult ricettaBindingResult,
-			@RequestParam("fileImages") MultipartFile[] files, @RequestParam("cuocoId") Long cuocoId,
-			@RequestParam("ingredientiIds") List<Long> ingredientiIds,
-			@RequestParam("quantita") List<String> quantitaList, Model model) {
-    	this.ricettaValidator.validate(ricetta, ricettaBindingResult);
-		try {
-			ricettaService.registerRicetta(ricetta, cuocoId, files, ingredientiIds, quantitaList);
-			return "redirect:/leMieRicette";
-		} catch (IOException e) {
-			return "cuoco/addRicetta";
-		}
-	}
-
-
 
 }
 

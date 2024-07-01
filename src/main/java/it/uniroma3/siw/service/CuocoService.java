@@ -10,6 +10,7 @@ import it.uniroma3.siw.repository.CuocoRepository;
 
 import jakarta.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,21 +29,30 @@ public class CuocoService {
     private static final String UPLOADED_FOLDER = "uploads/cuochi2/";
     private static final String DEFAULT_IMAGE = "/images/default/senzaFoto.jpeg";
     
-    
+    /**
+     * This method retrieves a Cuoco from the DB based on its ID.
+     * @param id the id of the Cuoco to retrieve from the DB
+     * @return the retrieved Cuoco, or null if no Cuoco with the passed ID could be found in the DB
+     */
     @Transactional
-    public Cuoco findById(Long id) {
-        return cuocoRepository.findById(id).orElse(null);
+    public Cuoco getCuoco(Long id) {
+        Optional<Cuoco> result = this.cuocoRepository.findById(id);
+        return result.orElse(null);
     }
 
+    /**
+     * This method retrieves all Cuochi from the DB.
+     * @return a List with all the retrieved Cuochi
+     */
     @Transactional
-    public Iterable<Cuoco> findAll() {
-        return cuocoRepository.findAll();
+    public List<Cuoco> getAllCuochi() {
+        List<Cuoco> result = new ArrayList<>();
+        Iterable<Cuoco> iterable = this.cuocoRepository.findAll();
+        for(Cuoco Cuoco : iterable)
+            result.add(Cuoco);
+        return result;
     }
-
-    @Transactional
-    public boolean existsByNomeAndCognome(String nome, String cognome) {
-        return cuocoRepository.existsByNomeAndCognome(nome, cognome);
-    }
+ 
 
     @Transactional
     public void save(Cuoco cuoco) {
@@ -64,7 +74,7 @@ public class CuocoService {
 
     @Transactional
     public void registerCuoco(Cuoco cuoco, Credenziali credenziali, MultipartFile file) throws IOException {
-        if (!existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
+    	
             if (file.isEmpty()) {
                 cuoco.setUrlImage(DEFAULT_IMAGE);
             } else {
@@ -76,12 +86,11 @@ public class CuocoService {
             
             save(cuoco);
             credenzialiService.saveCredenziali(credenziali); 
-        }
     }
 
     @Transactional
     public void updateCuoco(Long id, Cuoco updatedCuoco, MultipartFile file) throws IOException {
-        Cuoco existingCuoco = findById(id);
+        Cuoco existingCuoco = getCuoco(id);
         if (existingCuoco != null) {
             updateCuocoDetails(existingCuoco, updatedCuoco);
 

@@ -1,70 +1,48 @@
 <!DOCTYPE html>
 <html lang="it">
-
-<head th:replace="~{fragments/header :: header(title='SiwFood - Admin')}"></head>
+<head th:replace="~{fragments/header :: header(title='SiwFood - Admin')}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
 
 <body>
-	<!-- Include la navbar -->
-	<div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-	<!-- Corpo principale della pagina -->
-	<div class="container mt-5 vh-50 text-center">
-		<h1 class="mb-4">Benvenuto nella sezione Admin di SiwFood</h1>
+    <div class="jumbotron jumbotron-fluid vh-50 mt-3 mb-3">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 d-flex justify-content-center">
+                    <div class="text-center">
+                        <div class="text-center mt-5">
+                            <img src="/images/admin.jpeg" class="rounded-4 img-fluid mb-4" alt="Logo Admin SiwFood"
+                                style="width: 100%; max-width: 500px;">
 
+                            <h1 class="display-4">Benvenuto Admin!</h1>
+                            <p class="lead mb-4">
+                                Gestisci il contenuto del sito, modera le ricette, e controlla gli utenti tutto da questa
+                                interfaccia amministrativa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <p class="lead">
+                        Utilizza il menu qui sotto per navigare tra le diverse sezioni amministrative.
+                    </p>
+                    <a class="btn btn-primary btn-lg" href="/admin/cuochi" role="button">Gestisci Cuochi</a>
+                    <a class="btn btn-success btn-lg" href="/admin/ricette" role="button">Gestisci Ricette</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Include il footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
 
-
-		<!-- Gestione Ricette -->
-		<div class="card mb-4 shadow-sm no-hover">
-			<div class="card-header">
-				<h4 class="my-0 fw-normal">Gestione Ricette</h4>
-			</div>
-			<div class="card-body">
-				<p>Qui puoi gestire le ricette registrate nel sistema.</p>
-				<a href="/admin/formNewRicetta" class="btn btn-primary w-100">Aggiungi Nuova Ricetta</a>
-				<a href="/admin/indexRicette" class="btn btn-secondary w-100 mt-2">Visualizza Ricette</a>
-			</div>
-		</div>
-
-
-
-
-	</div>
-
-	<div class="row row-cols-1 justify-content-center">
-		<!-- Gestione Cuochi -->
-		<div class="col-6">
-			<div class="card mb-4 shadow-sm no-hover">
-				<div class="card-header">
-					<h4 class="my-0 fw-normal">Gestione Cuochi</h4>
-				</div>
-				<div class="card-body">
-					<p>Qui puoi gestire i cuochi registrati nel sistema.</p>
-					<a href="/admin/formNewCuoco" class="btn btn-primary w-100">Aggiungi Nuovo Cuoco</a>
-					<a href="/admin/indexCuochi" class="btn btn-secondary w-100 mt-2">Visualizza Cuochi</a>
-				</div>
-			</div>
-		</div>
-		<!-- Gestione Ricette -->
-		<div class="col-6">
-			<div class="card mb-4 shadow-sm no-hover">
-				<div class="card-header">
-					<h4 class="my-0 fw-normal">Gestione Ricette</h4>
-				</div>
-				<div class="card-body">
-					<p>Qui puoi gestire le ricette registrate nel sistema.</p>
-					<a href="/admin/formNewRicetta" class="btn btn-primary w-100">Aggiungi Nuova Ricetta</a>
-					<a href="/admin/indexRicette" class="btn btn-secondary w-100 mt-2">Visualizza Ricette</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	</div>
-
-	<!-- Include il footer -->
-	<div th:replace="~{fragments/footer :: footer}"></div>
-
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 
 
@@ -29,16 +30,20 @@ public class Cuoco {
 	@NotBlank
     private String cognome;
 	
+	@NotBlank
+	@Column(length = 2000)
+    private String biografia;
+	
     @NotNull
-    @PastOrPresent
+    @Past
     private LocalDate dataDiNascita;
     
-    private String urlImage;
+	private String urlImage;
     
-    @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL)
     private List<Ricetta> ricette;
     
-	@OneToOne(mappedBy = "cuoco", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(mappedBy = "cuoco", cascade = CascadeType.ALL)
     private Credenziali credenziali;
     
     // Getters and Setters
@@ -90,4 +95,13 @@ public class Cuoco {
     public void setRicette(List<Ricetta> ricette) {
         this.ricette = ricette;
     }
+    
+    public String getBiografia() {
+		return biografia;
+	}
+
+	public void setBiografia(String biografia) {
+		this.biografia = biografia;
+	}
+
 }

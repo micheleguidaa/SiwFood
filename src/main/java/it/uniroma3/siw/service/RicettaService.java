@@ -35,13 +35,33 @@ public class RicettaService {
 	private static final String UPLOAD_DIR = "uploads/ricette2/";
 	private static final String DEFAULT_IMAGE = "/images/default/senzaRicetta.jpeg";
 
-	public Ricetta findById(Long id) {
-		return ricettaRepository.findById(id).orElse(null);
-	}
 
-	public Iterable<Ricetta> findAll() {
-		return ricettaRepository.findAll();
-	}
+    /**
+     * This method retrieves a Ricetta from the DB based on its ID.
+     * @param id the id of the Ricetta to retrieve from the DB
+     * @return the retrieved Ricetta, or null if no Ricetta with the passed ID could be found in the DB
+     */
+    @Transactional
+    public Ricetta getRicetta(Long id) {
+        Optional<Ricetta> result = this.ricettaRepository.findById(id);
+        return result.orElse(null);
+    }
+
+	
+    /**
+     * This method retrieves all Ricette from the DB.
+     * @return a List with all the retrieved Ricette
+     */
+    @Transactional
+    public List<Ricetta> getAllRicette() {
+        List<Ricetta> result = new ArrayList<>();
+        Iterable<Ricetta> iterable = this.ricettaRepository.findAll();
+        for(Ricetta Ricetta : iterable)
+            result.add(Ricetta);
+        return result;
+    }
+    
+    
 
 	public void save(Ricetta ricetta) {
 		ricettaRepository.save(ricetta);
@@ -65,7 +85,7 @@ public class RicettaService {
 	@Transactional
 	public void registerRicetta(Ricetta ricetta, Long cuocoId, MultipartFile[] files, List<Long> ingredientiIds,
 			List<String> quantitaList) throws IOException {
-		Cuoco cuoco = cuocoService.findById(cuocoId);
+		Cuoco cuoco = cuocoService.getCuoco(cuocoId);
 		ricetta.setCuoco(cuoco);
 
 		List<String> urlsImages = handleFileUpload(files);
@@ -93,7 +113,7 @@ public class RicettaService {
 	@Transactional
 	public void updateRicetta(Long id, Ricetta updatedRicetta, MultipartFile[] files, List<Long> ingredientiIds,
 			List<String> quantitaList) throws IOException {
-		Ricetta existingRicetta = findById(id);
+		Ricetta existingRicetta = getRicetta(id);
 		if (existingRicetta != null) {
 			updateRicettaDetails(existingRicetta, updatedRicetta);
 
@@ -140,10 +160,6 @@ public class RicettaService {
 			}
 		}
 		return urlsImages;
-	}
-
-	public long countRicette() {
-		return ricettaRepository.count();
 	}
 
 	public List<Ricetta> findByNome(String nome) {

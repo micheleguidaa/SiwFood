@@ -27,6 +27,7 @@ public class GlobalController {
 			utente = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();}
 		return utente;
 	}
+
 	
     @ModelAttribute("ruolo")
     public String getAuthorityAsString() {

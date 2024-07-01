@@ -35,32 +35,35 @@
 
 					<!-- Inizio Elementi visibili per admin -->
 					<li class="nav-item">
-						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/ricette">Ricette</a>
+						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/cuochi">Cuochi</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/cuochi">Cuochi</a>
+						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/ricette">Ricette</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" th:if="${ruolo == 'ADMIN'}" href="/admin/ingredienti">Ingredienti</a>
 					</li>
 					<!-- Fine Elementi visibili per admin -->
 				</ul>
-				
+
 				<!-- Inizio Barra di Ricerca per Cuochi e Utenti Non Registrati -->
-				<form class="d-flex" th:if="${ruolo != 'ADMIN'}"  th:action="@{/search}" method="post">
-					<input class="form-control me-2" type="search" name="stringa"  placeholder="Search" aria-label="Search">
+				<form class="d-flex" th:if="${ruolo != 'ADMIN'}" th:action="@{/search}" method="post">
+					<input class="form-control me-2" type="search" name="stringa" placeholder="Search"
+						aria-label="Search">
 				</form>
 				<!-- Fine Barra di Ricerca per Cuochi e Utenti Non Registrati -->
-				
+
 				<!-- Inizio Barra di Ricerca per Admin -->
 				<form class="d-flex" th:if="${ruolo == 'ADMIN'}" th:action="@{/admin/search}" method="post">
-					<input class="form-control me-2" type="search" name="stringa"  placeholder="Search" aria-label="Search">
+					<input class="form-control me-2" type="search" name="stringa" placeholder="Search"
+						aria-label="Search">
 				</form>
 				<!-- Fine Barra di Ricerca per Admin-->
 
-				
+
 				<div class="d-flex align-items-center">
-					<a type="button" class="btn btn-success me-2 my-2" th:if="${userDetails == null}" href="/login">Login</a>
+					<a type="button" class="btn btn-success me-2 my-2" th:if="${userDetails == null}"
+						href="/login">Login</a>
 					<div class="dropdown" th:if="${userDetails != null}">
 						<a class="nav-link" role="button" id="userDropdown" data-bs-toggle="dropdown"
 							aria-expanded="false">

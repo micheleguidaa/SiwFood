@@ -1,53 +1,57 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head th:replace="~{fragments/header :: header(title='SiwFood - Cuoco')}">
-    <link rel="stylesheet" href="path/to/bootstrap.min.css">
-    <link rel="stylesheet" href="path/to/your-custom-styles.css">
+	<link rel="stylesheet" href="path/to/bootstrap.min.css">
+	<link rel="stylesheet" href="path/to/your-custom-styles.css">
 </head>
+
 <body>
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <div class="container mt-5 mb-5">
-        <div class="row mb-4 align-items-center">
-            <div class="col-md-4 text-center">
-                <div class="card rounded-circle cuoco-card shadow-sm">
-                    <img th:src="${cuoco.urlImage}" class="cuoco-img img-fluid rounded-circle" alt="Immagine Cuoco">
-                </div>
-            </div>
-            <div class="col-md-8">
-                <h1 class="display-4 ms-4" th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
-                <p class="text-muted lead ms-4" th:text="'Nato il: ' + ${cuoco.dataDiNascita}">Nato il: 12/08/1962</p>
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <p class="lead">
-                            Voglio raccontarvi una storia. La storia di un viaggio che parte da un piccola cittadina in
-                            provincia di Bologna e attraversa tutto il mondo, dalla Spagna al Libano, dal Brasile alla
-                            Turchia,
-                            con il cuore sempre diviso a metà, tra l’amore per la propria terra e la voglia di scoprire
-                            paesi
-                            lontani.<br><br>
-                            Lo avete capito, voglio raccontarvi la mia storia.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <h2 class="mb-4 text-center">Ricette:</h2>
-        <div th:if="${cuoco.ricette == null || cuoco.ricette.isEmpty()}" class="alert alert-warning">
-            Non ci sono ricette del cuoco nel sistema
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <div class="col" th:each="ricetta : ${cuoco.ricette}">
-                <div class="card h-100">
-                    <img th:src="${ricetta.urlsImages[0]}" class="card-img-top recipe-img" alt="Immagine Ricetta">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title" th:text="${ricetta.nome}">Lasagna</h5>
-                        <a th:href="@{'/ricetta/' + ${ricetta.id}}" class="btn btn-primary mt-auto">Visualizza Ricetta</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div th:replace="~{fragments/footer :: footer}"></div>
-    <script src="path/to/bootstrap.bundle.min.js"></script>
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+	<div class="container mt-5 mb-5">
+		<div class="row mb-4 align-items-center">
+			<div class="col-md-4 text-center">
+				<div class="card rounded-circle cuoco-card shadow-sm">
+					<img th:src="${cuoco.urlImage}" class="cuoco-img img-fluid rounded-circle" alt="Immagine Cuoco">
+				</div>
+			</div>
+			<div class="col-md-8">
+				<h1 class="display-4 ms-4" th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">Bruno Barbieri</h1>
+				<p class="text-muted lead ms-4" th:text="'Nato il: ' + ${cuoco.dataDiNascita}">Nato il: 12/08/1962</p>
+				<div class="card shadow-sm">
+					<div class="card-body">
+						<p class="lead" th:text="${cuoco.biografia}">
+							Voglio raccontarvi una storia. La storia di un viaggio che parte da un piccola cittadina in
+							provincia di Bologna e attraversa tutto il mondo, dalla Spagna al Libano, dal Brasile alla
+							Turchia,
+							con il cuore sempre diviso a metà, tra l’amore per la propria terra e la voglia di scoprire
+							paesi
+							lontani.<br><br>
+							Lo avete capito, voglio raccontarvi la mia storia.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h2 class="mb-4 text-center">Ricette:</h2>
+		<div th:if="${cuoco.ricette == null || cuoco.ricette.isEmpty()}" class="alert alert-warning text-center">
+			Non ci sono ricette del cuoco nel sistema
+		</div>
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+			<div class="col" th:each="ricetta : ${cuoco.ricette}">
+				<div class="card h-100">
+					<img th:src="${ricetta.urlsImages[0]}" class="card-img-top recipe-img" alt="Immagine Ricetta">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title" th:text="${ricetta.nome}">Lasagna</h5>
+						<a th:href="@{'/ricetta/' + ${ricetta.id}}" class="btn btn-primary mt-auto">Visualizza
+							Ricetta</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+	<script src="path/to/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

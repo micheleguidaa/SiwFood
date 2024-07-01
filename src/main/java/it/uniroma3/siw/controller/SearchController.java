@@ -27,8 +27,8 @@ public class SearchController {
     @PostMapping("/search")
     public String searchCuochi(@RequestParam String stringa, RedirectAttributes redirectAttributes) {
         if (stringa.length() == 0) {
-            redirectAttributes.addFlashAttribute("cuochi", this.cuocoService.findAll());
-            redirectAttributes.addFlashAttribute("ricette", this.ricettaService.findAll());
+            redirectAttributes.addFlashAttribute("cuochi", this.cuocoService.getAllCuochi());
+            redirectAttributes.addFlashAttribute("ricette", this.ricettaService.getAllRicette());
         } else {
             List<Cuoco> cuochiTrovati = this.cuocoService.findByNome(stringa);
             cuochiTrovati.addAll(this.cuocoService.findByCognome(stringa));
@@ -48,8 +48,8 @@ public class SearchController {
     @PostMapping("/admin/search")
     public String searchCuochiAdmin(@RequestParam String stringa, RedirectAttributes redirectAttributes) {
         if (stringa.length() == 0) {
-            redirectAttributes.addFlashAttribute("cuochi", this.cuocoService.findAll());
-            redirectAttributes.addFlashAttribute("ricette", this.ricettaService.findAll());
+            redirectAttributes.addFlashAttribute("cuochi", this.cuocoService.getAllCuochi());
+            redirectAttributes.addFlashAttribute("ricette", this.ricettaService.getAllRicette());
         } else {
             List<Cuoco> cuochiTrovati = this.cuocoService.findByNome(stringa);
             cuochiTrovati.addAll(this.cuocoService.findByCognome(stringa));

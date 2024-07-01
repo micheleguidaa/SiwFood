@@ -1,7 +1,5 @@
 package it.uniroma3.siw.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,37 +18,35 @@ public class CuocoController {
 
     @Autowired
     private CuocoService cuocoService;
-
+    
+    @GetMapping("/cuochi")
+    public String showCuochi(Model model) {
+        model.addAttribute("cuochi", cuocoService.getAllCuochi());
+        return "cuochi";
+    }
 
     @GetMapping("/admin/cuochi")
     public String indexCuochi(Model model) {
-        model.addAttribute("cuochi", cuocoService.findAll());
-        return "admin/indexCuochi.html";
-    }
-
-    @GetMapping("/cuochi")
-    public String showCuochi(Model model) {
-        model.addAttribute("cuochi", cuocoService.findAll());
-        return "cuochi.html";
+        model.addAttribute("cuochi", cuocoService.getAllCuochi());
+        return "admin/indexCuochi";
     }
 
     @GetMapping("/cuoco/{id}")
     public String getCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("cuoco", cuocoService.findById(id));
-        return "cuoco.html";
+        model.addAttribute("cuoco", cuocoService.getCuoco(id));
+        return "cuoco";
     }
     
     @PostMapping("/admin/delete/cuoco/{id}")
     public String deleteCuoco(@PathVariable("id") Long id) {
         cuocoService.deleteById(id);
-        return "redirect:/admin/indexCuochi";
+        return "redirect:/admin/cuochi";
     }
     
-
     @GetMapping("/admin/update/cuoco/{id}")
-    public String formEditCuoco(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("cuoco", cuocoService.findById(id));
-        return "admin/formModifyCuoco.html";
+    public String formUpdateCuoco(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("cuoco", cuocoService.getCuoco(id));
+        return "admin/formUpdateCuoco";
     }
 
     @PostMapping("/admin/update/cuoco/{id}")
