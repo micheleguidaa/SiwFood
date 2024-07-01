@@ -3,12 +3,12 @@ package it.uniroma3.siw.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.transaction.Transactional;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -33,5 +33,16 @@ public class FileService {
         if (Files.exists(path)) {
             Files.delete(path);
         }
+    }
+
+    public List<String> handleFileUpload(MultipartFile[] files, String uploadDirPath) throws IOException {
+        List<String> urlsImages = new ArrayList<>();
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                String imageUrl = saveFile(file, uploadDirPath);
+                urlsImages.add(imageUrl);
+            }
+        }
+        return urlsImages;
     }
 }

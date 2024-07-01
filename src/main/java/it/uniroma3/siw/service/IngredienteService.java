@@ -26,11 +26,11 @@ public class IngredienteService {
             ingredienteRepository.save(ingrediente);
         }
     }
-    
-    public Ingrediente findById(Long id) {
+
+    public Ingrediente getIngrediente(Long id) {
         return ingredienteRepository.findById(id).orElse(null);
     }
-    
+
     public List<Ingrediente> findAllOrderedByNome() {
         return ingredienteRepository.findAllByOrderByNomeAsc();
     }
@@ -38,5 +38,10 @@ public class IngredienteService {
     @Transactional
     public void deleteById(Long id) {
         ingredienteRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void save(Ingrediente ingrediente) {
+        ingredienteRepository.save(ingrediente);
     }
 }

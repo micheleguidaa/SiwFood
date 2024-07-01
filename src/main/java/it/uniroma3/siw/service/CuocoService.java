@@ -61,17 +61,18 @@ public class CuocoService {
 
     @Transactional
     public void deleteById(Long id) {
-        Optional<Cuoco> cuoco = cuocoRepository.findById(id);
-        cuoco.ifPresent(c -> {
+        Cuoco cuoco = cuocoRepository.findById(id).orElse(null);
+        if (cuoco != null) {
             try {
-                fileService.deleteFile(c.getUrlImage(), UPLOADED_FOLDER);
+                fileService.deleteFile(cuoco.getUrlImage(), UPLOADED_FOLDER);
                 cuocoRepository.deleteById(id);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
+        } else {
+            throw new IllegalArgumentException("Cuoco non trovato con id: " + id);
+        }
     }
-
     @Transactional
     public void registerCuoco(Cuoco cuoco, Credenziali credenziali, MultipartFile file) throws IOException {
     	
@@ -111,10 +112,6 @@ public class CuocoService {
         existingCuoco.setDataDiNascita(updatedCuoco.getDataDiNascita());
     }
 
-    @Transactional
-    public long countCuochi() {
-        return cuocoRepository.count();
-    }
     
     @Transactional
     public List<Cuoco> findByNome(String nome) {
