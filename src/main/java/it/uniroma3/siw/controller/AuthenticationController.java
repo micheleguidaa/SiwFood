@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.controller.validator.CredenzialiValidator;
-import it.uniroma3.siw.controller.validator.CuocoValidator;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.CuocoService;
-import it.uniroma3.siw.service.RicettaService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -34,9 +32,6 @@ public class AuthenticationController {
 
 	@Autowired
 	private CuocoService cuocoService;
-
-	@Autowired
-	private CuocoValidator cuocoValidator;
 
 	@Autowired
 	private CredenzialiValidator credenzialiValidator;

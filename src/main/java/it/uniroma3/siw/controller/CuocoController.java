@@ -56,10 +56,11 @@ public class CuocoController {
                               Model model) {
         try {
             cuocoService.updateCuoco(id, cuoco, file);
-            return "redirect:/admin/indexCuochi";
+            model.addAttribute("cuochi", cuocoService.getAllCuochi());
+            return "admin/indexCuochi";
         } catch (IOException e) {
             model.addAttribute("messaggioErrore", "Errore nella gestione dell'immagine");
-            return "admin/formModifyCuoco.html";
+            return "admin/formModifyCuoco";
         }
     }
     

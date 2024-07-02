@@ -26,10 +26,10 @@ public class Cuoco {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-	@NotBlank
+    @NotBlank(message = "Il nome è obbligatorio")
     private String nome;
 	
-	@NotBlank
+    @NotBlank(message = "Il cognome è obbligatorio")
     private String cognome;
 	
 	@NotBlank

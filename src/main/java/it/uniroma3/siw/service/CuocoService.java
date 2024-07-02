@@ -26,7 +26,7 @@ public class CuocoService {
     @Autowired
     private CredenzialiService credenzialiService;
 
-    private static final String UPLOADED_FOLDER = "uploads/cuochi2/";
+    private static final String UPLOADED_FOLDER = "uploads/cuochiImages/";
     private static final String DEFAULT_IMAGE = "/images/default/senzaFoto.jpeg";
     
     /**
@@ -110,6 +110,7 @@ public class CuocoService {
         existingCuoco.setNome(updatedCuoco.getNome());
         existingCuoco.setCognome(updatedCuoco.getCognome());
         existingCuoco.setDataDiNascita(updatedCuoco.getDataDiNascita());
+        existingCuoco.setBiografia(updatedCuoco.getBiografia());
     }
 
     

@@ -73,8 +73,13 @@
 
 					</div>
 					<div class="mb-3">
-						<label for="text" class="form-label">Biografia</label>
-						<input type="text" class="form-control" id="biografia" name="biografia" required>
+						<div class="mb-3">
+							<label for="biografia" class="form-label">Biografia</label>
+							<textarea class="form-control" id="biografia" name="biografia" rows="1"
+								th:text="${cuoco.biografia}" required></textarea>
+							<span th:if="${#fields.hasErrors('cuoco.biografia')}" th:errors="${cuoco.biografia}"
+								th:style="'color:red'"></span>
+						</div>
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Password</label>

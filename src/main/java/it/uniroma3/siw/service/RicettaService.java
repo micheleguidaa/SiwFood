@@ -32,7 +32,7 @@ public class RicettaService {
     @Autowired
     private IngredienteService ingredienteService;
 
-    private static final String UPLOAD_DIR = "uploads/ricette2/";
+    private static final String UPLOAD_DIR = "uploads/ricetteImages/";
     private static final String DEFAULT_IMAGE = "/images/default/senzaRicetta.jpeg";
 
     @Transactional
