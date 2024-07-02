@@ -62,7 +62,6 @@ public class AuthenticationController {
         return "index";
 	}
 
-	
 	@GetMapping("/success")
 	public String defaultAfterLogin(Model model) {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -43,9 +43,10 @@ body {
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
+    background-color: var(--secondary-color)!important;;
+    border-color: var(--secondary-color)!important;;
 }
+
 
 /* Navbar Styles */
 .navbar {
