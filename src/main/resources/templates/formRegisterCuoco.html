@@ -10,17 +10,13 @@
 	</div>
 	<div class="container form-container mt-5">
 		<h2 class="text-center mb-4">Aggiungi Nuovo Cuoco</h2>
-		<form th:action="@{/registerCuoco}" method="post" enctype="multipart/form-data" th:object="${credenziali}">
 
-			<div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger text-center" role="alert">
-				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="mb-0">...</p>
-			</div>
-			
-		<form th:action="@{/registerCuoco}" method="post" enctype="multipart/form-data" onsubmit="return validatePasswords()">
+		<form th:action="@{/registerCuoco}" method="post" enctype="multipart/form-data"
+			onsubmit="return validatePasswords()">
 			<div class=" d-flex justify-content-center">
-				<div th:if="${#fields.hasErrors('credentials')}" class="alert alert-danger text-center w-50"
+				<div th:if="${#fields.hasErrors('credenziali')}" class="alert alert-danger text-center w-50"
 					role="alert">
-					<p th:each="err : ${#fields.errors('credentials')}" th:text="${err}" class="mb-0">...</p>
+					<p th:each="err : ${#fields.errors('credenziali')}" th:text="${err}" class="mb-0">...</p>
 				</div>
 			</div>
 
@@ -47,17 +43,19 @@
 						<label for="nome" class="form-label">Nome</label>
 						<input type="text" class="form-control" id="nome" name="nome" required>
 						<span th:if="${#fields.hasErrors('cuoco.nome')}" th:errors="${cuoco.nome}"
-							th:style="'color:red'"></span>
+							class="text-danger">></span>
 					</div>
 					<div class="mb-3">
 						<label for="cognome" class="form-label">Cognome</label>
 						<input type="text" class="form-control" id="cognome" name="cognome" required>
-						<span th:if="${#fields.hasErrors('cuoco.cognome')}" th:errors="${cuoco.cognome   }"
-							th:style="'color:red'"></span>
+						<span th:if="${#fields.hasErrors('cuoco.cognome')}" th:errors="${cuoco.cognome}"
+							class="text-danger"></span>
 					</div>
 					<div class="mb-3">
 						<label for="dataDiNascita" class="form-label">Data di Nascita</label>
-						<input type="date" class="form-control" id="dataDiNascita" name="dataDiNascita" required>
+						<input type="date" class="form-control" id="dataDiNascita" name="dataDiNascita">
+						<span th:if="${#fields.hasErrors('cuoco.dataDiNascita')}" th:errors="${cuoco.dataDiNascita}"
+							th:style="'color:red'"></span>
 					</div>
 					<div class="mb-3">
 						<label for="fileImage" class="form-label">Carica una foto del cuoco (opzionale)</label>
@@ -114,7 +112,11 @@
 	<script>
 		function loadFile(event) {
 			var image = document.getElementById('cuocoImagePreview');
-			image.src = URL.createObjectURL(event.target.files[0]);
+			if (event.target.files.length > 0) {
+				image.src = URL.createObjectURL(event.target.files[0]);
+			} else {
+				image.src = '/images/default/senzaFoto.jpeg'; // Percorso dell'immagine di default
+			}
 		}
 
 		document.getElementById('togglePassword').addEventListener('click', function () {

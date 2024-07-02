@@ -31,42 +31,42 @@ import jakarta.validation.Valid;
 public class AuthenticationController {
 	@Autowired
 	private CredenzialiService credenzialiService;
-	
-    @Autowired
-    private CuocoService cuocoService;
-        
-    @Autowired
-    private CuocoValidator cuocoValidator;
-    
-    @Autowired
-    private CredenzialiValidator credenzialiValidator;
+
+	@Autowired
+	private CuocoService cuocoService;
+
+	@Autowired
+	private CuocoValidator cuocoValidator;
+
+	@Autowired
+	private CredenzialiValidator credenzialiValidator;
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {
 		return "login";
 	}
 
-	@GetMapping("/") 
+	@GetMapping("/")
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
-	        return "index";
-		}
-		else {		
-			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			return "index";
+		} else {
+			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+					.getPrincipal();
 			Credenziali credentials = credenzialiService.getCredenziali(userDetails.getUsername());
 			if (credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
 				return "admin/indexAdmin";
 			}
 		}
-        return "index";
+		return "index";
 	}
 
 	@GetMapping("/success")
 	public String defaultAfterLogin(Model model) {
-		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credenziali credentials = credenzialiService.getCredenziali(userDetails.getUsername());
-		if(credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
+		if (credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
 			return "admin/indexAdmin";
 		}
 		return "success";
@@ -74,49 +74,41 @@ public class AuthenticationController {
 
 	@GetMapping("/registerCuoco")
 	public String formNewCuoco(HttpServletRequest request, HttpSession session, Model model) {
-	    String referer = request.getHeader("Referer");
-	    if (referer != null) {
-	        session.setAttribute("prevPage", referer);
-	    }
-	    model.addAttribute("cuoco", new Cuoco());
-	    model.addAttribute("credenziali", new Credenziali());
-	    return "formRegisterCuoco";
+		String referer = request.getHeader("Referer");
+		if (referer != null) {
+			session.setAttribute("prevPage", referer);
+		}
+		model.addAttribute("cuoco", new Cuoco());
+		model.addAttribute("credenziali", new Credenziali());
+		return "formRegisterCuoco";
 	}
-	
 
 	@PostMapping("/registerCuoco")
-	public String registerCuoco(@Valid @ModelAttribute("cuoco") Cuoco cuoco,
-	                            BindingResult cuocoBindingResult, 
-	                            @ModelAttribute("credenziali") Credenziali credenziali,
-	                            BindingResult credenzialiBindingResult,
-	                            @RequestParam("fileImage") MultipartFile file,
-	                            HttpSession session,
-	                            Model model) {
-		
-	    this.cuocoValidator.validate(cuoco, cuocoBindingResult);
-	    this.credenzialiValidator.validate(credenziali, credenzialiBindingResult);
-	    
-	    
-	    // se user e credential hanno entrambi contenuti validi, memorizza User e the Credentials nel DB
-	    if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
-	        try {
-	            cuocoService.registerCuoco(cuoco, credenziali, file);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            model.addAttribute("fileUploadError", "Errore nel caricamento dell'immagine");
-	            return "formRegisterCuoco";
-	        }
-	        model.addAttribute("cuoco", cuoco);
-	        
-	        // Reindirizza alla pagina precedente
-	        String prevPage = (String) session.getAttribute("prevPage");
-	        if (prevPage != null) {
-	            session.removeAttribute("prevPage"); // Rimuovi l'URL dalla sessione
-	            return "redirect:" + prevPage;
-	        }
-	        return "login";
-	    }
-	    return "formRegisterCuoco";
+	public String registerCuoco(@Valid @ModelAttribute("cuoco") Cuoco cuoco, BindingResult cuocoBindingResult,
+			@ModelAttribute("credenziali") Credenziali credenziali, BindingResult credenzialiBindingResult,
+			@RequestParam("fileImage") MultipartFile file, HttpSession session, Model model) {
+		this.credenzialiValidator.validate(credenziali, credenzialiBindingResult);
+		// se user e credential hanno entrambi contenuti validi, memorizza User e the
+		// Credentials nel DB
+		if (!cuocoBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
+			try {
+				cuocoService.registerCuoco(cuoco, credenziali, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+				model.addAttribute("fileUploadError", "Errore nel caricamento dell'immagine");
+				return "formRegisterCuoco";
+			}
+			model.addAttribute("cuoco", cuoco);
+
+			// Reindirizza alla pagina precedente
+			String prevPage = (String) session.getAttribute("prevPage");
+			if (prevPage != null) {
+				session.removeAttribute("prevPage"); // Rimuovi l'URL dalla sessione
+				return "redirect:" + prevPage;
+			}
+			return "login";
+		}
+		return "formRegisterCuoco";
 	}
 
 }

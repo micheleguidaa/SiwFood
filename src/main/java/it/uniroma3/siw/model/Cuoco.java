@@ -3,6 +3,8 @@ package it.uniroma3.siw.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,8 +36,8 @@ public class Cuoco {
 	@Column(length = 2000)
     private String biografia;
 	
-    @NotNull
-    @Past
+    @Past(message = "La data di nascita deve essere nel passato")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataDiNascita;
     
 	private String urlImage;
