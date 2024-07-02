@@ -8,12 +8,6 @@ import org.springframework.validation.Validator;
 import it.uniroma3.siw.model.Ricetta;
 import it.uniroma3.siw.repository.RicettaRepository;
 
-/***********************************************
- 				DA FIXARE!!!
- ***********************************************/
-
-
-
 @Component
 public class RicettaValidator implements Validator {
     @Autowired

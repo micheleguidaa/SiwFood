@@ -4,7 +4,11 @@
 	<div>
 		<div class="container form-container my-5">
 			<h2 class="text-center mb-4" th:text="${titolo}"></h2>
-			<form th:action="@{${action}}" method="post" enctype="multipart/form-data">
+			<form th:action="@{${action}}" method="post" enctype="multipart/form-data" th:object="${ricetta}">
+				<div th:if="${#fields.hasGlobalErrors()}">
+					<span th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</span>
+				</div>
+
 				<input type="hidden" id="cuocoId" name="cuocoId" th:value="${cuocoCorrente?.id}" />
 				<div class="row">
 					<div class="col-md-4">

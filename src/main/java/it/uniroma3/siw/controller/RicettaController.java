@@ -66,12 +66,19 @@ public class RicettaController {
 			@RequestParam("ingredientiIds") List<Long> ingredientiIds,
 			@RequestParam("quantita") List<String> quantitaList, Model model) {
     	this.ricettaValidator.validate(ricetta, ricettaBindingResult);
+		if (ricettaBindingResult.hasErrors()) {
+			model.addAttribute("ricetta", new Ricetta());
+			model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
+			return "/addRicetta";
+	
+		}
 		try {
 			ricettaService.registerRicetta(ricetta, cuocoId, files, ingredientiIds, quantitaList);
 			return "redirect:/leMieRicette";
 		} catch (IOException e) {
 			return "cuoco/addRicetta";
 		}
+	
 	}
 
 
