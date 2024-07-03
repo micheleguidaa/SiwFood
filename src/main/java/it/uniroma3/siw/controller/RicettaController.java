@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import it.uniroma3.siw.controller.validator.RicettaValidator;
-import it.uniroma3.siw.model.Credenziali;
-import it.uniroma3.siw.model.Cuoco;
 import it.uniroma3.siw.model.Ingrediente;
 import it.uniroma3.siw.model.Ricetta;
 import it.uniroma3.siw.service.IngredienteService;
@@ -32,8 +29,6 @@ public class RicettaController {
 	@Autowired
 	private IngredienteService ingredienteService;
 	
-	@Autowired
-	private RicettaValidator ricettaValidator;
 
 	@GetMapping("/ricette")
 	public String showRicette(Model model) {
@@ -65,13 +60,13 @@ public class RicettaController {
 			@RequestParam("fileImages") MultipartFile[] files, @RequestParam("cuocoId") Long cuocoId,
 			@RequestParam("ingredientiIds") List<Long> ingredientiIds,
 			@RequestParam("quantita") List<String> quantitaList, Model model) {
-    	this.ricettaValidator.validate(ricetta, ricettaBindingResult);
 		if (ricettaBindingResult.hasErrors()) {
 			model.addAttribute("ricetta", new Ricetta());
 			model.addAttribute("ingredienti", ingredienteService.findAllOrderedByNome());
-			return "/addRicetta";
+			return "cuoco/addRicetta";
 	
 		}
+		
 		try {
 			ricettaService.registerRicetta(ricetta, cuocoId, files, ingredientiIds, quantitaList);
 			return "redirect:/leMieRicette";
